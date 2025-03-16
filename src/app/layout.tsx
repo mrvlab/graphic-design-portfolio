@@ -26,7 +26,7 @@ export default function RootLayout({
           rel='stylesheet'
         />
       </head>
-      <body className={`antialiased`}>{children}</body>
+      <body className={'antialiased lg:font-[0.75rem]'}>{children}</body>
     </html>
   );
 }
