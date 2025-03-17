@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 
 import './globals.css';
 
@@ -26,7 +27,10 @@ export default function RootLayout({
           rel='stylesheet'
         />
       </head>
-      <body className={'antialiased lg:font-[0.75rem]'}>{children}</body>
+      <body className={'antialiased lg:font-[0.75rem]'}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
