@@ -1,0 +1,32 @@
+import {ImageIcon} from '@sanity/icons'
+
+import {defineField, defineType} from 'sanity'
+
+export const mediaGallery = defineType({
+  name: 'mediaGallery',
+  title: 'Media Gallery',
+  type: 'object',
+  icon: ImageIcon,
+  fields: [
+    defineField({
+      name: 'mediaItems', // <-- Now exists!
+      title: 'Media Items',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alternative Text',
+              type: 'string',
+            }),
+          ],
+        }),
+      ],
+    }),
+  ],
+})

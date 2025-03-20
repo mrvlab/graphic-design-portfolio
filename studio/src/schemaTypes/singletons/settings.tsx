@@ -1,13 +1,6 @@
 import {CogIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-import * as demo from '../../lib/initialValues'
-
-/**
- * Settings schema Singleton.  Singletons are single documents that are displayed not in a collection, handy for things like site settings and other global configurations.
- * Learn more: https://www.sanity.io/docs/create-a-link-to-a-single-edit-page-in-your-main-document-type-list
- */
-
 export const settings = defineType({
   name: 'settings',
   title: 'Settings',
@@ -19,7 +12,6 @@ export const settings = defineType({
       description: 'This field is the title of your blog.',
       title: 'Title',
       type: 'string',
-      initialValue: demo.title,
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -27,7 +19,6 @@ export const settings = defineType({
       description: 'Used both for the <meta> description tag for SEO, and the blog subheader.',
       title: 'Description',
       type: 'array',
-      initialValue: demo.description,
       of: [
         // Define a minified block content field for the description. https://www.sanity.io/docs/block-content
         defineArrayMember({
@@ -97,9 +88,22 @@ export const settings = defineType({
     }),
   ],
   preview: {
-    prepare() {
+    select: {
+      title: 'Settings',
+      updatedAt: '_updatedAt', // Selects the last updated timestamp
+    },
+    prepare({title, updatedAt}) {
+      const formattedDate = updatedAt
+        ? new Date(updatedAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })
+        : 'No edits yet'
+
       return {
-        title: 'Settings',
+        title: title || 'Untitled',
+        subtitle: `Last edited: ${formattedDate}`,
       }
     },
   },

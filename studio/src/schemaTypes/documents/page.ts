@@ -13,50 +13,46 @@ export const page = defineType({
   icon: DocumentIcon,
   fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      validation: (Rule) => Rule.required(),
-      options: {
-        source: 'name',
-        maxLength: 96,
-      },
-    }),
-    defineField({
-      name: 'heading',
-      title: 'Heading',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'subheading',
-      title: 'Subheading',
-      type: 'string',
-    }),
-    defineField({
-      name: 'pageBuilder',
-      title: 'Page builder',
+      name: 'richText',
+      title: 'Rich Text',
       type: 'array',
-      of: [{type: 'callToAction'}, {type: 'infoSection'}],
-      options: {
-        insertMenu: {
-          // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/array-type#efb1fe03459d
-          views: [
-            {
-              name: 'grid',
-              previewImageUrl: (schemaTypeName) =>
-                `/static/page-builder-thumbnails/${schemaTypeName}.webp`,
-            },
-          ],
-        },
-      },
+      of: [{type: 'block'}],
     }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative Text',
+          type: 'string',
+        }),
+      ],
+    }),
+    // defineField({
+    //   name: 'pageBuilder',
+    //   title: 'Page builder',
+    //   type: 'array',
+    //   of: [{type: 'callToAction'}, {type: 'infoSection'}],
+    //   options: {
+    //     insertMenu: {
+    //       // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/array-type#efb1fe03459d
+    //       views: [
+    //         {
+    //           name: 'grid',
+    //           previewImageUrl: (schemaTypeName) =>
+    //             `/static/page-builder-thumbnails/${schemaTypeName}.webp`,
+    //         },
+    //       ],
+    //     },
+    //   },
+    // }),
   ],
+  preview: {
+    select: {
+      title: 'richText',
+    },
+  },
 })

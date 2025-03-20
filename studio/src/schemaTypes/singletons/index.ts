@@ -1,0 +1,7 @@
+export {footer} from './footer'
+export {homePage} from './homePage'
+export {navigation} from './navigation'
+export {settings} from './settings'
+export {languages} from './languages'
+export {experiences} from './experiences'
+export {studies} from './studies'
