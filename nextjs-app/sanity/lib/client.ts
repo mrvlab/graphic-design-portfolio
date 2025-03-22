@@ -1,24 +1,27 @@
-import { createClient } from "next-sanity";
+// lib/sanity.client.ts
+import { createClient } from 'next-sanity';
+import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api';
+import { token } from './token';
 
-import { apiVersion, dataset, projectId, studioUrl } from "@/sanity/lib/api";
-import { token } from "./token";
+// Read preview mode from env
+const isPreviewMode = process.env.NEXT_PUBLIC_PREVIEW_MODE === 'true';
 
+// Factory function to create the client dynamically if needed
 export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: true,
-  perspective: "published",
-  token, // Required if you have a private dataset
+  useCdn: !isPreviewMode, // Use CDN in production (non-preview)
+  perspective: isPreviewMode ? 'previewDrafts' : 'published',
+  token: isPreviewMode ? token : undefined, // Only needed for previewing drafts
+  ignoreBrowserTokenWarning: isPreviewMode,
   stega: {
     studioUrl,
-    // Set logger to 'console' for more verbose logging
-    // logger: console,
     filter: (props) => {
-      if (props.sourcePath.at(-1) === "title") {
+      // Only expose title field for preview overlays
+      if (props.sourcePath.at(-1) === 'title') {
         return true;
       }
-
       return props.filterDefault(props);
     },
   },
