@@ -1,37 +1,26 @@
-import {TiersIcon} from '@sanity/icons'
+import {BlockquoteIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
-export const experiences = defineType({
-  name: 'experiences',
-  title: 'Experiences',
+export const publications = defineType({
+  name: 'publications',
+  title: 'Publications',
   type: 'document',
-  icon: TiersIcon,
+  icon: BlockquoteIcon,
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required().error('Title name is required.'),
+      validation: (Rule) => Rule.required().error('title name is required.'),
     }),
     defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-    }),
-    defineField({
-      name: 'role',
-      title: 'Role',
-      type: 'string',
-    }),
-    defineField({
-      name: 'startDate',
-      title: 'Start Date',
-      type: 'date',
-    }),
-    defineField({
-      name: 'endDate',
-      title: 'End Date',
-      type: 'date',
+      title: 'Link',
+      name: 'href',
+      type: 'url',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https', 'mailto', 'tel'],
+        }),
     }),
   ],
   preview: {

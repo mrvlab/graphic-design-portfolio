@@ -1,33 +1,24 @@
-import {ArrowTopRightIcon} from '@sanity/icons'
+import {StackCompactIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
-export const navigation = defineType({
-  name: 'navigation',
-  title: 'Navigation',
+export const softwareTools = defineType({
+  name: 'softwareTools',
+  title: 'Software Tools',
   type: 'document',
-  icon: ArrowTopRightIcon,
+  icon: StackCompactIcon,
   fields: [
     defineField({
-      name: 'title',
-      description: 'Title for navigation',
-      title: 'Title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 100,
-      },
+      name: 'richText',
+      title: 'Rich Text',
+      type: 'array',
+      of: [{type: 'block'}],
+      validation: (Rule) => Rule.required().error('Text is required.'),
     }),
   ],
   preview: {
     select: {
       title: 'title',
-      updatedAt: '_updatedAt', // Selects the last updated timestamp
+      updatedAt: '_updatedAt',
     },
     prepare({title, updatedAt}) {
       const formattedDate = updatedAt
