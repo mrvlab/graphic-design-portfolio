@@ -1,14 +1,14 @@
 import CityClock from '@/components/CityClock/CityClock';
 import ComingSoonText from '@/components/ComingSoonText/ComingSoonText';
+import { sanityFetch } from '@/sanity/lib/live';
+import { settingsQuery } from '@/sanity/lib/queries';
 import { getCurrentYear } from '@/utils/getCurrentYear';
 
-export default function Home() {
+export default async function Home() {
+  const { data: settings } = await sanityFetch({ query: settingsQuery });
+
   return (
     <div className='flex flex-col py-4 h-dvh'>
-      <header className='flex flex-col items-center'>
-        <h1>Martina Quirici</h1>
-        <p>Art Direction : Graphic Designer</p>
-      </header>
       <main className='relative flex flex-col flex-1'>
         <div
           id='logo'
@@ -17,7 +17,7 @@ export default function Home() {
           <ComingSoonText />
         </div>
         <div className='flex flex-col flex-1 justify-center items-center z-10'>
-          ( Coming soon )
+          {settings?.enterSiteText}
         </div>
       </main>
       <footer className='flex flex-col items-center'>
