@@ -436,14 +436,57 @@ export type SettingsQueryResult = {
   enterSiteText?: string;
 } | null;
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading  }
-export type GetPageQueryResult = {
-  _id: string;
-  _type: "page";
+// Query: *[_type == "page" && defined(slug.current)][0...12]{  __id,    name,    title,    subheading,    "slug": slug.current,    richText}
+export type GetPageQueryResult = Array<{
+  __id: null;
   name: string | null;
-  slug: Slug | null;
-  heading: null;
+  title: string | null;
   subheading: string | null;
+  slug: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+}>;
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0]{    title,    name,    subheading,    richText,    mainImage  }
+export type PAGE_QUERYResult = {
+  title: string | null;
+  name: string | null;
+  subheading: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  mainImage: null;
 } | null;
 // Variable: sitemapData
 // Query: *[_type == "page" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
@@ -463,7 +506,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
-    "\n  *[_type == 'page' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading\n  }\n": GetPageQueryResult;
+    "\n  *[_type == \"page\" && defined(slug.current)][0...12]{\n  __id,\n    name,\n    title,\n    subheading,\n    \"slug\": slug.current,\n    richText\n}\n": GetPageQueryResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    title,\n    name,\n    subheading,\n    richText,\n    mainImage\n  }\n": PAGE_QUERYResult;
     "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
   }

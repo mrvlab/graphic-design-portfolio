@@ -1,41 +1,33 @@
-// app/[slug]/page.tsx
-
-import { PortableText } from '@portabletext/react';
+import { PortableText, QueryParams } from 'next-sanity';
+import { PAGE_QUERY, getPageQuery } from '@/sanity/lib/queries';
+import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '@/sanity/lib/live';
-import { getPageQuery } from '@/sanity/lib/queries';
-import type { Metadata } from 'next';
 
-type Props = {
-  params: { slug: string };
-};
+export async function generateStaticParams() {
+  const posts = await client.fetch(getPageQuery);
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { data: page } = await sanityFetch({
-    query: getPageQuery,
-    params: { slug: params.slug },
-    stega: false,
-  });
-
-  return {
-    title: page?.name ?? 'Untitled Page',
-    description: page?.subheading,
-  };
+  return posts.map((page) => ({
+    slug: page?.slug,
+  }));
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<QueryParams>;
+}) {
   const { data: page } = await sanityFetch({
-    query: getPageQuery,
-    params: { slug: params.slug },
+    query: PAGE_QUERY,
+    params: await params,
   });
 
-  if (!page?._id) {
+  if (!page) {
     return (
       <div className='py-40 text-center text-3xl text-gray-500'>
         404 – Page Not Found
       </div>
     );
   }
-
   return (
     <div className='container max-w-4xl mx-auto my-20 px-4'>
       <div className='border-b pb-8 mb-12'>
