@@ -8,9 +8,9 @@ export const navigation = defineType({
   icon: ArrowTopRightIcon,
   fields: [
     defineField({
-      name: 'title',
-      description: 'Title for navigation',
-      title: 'Title',
+      name: 'name',
+      title: 'Name',
+      description: 'name for navigation',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
@@ -26,7 +26,7 @@ export const navigation = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'name',
       updatedAt: '_updatedAt', // Selects the last updated timestamp
     },
     prepare({ title, updatedAt }) {

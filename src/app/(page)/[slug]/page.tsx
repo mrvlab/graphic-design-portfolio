@@ -4,9 +4,9 @@ import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '@/sanity/lib/live';
 
 export async function generateStaticParams() {
-  const posts = await client.fetch(getPageQuery);
+  const page = await client.fetch(getPageQuery);
 
-  return posts.map((page) => ({
+  return page.map((page) => ({
     slug: page?.slug,
   }));
 }

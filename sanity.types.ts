@@ -202,11 +202,32 @@ export type Projects = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  name?: string;
+  slug?: Slug;
   title?: string;
+  richText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
   year?: string;
   images?: Array<{
     _key: string;
   } & MediaGallery>;
+  comingSoon?: boolean;
 };
 
 export type Navigation = {
@@ -215,7 +236,7 @@ export type Navigation = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  name?: string;
   slug?: Slug;
 };
 
@@ -330,6 +351,21 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
+export type ProjectsIndex = {
+  _id: string;
+  _type: "projectsIndex";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  projects?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "projects";
+  }>;
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -390,7 +426,7 @@ export type Footer = {
   title?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Page | Slug | HomePage | Footer;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Footer;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -435,10 +471,18 @@ export type SettingsQueryResult = {
   };
   enterSiteText?: string;
 } | null;
+// Variable: navigationQuery
+// Query: *[_type == "navigation"] | order(_updatedAt desc)[0...12]{    _id,    name,    "slug": slug.current,    _updatedAt  }
+export type NavigationQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  _updatedAt: string;
+}>;
 // Variable: getPageQuery
-// Query: *[_type == "page" && defined(slug.current)][0...12]{  __id,    name,    title,    subheading,    "slug": slug.current,    richText}
+// Query: *[_type == "page" && defined(slug.current)][0...12]{    _id,    name,    title,    subheading,    "slug": slug.current,    richText}
 export type GetPageQueryResult = Array<{
-  __id: null;
+  _id: string;
   name: string | null;
   title: string | null;
   subheading: string | null;
@@ -488,6 +532,40 @@ export type PAGE_QUERYResult = {
   }> | null;
   mainImage: null;
 } | null;
+// Variable: projectsQuery
+// Query: *[_type == "Projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon}
+export type ProjectsQueryResult = Array<never>;
+// Variable: singleProjectQuery
+// Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon  }
+export type SingleProjectQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  year: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    _key: string;
+  } & MediaGallery> | null;
+  comingSoon: boolean | null;
+} | null;
 // Variable: sitemapData
 // Query: *[_type == "page" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<{
@@ -506,8 +584,11 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
-    "\n  *[_type == \"page\" && defined(slug.current)][0...12]{\n  __id,\n    name,\n    title,\n    subheading,\n    \"slug\": slug.current,\n    richText\n}\n": GetPageQueryResult;
+    "\n  *[_type == \"navigation\"] | order(_updatedAt desc)[0...12]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    _updatedAt\n  }\n": NavigationQueryResult;
+    "\n  *[_type == \"page\" && defined(slug.current)][0...12]{\n    _id,\n    name,\n    title,\n    subheading,\n    \"slug\": slug.current,\n    richText\n}\n": GetPageQueryResult;
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    title,\n    name,\n    subheading,\n    richText,\n    mainImage\n  }\n": PAGE_QUERYResult;
+    "\n  *[_type == \"Projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n}\n": ProjectsQueryResult;
+    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
     "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
   }
