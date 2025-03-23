@@ -2,9 +2,17 @@ import { defineQuery } from 'next-sanity';
 
 export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
 
+export const navigationQuery = defineQuery(`
+  *[_type == "navigation"] | order(_updatedAt desc)[0...12]{
+    _id,
+    name,
+    "slug": slug.current,
+    _updatedAt
+  }
+`);
 export const getPageQuery = defineQuery(`
   *[_type == "page" && defined(slug.current)][0...12]{
-  __id,
+    _id,
     name,
     title,
     subheading,
@@ -20,6 +28,32 @@ export const PAGE_QUERY = defineQuery(`
     subheading,
     richText,
     mainImage
+  }
+`);
+
+export const projectsQuery = defineQuery(`
+  *[_type == "Projects" && defined(slug.current)][0...100]{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    images,
+    comingSoon
+}
+`);
+
+export const singleProjectQuery = defineQuery(`
+  *[_type == "projects" && slug.current == $slug][0]{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    images,
+    comingSoon
   }
 `);
 
