@@ -1,0 +1,1 @@
+export { blockContentType } from './blockContentType';
