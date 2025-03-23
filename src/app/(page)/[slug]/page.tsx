@@ -40,7 +40,7 @@ export default async function Page({
       </div>
 
       <div className='prose prose-lg prose-gray max-w-none'>
-        <PortableText value={page.richText} />
+        {page.richText && <PortableText value={page.richText} />}
       </div>
     </div>
   );
