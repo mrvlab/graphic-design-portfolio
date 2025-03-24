@@ -20,9 +20,9 @@ const NavItems = ({ navItems }: Props) => {
   const isActive = (slug: string) => pathname === `/${slug}`;
 
   const alignmentClasses = {
-    left: 'text-left lg:text-right',
-    center: 'text-center lg:text-right',
-    right: 'text-right lg:text-right',
+    left: 'justify-start lg:justify-end',
+    center: 'justify-center lg:justify-end',
+    right: 'justify-end lg:justify-end',
   };
 
   const renderNavLink = (
@@ -35,12 +35,20 @@ const NavItems = ({ navItems }: Props) => {
     return (
       <li
         key={item._id}
-        className={`flex-1 ${alignmentClasses[alignment]} py-2.5 px-3`}
+        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit`}
         data-sanity-id={item._id}
         data-sanity-type='navigation'
       >
         <Link href={`/${slug}`}>
-          {isActive(slug) ? `( ${item.name} )` : item.name}
+          {isActive(slug) ? (
+            <div className='flex gap-1'>
+              <span>(</span>
+              {item.name}
+              <span>)</span>
+            </div>
+          ) : (
+            <div className='flex'>{item.name}</div>
+          )}
         </Link>
       </li>
     );
@@ -48,11 +56,9 @@ const NavItems = ({ navItems }: Props) => {
 
   return (
     <ul className='flex w-full items-center flex-1 lg:justify-end'>
-      <div className='flex w-full lg:w-[260px]'>
-        {renderNavLink(first, 'left')}
-        {middle.map((item) => renderNavLink(item, 'center'))}
-        {renderNavLink(last, 'right')}
-      </div>
+      {renderNavLink(first, 'left')}
+      {middle.map((item) => renderNavLink(item, 'center'))}
+      {renderNavLink(last, 'right')}
     </ul>
   );
 };
