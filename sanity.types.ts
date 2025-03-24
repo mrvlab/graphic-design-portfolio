@@ -673,6 +673,72 @@ export type FetchFooterQueryResult = {
     _key: string;
   }> | null;
 } | null;
+// Variable: fetchHomePageQuery
+// Query: *[_type == "homePage"][0]{    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon    }  }
+export type FetchHomePageQueryResult = {
+  projects: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    year: string | null;
+    richText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    images: Array<{
+      _key: string;
+    } & MediaGallery> | null;
+    comingSoon: boolean | null;
+  }> | null;
+} | null;
+// Variable: fetchProjectsIndexQuery
+// Query: *[_type == "projectsIndex"][0]{    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon    }  }
+export type FetchProjectsIndexQueryResult = {
+  projects: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    year: string | null;
+    richText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    images: Array<{
+      _key: string;
+    } & MediaGallery> | null;
+    comingSoon: boolean | null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -688,5 +754,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
     "\n  *[_type == \"header\"][0]{\n    _id,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
     "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
+    "\n  *[_type == \"homePage\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchHomePageQueryResult;
+    "\n  *[_type == \"projectsIndex\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchProjectsIndexQueryResult;
   }
 }

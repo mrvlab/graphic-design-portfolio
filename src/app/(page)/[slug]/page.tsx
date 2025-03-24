@@ -4,6 +4,8 @@ import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '@/sanity/lib/live';
 import { PAGE_QUERYResult } from '../../../../sanity.types';
 
+import HomePage from '@/page/HomePage';
+
 export async function generateStaticParams() {
   const page = await client.fetch(getPageQuery);
 
@@ -17,9 +19,12 @@ export default async function Page({
 }: {
   params: Promise<QueryParams>;
 }) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug as string;
+
   const { data: page }: { data: PAGE_QUERYResult } = await sanityFetch({
     query: PAGE_QUERY,
-    params: await params,
+    params: resolvedParams,
   });
 
   if (!page) {
@@ -29,7 +34,21 @@ export default async function Page({
       </div>
     );
   }
-  return (
+
+  const renderPageBySlug = () => {
+    switch (slug) {
+      case 'home':
+        return <HomePage />;
+      default:
+        return null;
+    }
+  };
+
+  const customPage = renderPageBySlug();
+
+  return customPage ? (
+    customPage
+  ) : (
     <div className='container max-w-4xl mx-auto my-20 px-4'>
       <div className='border-b pb-8 mb-12'>
         <h1 className='text-5xl font-bold text-gray-900'>
