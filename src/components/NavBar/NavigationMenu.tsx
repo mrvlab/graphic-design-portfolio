@@ -5,14 +5,21 @@ import React from 'react';
 import NavItems from './NavItems';
 import Link from 'next/link';
 import { sanityFetch } from '@/sanity/lib/live';
-import { SettingsQueryResult } from '../../../sanity.types';
+import {
+  NavigationQueryResult,
+  SettingsQueryResult,
+} from '../../../sanity.types';
 import { PortableText } from 'next-sanity';
 type Props = {
   hideSideSections?: boolean;
 };
 
 const NavigationMenu = async ({ hideSideSections = false }: Props) => {
-  const navItems = await client.fetch(navigationQuery);
+  const { data: navItems }: { data: NavigationQueryResult } = await sanityFetch(
+    {
+      query: navigationQuery,
+    }
+  );
   const { data: settings }: { data: SettingsQueryResult } = await sanityFetch({
     query: settingsQuery,
   });

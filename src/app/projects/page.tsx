@@ -1,9 +1,13 @@
 // app/projects/page.tsx
-import { client } from '@/sanity/lib/client';
+
+import { sanityFetch } from '@/sanity/lib/live';
 import { projectsQuery } from '@/sanity/lib/queries';
+import { ProjectsQueryResult } from '../../../sanity.types';
 
 export default async function Page() {
-  const projects = await client.fetch(projectsQuery);
+  const { data: projects }: { data: ProjectsQueryResult } = await sanityFetch({
+    query: projectsQuery,
+  });
 
   if (!projects) {
     return (

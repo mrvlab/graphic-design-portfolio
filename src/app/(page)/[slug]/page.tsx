@@ -2,6 +2,7 @@ import { PortableText, QueryParams } from 'next-sanity';
 import { PAGE_QUERY, getPageQuery } from '@/sanity/lib/queries';
 import { client } from '@/sanity/lib/client';
 import { sanityFetch } from '@/sanity/lib/live';
+import { PAGE_QUERYResult } from '../../../../sanity.types';
 
 export async function generateStaticParams() {
   const page = await client.fetch(getPageQuery);
@@ -16,7 +17,7 @@ export default async function Page({
 }: {
   params: Promise<QueryParams>;
 }) {
-  const { data: page } = await sanityFetch({
+  const { data: page }: { data: PAGE_QUERYResult } = await sanityFetch({
     query: PAGE_QUERY,
     params: await params,
   });
