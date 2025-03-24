@@ -41,7 +41,16 @@ export const page = defineType({
       name: 'richText',
       title: 'Rich Text',
       type: 'array',
-      of: [{ type: 'block' }],
+
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading', value: 'h2' },
+          ],
+        },
+      ],
     }),
     // defineField({
     //   name: 'pageBuilder',
