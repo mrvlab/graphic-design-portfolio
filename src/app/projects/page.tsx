@@ -1,0 +1,28 @@
+// app/projects/page.tsx
+import { client } from '@/sanity/lib/client';
+import { projectsQuery } from '@/sanity/lib/queries';
+
+export default async function Page() {
+  const projects = await client.fetch(projectsQuery);
+
+  if (!projects) {
+    return (
+      <div className='py-40 text-center text-3xl text-gray-500'>
+        404 – Projects not found
+      </div>
+    );
+  }
+
+  return (
+    <div className='container max-w-4xl mx-auto my-20 px-4'>
+      <div className='border-b pb-8 mb-12'>
+        <h1 className='text-5xl font-bold text-gray-900'>List of projects</h1>
+      </div>
+      {projects.map((project) => (
+        <h3 className='text-2xl font-bold text-gray-900' key={project._id}>
+          {project.title} {project.year}
+        </h3>
+      ))}
+    </div>
+  );
+}

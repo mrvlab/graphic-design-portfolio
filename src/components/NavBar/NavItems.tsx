@@ -19,6 +19,12 @@ const NavItems = ({ navItems }: Props) => {
 
   const isActive = (slug: string) => pathname === `/${slug}`;
 
+  const alignmentClasses = {
+    left: 'text-left lg:text-right',
+    center: 'text-center lg:text-right',
+    right: 'text-right lg:text-right',
+  };
+
   const renderNavLink = (
     item: (typeof navItems)[number],
     alignment: 'left' | 'center' | 'right'
@@ -29,7 +35,7 @@ const NavItems = ({ navItems }: Props) => {
     return (
       <li
         key={item._id}
-        className={`flex-1 text-${alignment} py-2.5 px-3`}
+        className={`flex-1 ${alignmentClasses[alignment]} py-2.5 px-3`}
         data-sanity-id={item._id}
         data-sanity-type='navigation'
       >
@@ -44,23 +50,7 @@ const NavItems = ({ navItems }: Props) => {
     <ul className='flex w-full items-center flex-1 lg:justify-end'>
       <div className='flex w-full lg:w-[260px]'>
         {renderNavLink(first, 'left')}
-        <li className='flex-1 text-center py-2.5 px-3'>
-          {middle.map((item) =>
-            item.slug ? (
-              <span
-                key={item._id}
-                data-sanity-id={item._id}
-                data-sanity-type='navigation'
-                className='mx-2'
-              >
-                <Link href={`/${item.slug}`}>
-                  {isActive(item.slug) ? `( ${item.name} )` : item.name}
-                </Link>
-              </span>
-            ) : null
-          )}
-        </li>
-
+        {middle.map((item) => renderNavLink(item, 'center'))}
         {renderNavLink(last, 'right')}
       </div>
     </ul>

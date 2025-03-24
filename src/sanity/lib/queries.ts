@@ -32,7 +32,7 @@ export const PAGE_QUERY = defineQuery(`
 `);
 
 export const projectsQuery = defineQuery(`
-  *[_type == "Projects" && defined(slug.current)][0...100]{
+  *[_type == "projects" && defined(slug.current)][0...100]{
     _id,
     name,
     "slug": slug.current,

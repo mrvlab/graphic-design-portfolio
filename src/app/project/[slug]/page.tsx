@@ -3,11 +3,9 @@ import { client } from '@/sanity/lib/client';
 import { projectsQuery, singleProjectQuery } from '@/sanity/lib/queries';
 import { PortableText, QueryParams } from 'next-sanity';
 import { sanityFetch } from '@/sanity/lib/live';
-import { SingleProjectQueryResult } from '../../../../sanity.types';
 
 export async function generateStaticParams() {
-  const projects: SingleProjectQueryResult[] =
-    await client.fetch(projectsQuery);
+  const projects = await client.fetch(projectsQuery);
 
   return projects.map((project) => ({
     slug: project?.slug,

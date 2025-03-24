@@ -212,7 +212,7 @@ export type Projects = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    style?: "normal" | "h2";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -383,7 +383,7 @@ export type Page = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    style?: "normal" | "h2";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -494,7 +494,7 @@ export type GetPageQueryResult = Array<{
       _type: "span";
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    style?: "h2" | "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -519,7 +519,7 @@ export type PAGE_QUERYResult = {
       _type: "span";
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    style?: "h2" | "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -533,8 +533,36 @@ export type PAGE_QUERYResult = {
   mainImage: null;
 } | null;
 // Variable: projectsQuery
-// Query: *[_type == "Projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon}
-export type ProjectsQueryResult = Array<never>;
+// Query: *[_type == "projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon}
+export type ProjectsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  year: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    _key: string;
+  } & MediaGallery> | null;
+  comingSoon: boolean | null;
+}>;
 // Variable: singleProjectQuery
 // Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon  }
 export type SingleProjectQueryResult = {
@@ -550,7 +578,7 @@ export type SingleProjectQueryResult = {
       _type: "span";
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    style?: "h2" | "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -587,7 +615,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"navigation\"] | order(_updatedAt desc)[0...12]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    _updatedAt\n  }\n": NavigationQueryResult;
     "\n  *[_type == \"page\" && defined(slug.current)][0...12]{\n    _id,\n    name,\n    title,\n    subheading,\n    \"slug\": slug.current,\n    richText\n}\n": GetPageQueryResult;
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    title,\n    name,\n    subheading,\n    richText,\n    mainImage\n  }\n": PAGE_QUERYResult;
-    "\n  *[_type == \"Projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n}\n": ProjectsQueryResult;
+    "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n}\n": ProjectsQueryResult;
     "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
     "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
