@@ -68,3 +68,23 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `);
+
+export const fetchHeaderQuery = defineQuery(`
+  *[_type == "header"][0]{
+    _id,
+    lefttext,
+    name,
+    workTitle,
+    projectCloseText
+  }
+`);
+
+export const fetchFooterQuery = defineQuery(`
+  *[_type == "footer"][0]{
+    _id,
+    name,
+    rights,
+    location,
+    lefttext
+  }
+`);

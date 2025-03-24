@@ -638,6 +638,41 @@ export type SitemapDataResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string | null;
 }>;
+// Variable: fetchHeaderQuery
+// Query: *[_type == "header"][0]{    _id,    lefttext,    name,    workTitle,    projectCloseText  }
+export type FetchHeaderQueryResult = {
+  _id: string;
+  lefttext: string | null;
+  name: string | null;
+  workTitle: string | null;
+  projectCloseText: string | null;
+} | null;
+// Variable: fetchFooterQuery
+// Query: *[_type == "footer"][0]{    _id,    name,    rights,    location,    lefttext  }
+export type FetchFooterQueryResult = {
+  _id: string;
+  name: string | null;
+  rights: string | null;
+  location: string | null;
+  lefttext: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -651,5 +686,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
     "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
+    "\n  *[_type == \"header\"][0]{\n    _id,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
   }
 }
