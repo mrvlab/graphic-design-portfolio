@@ -86,7 +86,7 @@ export const page = defineType({
         : 'No edits yet';
 
       return {
-        title: title || 'Untitled',
+        title: title || 'Page',
         subtitle: `Last edited: ${formattedDate}`,
       };
     },

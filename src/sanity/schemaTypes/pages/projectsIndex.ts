@@ -10,6 +10,7 @@ export const projectsIndex = defineType({
     defineField({
       name: 'projects',
       title: 'Projects',
+      description: 'Select the projects to display on the index page.',
       type: 'array',
       of: [
         defineField({
@@ -19,8 +20,6 @@ export const projectsIndex = defineType({
           to: [{ type: 'projects' }],
         }),
       ],
-      validation: (Rule) =>
-        Rule.max(12).error('You can only select up to 12 projects.'),
     }),
   ],
   preview: {
@@ -39,7 +38,7 @@ export const projectsIndex = defineType({
         : 'No edits yet';
 
       return {
-        title: title || 'Home Page',
+        title: title || 'Projects Index',
         subtitle: `Last edited: ${formattedDate}`,
         media: mediaGallery || DocumentsIcon,
       };

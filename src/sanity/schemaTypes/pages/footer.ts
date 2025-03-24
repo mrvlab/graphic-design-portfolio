@@ -8,20 +8,59 @@ export const footer = defineType({
   icon: DoubleChevronDownIcon,
   fields: [
     defineField({
-      name: 'title',
-      description: 'Title for footer',
-      title: 'Title',
+      name: 'lefttext',
+      description: 'Left text for header',
+      title: 'Left Text',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' }, // Only paragraph
+          ],
+          lists: [], // Disable bullet/numbered lists
+          marks: {
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'name',
+      title: 'Name',
       type: 'string',
-      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'rights',
+      title: 'Rights',
+      type: 'string',
+    }),
+    defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
     }),
   ],
+
   preview: {
     select: {
       title: 'title',
       updatedAt: '_updatedAt',
-      mediaGallery: 'imageList.0.mediaItems.0.image',
     },
-    prepare({ title, mediaGallery, updatedAt }) {
+    prepare({ title, updatedAt }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -31,9 +70,9 @@ export const footer = defineType({
         : 'No edits yet';
 
       return {
-        title: title || 'Home Page',
+        title: title || 'Footer',
         subtitle: `Last edited: ${formattedDate}`,
-        media: mediaGallery || DoubleChevronDownIcon,
+        media: DoubleChevronDownIcon,
       };
     },
   },

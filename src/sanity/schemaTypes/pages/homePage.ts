@@ -11,6 +11,7 @@ export const homePage = defineType({
     defineField({
       name: 'projects',
       title: 'Projects',
+      description: 'Select up to 12 projects to display on the home page.',
       type: 'array',
       of: [
         defineField({

@@ -417,16 +417,48 @@ export type HomePage = {
   }>;
 };
 
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: string;
+  name?: string;
+  workTitle?: string;
+  projectCloseText?: string;
+};
+
 export type Footer = {
   _id: string;
   _type: "footer";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  lefttext?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  name?: string;
+  rights?: string;
+  location?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Footer;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Header | Footer;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery

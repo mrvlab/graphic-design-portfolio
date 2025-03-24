@@ -1,4 +1,3 @@
-import { client } from '@/sanity/lib/client';
 import { navigationQuery, settingsQuery } from '@/sanity/lib/queries';
 import { getCurrentYear } from '@/utils/getCurrentYear';
 import React from 'react';
