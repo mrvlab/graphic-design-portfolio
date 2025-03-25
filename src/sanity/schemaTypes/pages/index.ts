@@ -1,5 +1,4 @@
-export { header } from './header';
 export { homePage } from './homePage';
-export { page } from './page';
 export { projectsIndex } from './projectsIndex';
-export { footer } from './footer';
+export { aboutPage } from './aboutPage';
+export { contactPage } from './contactPage';

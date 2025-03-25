@@ -1,5 +1,5 @@
 import { StackCompactIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import { defineType, defineField } from 'sanity';
 
 export const softwareTools = defineType({
   name: 'softwareTools',
@@ -17,10 +17,17 @@ export const softwareTools = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      richText: 'richText',
       updatedAt: '_updatedAt',
     },
-    prepare({ title, updatedAt }) {
+    prepare({ richText, updatedAt }) {
+      // Try to grab the first block's plain text
+      const firstBlock = richText?.[0];
+      const firstText =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        firstBlock?.children?.map((child: any) => child.text).join('') ||
+        'Untitled';
+
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -30,7 +37,7 @@ export const softwareTools = defineType({
         : 'No edits yet';
 
       return {
-        title: title || 'Untitled',
+        title: firstText,
         subtitle: `Last edited: ${formattedDate}`,
       };
     },

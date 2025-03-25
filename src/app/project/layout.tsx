@@ -32,7 +32,7 @@ export default async function RootLayout({
         />
       </head>
       <body className='flex flex-col h-dvh pt-4 pb-2 lg:pt-3'>
-        <Navigation />
+        <Navigation hideSideSections />
         {/* Main content */}
         <main className='flex flex-col flex-1'>{children}</main>
 

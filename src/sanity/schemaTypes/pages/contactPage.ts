@@ -1,24 +1,24 @@
+import { TranslateIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
-import { DocumentsIcon } from '@sanity/icons';
 
-export const projectsIndex = defineType({
-  name: 'projectsIndex',
-  title: 'Projects Index',
+export const contactPage = defineType({
+  name: 'contactPage',
+  title: 'Contact Page',
   type: 'document',
-  icon: DocumentsIcon,
+  icon: TranslateIcon,
   fields: [
     defineField({
-      name: 'projects',
-      title: 'Projects',
-      description: 'Select the projects to display on the index page.',
+      name: 'richText',
+      title: 'Rich Text',
       type: 'array',
       of: [
-        defineField({
-          name: 'project',
-          title: 'Project',
-          type: 'reference',
-          to: [{ type: 'projects' }],
-        }),
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'Heading', value: 'h2' },
+          ],
+        },
       ],
     }),
     defineField({
@@ -59,10 +59,9 @@ export const projectsIndex = defineType({
   preview: {
     select: {
       title: 'title',
-      mediaGallery: 'imageList.0.mediaItems.0.image',
       updatedAt: '_updatedAt',
     },
-    prepare({ title, mediaGallery, updatedAt }) {
+    prepare({ title, updatedAt }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -72,9 +71,9 @@ export const projectsIndex = defineType({
         : 'No edits yet';
 
       return {
-        title: title || 'Projects Index',
+        title: title || 'Contact Page',
         subtitle: `Last edited: ${formattedDate}`,
-        media: mediaGallery || DocumentsIcon,
+        media: TranslateIcon,
       };
     },
   },

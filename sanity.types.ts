@@ -68,6 +68,88 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Settings = {
+  _id: string;
+  _type: "settings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    metadataBase?: string;
+    _type: "image";
+  };
+  enterSiteText?: string;
+};
+
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: string;
+  name?: string;
+  workTitle?: string;
+  projectCloseText?: string;
+};
+
+export type Footer = {
+  _id: string;
+  _type: "footer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  name?: string;
+  rights?: string;
+  location?: string;
+};
+
 export type MediaGallery = {
   _type: "mediaGallery";
   mediaItems?: Array<{
@@ -83,19 +165,6 @@ export type MediaGallery = {
     _type: "image";
     _key: string;
   }>;
-};
-
-export type Link = {
-  _type: "link";
-  linkType?: "href" | "page";
-  href?: string;
-  page?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "page";
-  };
-  openInNewTab?: boolean;
 };
 
 export type Studies = {
@@ -143,47 +212,6 @@ export type Skills = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-};
-
-export type Settings = {
-  _id: string;
-  _type: "settings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  ogImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    metadataBase?: string;
-    _type: "image";
-  };
-  enterSiteText?: string;
 };
 
 export type Publications = {
@@ -240,6 +268,12 @@ export type Navigation = {
   slug?: Slug;
 };
 
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
 export type Languages = {
   _id: string;
   _type: "languages";
@@ -293,6 +327,190 @@ export type BlockContent = Array<{
   _type: "image";
   _key: string;
 }>;
+
+export type ProjectsIndex = {
+  _id: string;
+  _type: "projectsIndex";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  projects?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "projects";
+  }>;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    metadataBase?: string;
+    _type: "image";
+  };
+};
+
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  projects?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "projects";
+  }>;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    metadataBase?: string;
+    _type: "image";
+  };
+};
+
+export type ContactPage = {
+  _id: string;
+  _type: "contactPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  richText?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    metadataBase?: string;
+    _type: "image";
+  };
+};
+
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  languages?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "languages";
+  }>;
+  experiences?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "experiences";
+  }>;
+  studies?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "studies";
+  }>;
+  publications?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "publications";
+  }>;
+  images?: Array<{
+    _key: string;
+  } & MediaGallery>;
+  bodyTextSections?: Array<{
+    title?: string;
+    content?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h2";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "richTextSection";
+    _key: string;
+  }>;
+  skills?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "skills";
+  }>;
+  softwareTools?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "softwareTools";
+  }>;
+  ogImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    metadataBase?: string;
+    _type: "image";
+  };
+};
 
 export type SanityImageCrop = {
   _type: "sanity.imageCrop";
@@ -351,114 +569,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type ProjectsIndex = {
-  _id: string;
-  _type: "projectsIndex";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  projects?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "projects";
-  }>;
-};
-
-export type Page = {
-  _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  title?: string;
-  subheading?: string;
-  richText?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
-export type HomePage = {
-  _id: string;
-  _type: "homePage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  projects?: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "projects";
-  }>;
-};
-
-export type Header = {
-  _id: string;
-  _type: "header";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  lefttext?: string;
-  name?: string;
-  workTitle?: string;
-  projectCloseText?: string;
-};
-
-export type Footer = {
-  _id: string;
-  _type: "footer";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  lefttext?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  name?: string;
-  rights?: string;
-  location?: string;
-};
-
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Header | Footer;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Settings | Header | Footer | MediaGallery | Studies | SoftwareTools | Skills | Publications | Projects | Navigation | Slug | Languages | Experiences | BlockContent | ProjectsIndex | HomePage | ContactPage | AboutPage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -511,133 +622,6 @@ export type NavigationQueryResult = Array<{
   slug: string | null;
   _updatedAt: string;
 }>;
-// Variable: getPageQuery
-// Query: *[_type == "page" && defined(slug.current)][0...12]{    _id,    name,    title,    subheading,    "slug": slug.current,    richText}
-export type GetPageQueryResult = Array<{
-  _id: string;
-  name: string | null;
-  title: string | null;
-  subheading: string | null;
-  slug: string | null;
-  richText: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-}>;
-// Variable: PAGE_QUERY
-// Query: *[_type == "page" && slug.current == $slug][0]{    title,    name,    subheading,    richText,    mainImage  }
-export type PAGE_QUERYResult = {
-  title: string | null;
-  name: string | null;
-  subheading: string | null;
-  richText: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  mainImage: null;
-} | null;
-// Variable: projectsQuery
-// Query: *[_type == "projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon}
-export type ProjectsQueryResult = Array<{
-  _id: string;
-  name: string | null;
-  slug: string | null;
-  title: string | null;
-  year: string | null;
-  richText: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  images: Array<{
-    _key: string;
-  } & MediaGallery> | null;
-  comingSoon: boolean | null;
-}>;
-// Variable: singleProjectQuery
-// Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon  }
-export type SingleProjectQueryResult = {
-  _id: string;
-  name: string | null;
-  slug: string | null;
-  title: string | null;
-  year: string | null;
-  richText: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
-  images: Array<{
-    _key: string;
-  } & MediaGallery> | null;
-  comingSoon: boolean | null;
-} | null;
-// Variable: sitemapData
-// Query: *[_type == "page" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
-export type SitemapDataResult = Array<{
-  slug: string | null;
-  _type: "page";
-  _updatedAt: string;
-}>;
-// Variable: pagesSlugs
-// Query: *[_type == "page" && defined(slug.current)]  {"slug": slug.current}
-export type PagesSlugsResult = Array<{
-  slug: string | null;
-}>;
 // Variable: fetchHeaderQuery
 // Query: *[_type == "header"][0]{    _id,    lefttext,    name,    workTitle,    projectCloseText  }
 export type FetchHeaderQueryResult = {
@@ -646,32 +630,6 @@ export type FetchHeaderQueryResult = {
   name: string | null;
   workTitle: string | null;
   projectCloseText: string | null;
-} | null;
-// Variable: fetchFooterQuery
-// Query: *[_type == "footer"][0]{    _id,    name,    rights,    location,    lefttext  }
-export type FetchFooterQueryResult = {
-  _id: string;
-  name: string | null;
-  rights: string | null;
-  location: string | null;
-  lefttext: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
 } | null;
 // Variable: fetchHomePageQuery
 // Query: *[_type == "homePage"][0]{    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon    }  }
@@ -739,6 +697,193 @@ export type FetchProjectsIndexQueryResult = {
     comingSoon: boolean | null;
   }> | null;
 } | null;
+// Variable: singleProjectQuery
+// Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon  }
+export type SingleProjectQueryResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  year: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    _key: string;
+  } & MediaGallery> | null;
+  comingSoon: boolean | null;
+} | null;
+// Variable: fetchAboutQuery
+// Query: *[_type == "aboutPage"][0]{  _id,  languages[]->{    _id,    title  },  experiences[]->{    _id,    title,    company,    startDate,    endDate  },  studies[]->{    _id,    title,    institution  },  publications[]->{    _id,    title,    url  },  images[]{    ogImage{      asset->{        _id,        url      },      alt,      metadataBase    }  },  bodyTextSections[]{    title,    content  },  skills[]->{    _id,    title,    level  },  softwareTools[]->{    _id,    title,    category  },  ogImage{    asset->{      _id,      url    },    alt,    metadataBase  }}
+export type FetchAboutQueryResult = {
+  _id: string;
+  languages: Array<{
+    _id: string;
+    title: null;
+  }> | null;
+  experiences: Array<{
+    _id: string;
+    title: string | null;
+    company: null;
+    startDate: string | null;
+    endDate: string | null;
+  }> | null;
+  studies: Array<{
+    _id: string;
+    title: null;
+    institution: string | null;
+  }> | null;
+  publications: Array<{
+    _id: string;
+    title: string | null;
+    url: null;
+  }> | null;
+  images: Array<{
+    ogImage: null;
+  }> | null;
+  bodyTextSections: Array<{
+    title: string | null;
+    content: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+  }> | null;
+  skills: Array<{
+    _id: string;
+    title: string | null;
+    level: null;
+  }> | null;
+  softwareTools: Array<{
+    _id: string;
+    title: null;
+    category: null;
+  }> | null;
+  ogImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+    metadataBase: string | null;
+  } | null;
+} | null;
+// Variable: fetchContactQuery
+// Query: *[_type == "contactPage"][0]{  _id,  richText,  ogImage{    asset->{      _id,      url    },    alt,    metadataBase  }}
+export type FetchContactQueryResult = {
+  _id: string;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  ogImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+    } | null;
+    alt: string | null;
+    metadataBase: string | null;
+  } | null;
+} | null;
+// Variable: fetchFooterQuery
+// Query: *[_type == "footer"][0]{    _id,    name,    rights,    location,    lefttext  }
+export type FetchFooterQueryResult = {
+  _id: string;
+  name: string | null;
+  rights: string | null;
+  location: string | null;
+  lefttext: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: projectsQuery
+// Query: *[_type == "projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon}
+export type ProjectsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  year: string | null;
+  richText: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "h2" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  images: Array<{
+    _key: string;
+  } & MediaGallery> | null;
+  comingSoon: boolean | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -746,15 +891,13 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"settings\"][0]": SettingsQueryResult;
     "\n  *[_type == \"navigation\"] | order(_updatedAt desc)[0...12]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    _updatedAt\n  }\n": NavigationQueryResult;
-    "\n  *[_type == \"page\" && defined(slug.current)][0...12]{\n    _id,\n    name,\n    title,\n    subheading,\n    \"slug\": slug.current,\n    richText\n}\n": GetPageQueryResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    title,\n    name,\n    subheading,\n    richText,\n    mainImage\n  }\n": PAGE_QUERYResult;
-    "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n}\n": ProjectsQueryResult;
-    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
-    "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
-    "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
     "\n  *[_type == \"header\"][0]{\n    _id,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
-    "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
     "\n  *[_type == \"homePage\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchHomePageQueryResult;
     "\n  *[_type == \"projectsIndex\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchProjectsIndexQueryResult;
+    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
+    "\n  *[_type == \"aboutPage\"][0]{\n  _id,\n  languages[]->{\n    _id,\n    title\n  },\n  experiences[]->{\n    _id,\n    title,\n    company,\n    startDate,\n    endDate\n  },\n  studies[]->{\n    _id,\n    title,\n    institution\n  },\n  publications[]->{\n    _id,\n    title,\n    url\n  },\n  images[]{\n    ogImage{\n      asset->{\n        _id,\n        url\n      },\n      alt,\n      metadataBase\n    }\n  },\n  bodyTextSections[]{\n    title,\n    content\n  },\n  skills[]->{\n    _id,\n    title,\n    level\n  },\n  softwareTools[]->{\n    _id,\n    title,\n    category\n  },\n  ogImage{\n    asset->{\n      _id,\n      url\n    },\n    alt,\n    metadataBase\n  }\n}\n": FetchAboutQueryResult;
+    "\n  *[_type == \"contactPage\"][0]{\n  _id,\n  richText,\n  ogImage{\n    asset->{\n      _id,\n      url\n    },\n    alt,\n    metadataBase\n  }\n}\n": FetchContactQueryResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
+    "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n}\n": ProjectsQueryResult;
   }
 }
