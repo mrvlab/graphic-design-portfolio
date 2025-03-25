@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 type ICityClock = {
-  location: string | null;
+  location: string | null | undefined;
 };
 
 const formatTime = () => {

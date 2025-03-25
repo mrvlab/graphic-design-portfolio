@@ -11,22 +11,18 @@ const Footer = async () => {
     query: fetchFooterQuery,
   });
 
-  if (!footer) {
-    return console.log('footer not found');
-  }
-  const { lefttext, location, name, rights } = footer;
   return (
     <footer className='flex flex-col items-center lg:flex-row lg:px-2 lg:justify-between'>
       <div className='hidden lg:flex lg:pt-3 lg:pb-1'>
-        {lefttext && <PortableText value={lefttext} />}
+        {footer?.lefttext && <PortableText value={footer?.lefttext} />}
       </div>
       <div className='lg:order-last'>
-        <CityClock location={location} />
+        <CityClock location={footer?.location} />
       </div>
       <div className='lg:flex lg:gap-[3px]'>
         &copy; {getCurrentYear()}
-        <span className='hidden lg:flex lg:justify-center'>{name}</span>
-        {rights}
+        <span className='hidden lg:flex lg:justify-center'>{footer?.name}</span>
+        {footer?.rights}
       </div>
     </footer>
   );

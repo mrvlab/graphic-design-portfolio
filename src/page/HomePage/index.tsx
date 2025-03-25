@@ -2,6 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
+import Link from 'next/link';
 
 const index = async () => {
   const { data: home }: { data: FetchHomePageQueryResult } = await sanityFetch({
@@ -20,7 +21,7 @@ const index = async () => {
     <div className='container max-w-4xl mx-auto my-20 px-4'>
       <div className='border-b pb-8 mb-12'>
         <h1 className='text-5xl font-bold text-gray-900'>
-          Home Page list of 12 projscts
+          Home Page list of 12 projects
         </h1>
       </div>
 
@@ -28,9 +29,11 @@ const index = async () => {
         {home.projects &&
           home.projects.map((project) => (
             <div key={project._id} className='flex flex-col gap-4 mb-8'>
-              <h2 className='text-3xl font-bold text-gray-900'>
-                {project.title}
-              </h2>
+              <Link href={`/project/${project.slug}`}>
+                <h2 className='text-3xl font-bold text-gray-900'>
+                  {project.title}
+                </h2>
+              </Link>
               <p className='flex gap-1.5 items-center text-xl  text-gray-600'>
                 Project status:{' '}
                 {project.comingSoon ? (
