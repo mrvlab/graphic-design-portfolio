@@ -2,13 +2,13 @@
 
 import ComingSoonText from '@/components/ComingSoonText/ComingSoonText';
 import Link from 'next/link';
-import { SettingsQueryResult } from '../../sanity.types';
+import { SettingsQueryResult } from '../../../sanity.types';
 
 type EnterPageProps = {
   settings: SettingsQueryResult;
 };
 
-export default function EnterPage({ settings }: EnterPageProps) {
+export default function index({ settings }: EnterPageProps) {
   const enterSiteText = settings?.enterSiteText;
   return (
     <>

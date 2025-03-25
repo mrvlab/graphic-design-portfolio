@@ -417,16 +417,48 @@ export type HomePage = {
   }>;
 };
 
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: string;
+  name?: string;
+  workTitle?: string;
+  projectCloseText?: string;
+};
+
 export type Footer = {
   _id: string;
   _type: "footer";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  lefttext?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  name?: string;
+  rights?: string;
+  location?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Footer;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | MediaGallery | Link | Studies | SoftwareTools | Skills | Settings | Publications | Projects | Navigation | Languages | Experiences | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ProjectsIndex | Page | Slug | HomePage | Header | Footer;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -606,6 +638,107 @@ export type SitemapDataResult = Array<{
 export type PagesSlugsResult = Array<{
   slug: string | null;
 }>;
+// Variable: fetchHeaderQuery
+// Query: *[_type == "header"][0]{    _id,    lefttext,    name,    workTitle,    projectCloseText  }
+export type FetchHeaderQueryResult = {
+  _id: string;
+  lefttext: string | null;
+  name: string | null;
+  workTitle: string | null;
+  projectCloseText: string | null;
+} | null;
+// Variable: fetchFooterQuery
+// Query: *[_type == "footer"][0]{    _id,    name,    rights,    location,    lefttext  }
+export type FetchFooterQueryResult = {
+  _id: string;
+  name: string | null;
+  rights: string | null;
+  location: string | null;
+  lefttext: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+} | null;
+// Variable: fetchHomePageQuery
+// Query: *[_type == "homePage"][0]{    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon    }  }
+export type FetchHomePageQueryResult = {
+  projects: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    year: string | null;
+    richText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    images: Array<{
+      _key: string;
+    } & MediaGallery> | null;
+    comingSoon: boolean | null;
+  }> | null;
+} | null;
+// Variable: fetchProjectsIndexQuery
+// Query: *[_type == "projectsIndex"][0]{    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    images,    comingSoon    }  }
+export type FetchProjectsIndexQueryResult = {
+  projects: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    year: string | null;
+    richText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h2" | "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    images: Array<{
+      _key: string;
+    } & MediaGallery> | null;
+    comingSoon: boolean | null;
+  }> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -619,5 +752,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n  }\n": SingleProjectQueryResult;
     "\n  *[_type == \"page\" && defined(slug.current)] | order(_type asc) {\n    \"slug\": slug.current,\n    _type,\n    _updatedAt,\n  }\n": SitemapDataResult;
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
+    "\n  *[_type == \"header\"][0]{\n    _id,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
+    "\n  *[_type == \"homePage\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchHomePageQueryResult;
+    "\n  *[_type == \"projectsIndex\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images,\n    comingSoon\n    }\n  }\n": FetchProjectsIndexQueryResult;
   }
 }

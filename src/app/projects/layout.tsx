@@ -37,8 +37,7 @@ export default async function RootLayout({
         <main className='flex flex-col flex-1'>{children}</main>
 
         {/* Footer */}
-        <Footer />
-
+        {await Footer()}
         {/* Other global utilities */}
         <SanityLive />
         {isDraft && (

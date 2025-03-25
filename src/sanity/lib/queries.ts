@@ -68,3 +68,51 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `);
+
+export const fetchHeaderQuery = defineQuery(`
+  *[_type == "header"][0]{
+    _id,
+    lefttext,
+    name,
+    workTitle,
+    projectCloseText
+  }
+`);
+
+export const fetchFooterQuery = defineQuery(`
+  *[_type == "footer"][0]{
+    _id,
+    name,
+    rights,
+    location,
+    lefttext
+  }
+`);
+export const fetchHomePageQuery = defineQuery(`
+  *[_type == "homePage"][0]{
+    projects[]->{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    images,
+    comingSoon
+    }
+  }
+`);
+export const fetchProjectsIndexQuery = defineQuery(`
+  *[_type == "projectsIndex"][0]{
+    projects[]->{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    images,
+    comingSoon
+    }
+  }
+`);

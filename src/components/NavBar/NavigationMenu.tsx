@@ -1,20 +1,26 @@
-import { client } from '@/sanity/lib/client';
-import { navigationQuery, settingsQuery } from '@/sanity/lib/queries';
+import { fetchHeaderQuery, navigationQuery } from '@/sanity/lib/queries';
 import { getCurrentYear } from '@/utils/getCurrentYear';
 import React from 'react';
 import NavItems from './NavItems';
 import Link from 'next/link';
 import { sanityFetch } from '@/sanity/lib/live';
-import { SettingsQueryResult } from '../../../sanity.types';
-import { PortableText } from 'next-sanity';
+import {
+  FetchHeaderQueryResult,
+  NavigationQueryResult,
+} from '../../../sanity.types';
+
 type Props = {
   hideSideSections?: boolean;
 };
 
 const NavigationMenu = async ({ hideSideSections = false }: Props) => {
-  const navItems = await client.fetch(navigationQuery);
-  const { data: settings }: { data: SettingsQueryResult } = await sanityFetch({
-    query: settingsQuery,
+  const { data: navItems }: { data: NavigationQueryResult } = await sanityFetch(
+    {
+      query: navigationQuery,
+    }
+  );
+  const { data: header }: { data: FetchHeaderQueryResult } = await sanityFetch({
+    query: fetchHeaderQuery,
   });
 
   return (
@@ -23,18 +29,14 @@ const NavigationMenu = async ({ hideSideSections = false }: Props) => {
       {!hideSideSections && (
         <div className='hidden lg:flex lg:flex-col lg:flex-1'>
           <span>&copy; {getCurrentYear()}</span>
-          <span>Creative Services</span>
+          <span>{header?.lefttext}</span>
         </div>
       )}
 
       {/* CENTER SECTION */}
       <Link href='/home' className='flex flex-col items-center flex-2'>
-        <h1>{settings?.title}</h1>
-        {settings?.description && (
-          <div>
-            <PortableText value={settings.description} />
-          </div>
-        )}
+        <h1>{header?.name}</h1>
+        <h1>{header?.workTitle}</h1>
       </Link>
 
       {/* RIGHT SECTION */}

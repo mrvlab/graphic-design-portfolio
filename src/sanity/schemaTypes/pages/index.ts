@@ -1,3 +1,4 @@
+export { header } from './header';
 export { homePage } from './homePage';
 export { page } from './page';
 export { projectsIndex } from './projectsIndex';

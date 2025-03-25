@@ -17,12 +17,5 @@ export const client = createClient({
   ignoreBrowserTokenWarning: isPreviewMode,
   stega: {
     studioUrl,
-    filter: (props) => {
-      // Only expose title field for preview overlays
-      if (props.sourcePath.at(-1) === 'title') {
-        return true;
-      }
-      return props.filterDefault(props);
-    },
   },
 });

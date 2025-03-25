@@ -3,6 +3,7 @@ import { client } from '@/sanity/lib/client';
 import { projectsQuery, singleProjectQuery } from '@/sanity/lib/queries';
 import { PortableText, QueryParams } from 'next-sanity';
 import { sanityFetch } from '@/sanity/lib/live';
+import { SingleProjectQueryResult } from '../../../../sanity.types';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -17,10 +18,11 @@ export default async function Page({
 }: {
   params: Promise<QueryParams>;
 }) {
-  const { data: project } = await sanityFetch({
-    query: singleProjectQuery,
-    params: await params,
-  });
+  const { data: project }: { data: SingleProjectQueryResult } =
+    await sanityFetch({
+      query: singleProjectQuery,
+      params: await params,
+    });
 
   if (!project) {
     return (
