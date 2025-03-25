@@ -24,6 +24,40 @@ export const homePage = defineType({
       validation: (Rule) =>
         Rule.max(12).error('You can only select up to 12 projects.'),
     }),
+    defineField({
+      name: 'ogImage',
+      title: 'Open Graph Image',
+      type: 'image',
+      description: 'Displayed on social cards and search engine results.',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative text',
+          description: 'Important for accessibility and SEO.',
+          type: 'string',
+          validation: (Rule) =>
+            Rule.custom((alt, context) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const hasImage = !!(context.document?.ogImage as any)?.asset
+                ?._ref;
+              if (hasImage && !alt) {
+                return 'Alternative text is required when an image is uploaded.';
+              }
+              return true;
+            }),
+        }),
+        defineField({
+          name: 'metadataBase',
+          title: 'Metadata Base URL',
+          type: 'url',
+          description:
+            'Used with Next.js generateMetadata(). Example: https://yourdomain.com',
+        }),
+      ],
+    }),
   ],
   preview: {
     select: {

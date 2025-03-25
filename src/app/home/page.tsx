@@ -1,10 +1,10 @@
 import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHomePageQuery } from '@/sanity/lib/queries';
+import Link from 'next/link';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
-import Link from 'next/link';
 
-const index = async () => {
+const page = async () => {
   const { data: home }: { data: FetchHomePageQueryResult } = await sanityFetch({
     query: fetchHomePageQuery,
   });
@@ -49,4 +49,4 @@ const index = async () => {
   );
 };
 
-export default index;
+export default page;

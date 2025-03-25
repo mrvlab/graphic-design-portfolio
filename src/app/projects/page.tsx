@@ -1,22 +1,24 @@
 // app/projects/page.tsx
 
 import { sanityFetch } from '@/sanity/lib/live';
-import { projectsQuery } from '@/sanity/lib/queries';
-import { ProjectsQueryResult } from '../../../sanity.types';
+import { fetchProjectsIndexQuery } from '@/sanity/lib/queries';
 import Link from 'next/link';
+import { FetchProjectsIndexQueryResult } from '../../../sanity.types';
 
 export default async function Page() {
-  const { data: projects }: { data: ProjectsQueryResult } = await sanityFetch({
-    query: projectsQuery,
+  const { data }: { data: FetchProjectsIndexQueryResult } = await sanityFetch({
+    query: fetchProjectsIndexQuery,
   });
 
-  if (!projects) {
+  if (!data) {
     return (
-      <div className='py-40 text-center text-3xl text-gray-500'>
-        404 – Projects not found
-      </div>
+      <div className='py-40 text-center text-3xl text-gray-500'>404 –</div>
     );
   }
+  if (!data.projects) {
+    return console.log('No projects found');
+  }
+  const { projects } = data;
 
   return (
     <div className='container max-w-4xl mx-auto my-20 px-4'>
