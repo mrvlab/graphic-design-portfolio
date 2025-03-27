@@ -29,7 +29,12 @@ export const fetchHomePageQuery = defineQuery(`
     title,
     year,
     richText,
-    images,
+    images {
+      mediaItems[] {
+        alt,
+        "url": asset->url
+      }
+    },
     comingSoon
     }
   }
@@ -43,7 +48,12 @@ export const fetchProjectsIndexQuery = defineQuery(`
     title,
     year,
     richText,
-    images,
+    images {
+      mediaItems[] {
+        alt,
+        "url": asset->url
+      }
+    },
     comingSoon
     }
   }
@@ -52,13 +62,47 @@ export const fetchProjectsIndexQuery = defineQuery(`
 export const singleProjectQuery = defineQuery(`
   *[_type == "projects" && slug.current == $slug][0]{
     _id,
-    name,
-    "slug": slug.current,
     title,
+    comingSoon,
+    "slug": slug.current,
     year,
     richText,
-    images,
-    comingSoon
+    images {
+      mediaItems[] {
+        alt,
+        "url": asset->url
+      }
+    },
+    sectionList[] {
+      _type == "section" => {
+        _type,
+        _key,
+        richText,
+        images {
+          mediaItems[] {
+            alt,
+            "url": asset->url
+          }
+        }
+      },
+      _type == "relatedProjects" => {
+        _type,
+        _key,
+        projects[]->{
+          _id,
+          title,
+          "slug": slug.current,
+          comingSoon,
+          year,
+          images {
+            mediaItems[] {
+              alt,
+              "url": asset->url
+            }
+          }
+        }
+      }
+    }
   }
 `);
 export const fetchAboutQuery = defineQuery(`

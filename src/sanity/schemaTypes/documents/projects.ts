@@ -1,31 +1,48 @@
-import { defineType, defineField } from 'sanity';
-import { DocumentsIcon, DocumentIcon } from '@sanity/icons';
+import {defineType, defineField} from 'sanity'
+import {DocumentsIcon, DocumentIcon} from '@sanity/icons'
 
 export const projects = defineType({
   name: 'projects',
   title: 'Projects',
   type: 'document',
   icon: DocumentsIcon,
+  fieldsets: [
+    {
+      name: 'projectInit',
+      title: 'Project Init',
+      options: {collapsible: true, collapsed: false},
+    },
+    {
+      name: 'projectPage',
+      title: 'Project Page',
+      options: {collapsible: true, collapsed: false},
+    },
+  ],
   fields: [
+     // ----- Project Init -----
     defineField({
-      name: 'name',
-      title: 'Name',
+      name: 'title',
+      title: 'Title',
       type: 'string',
+      fieldset: 'projectInit',
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'comingSoon',
+      title: 'Project Coming Soon',
+      type: 'boolean',
+      fieldset: 'projectInit',
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description: 'Required for published projects. Leave empty if project is marked as "coming soon". This slug will be used in the project URL.',
       options: {
-        source: 'name',
+        source: 'title',
         maxLength: 100,
       },
-    }),
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      fieldset: 'projectInit',
     }),
     defineField({
       name: 'richText',
@@ -35,51 +52,54 @@ export const projects = defineType({
         {
           type: 'block',
           styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'Heading', value: 'h2' },
+            {title: 'Normal', value: 'normal'},
           ],
         },
       ],
+      fieldset: 'projectInit',
     }),
     defineField({
       name: 'year',
       title: 'Year',
       type: 'date',
+      fieldset: 'projectInit',
     }),
     defineField({
       name: 'images',
       title: 'Images',
-      type: 'array',
-      of: [{ type: 'mediaGallery' }],
-      validation: (Rule) =>
-        Rule.max(2).error('You can only add up to 2 images.'),
+      type: 'mediaGallery',
+      fieldset: 'projectInit',
     }),
+    // ----- Project page -----
     defineField({
-      name: 'comingSoon',
-      title: 'Project Coming Soon',
-      type: 'boolean',
+      name: 'sectionList',
+      title: 'Section List',
+      type: 'array',
+      of: [{type: 'section'},{type: 'relatedProjects'}],
+      fieldset: 'projectPage',
     }),
   ],
   preview: {
     select: {
-      title: 'name',
+      title: 'title',
+      comingSoon: 'comingSoon',
       updatedAt: '_updatedAt',
-      mediaGallery: 'imageList.0.mediaItems.0.image',
+      firstMediaGallery: 'images.mediaItems.0.asset',
     },
-    prepare({ title, mediaGallery, updatedAt }) {
+    prepare({title, firstMediaGallery, comingSoon, updatedAt}) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet';
+        : 'No edits yet'
 
       return {
-        title: title || 'Home Page',
+        title: `${title || 'Home Page'} ${comingSoon ? '(Coming Soon)' : ''}`,
         subtitle: `Last edited: ${formattedDate}`,
-        media: mediaGallery || DocumentIcon,
-      };
+        media: firstMediaGallery || DocumentIcon,
+      }
     },
   },
-});
+})
