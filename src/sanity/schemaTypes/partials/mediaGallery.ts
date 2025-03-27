@@ -9,7 +9,7 @@ export const mediaGallery = defineType({
   icon: ImageIcon,
   fields: [
     defineField({
-      name: 'mediaItems', // <-- Now exists!
+      name: 'mediaItems',
       title: 'Media Items',
       type: 'array',
       of: [
@@ -29,4 +29,16 @@ export const mediaGallery = defineType({
       ],
     }),
   ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'mediaItems.0.image',
+    },
+    prepare({title, media}) {
+      return {
+        title: title || 'Media Gallery',
+        media: media || ImageIcon,
+      }
+    },
+  },
 });
