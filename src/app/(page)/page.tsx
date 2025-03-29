@@ -1,8 +1,20 @@
 import ComingSoonText from '@/components/ComingSoonText/ComingSoonText';
 import Link from 'next/link';
 import { SettingsQueryResult } from '../../../sanity.types';
-import { settingsQuery } from '@/sanity/lib/queries';
+import { fetchHomePageQuery, settingsQuery } from '@/sanity/lib/queries';
 import { sanityFetch } from '@/sanity/lib/live';
+import { generateSeoMetadata } from '@/utils/generateMetadata';
+
+export async function generateMetadata() {
+  const { data: page } = await sanityFetch({
+    query: fetchHomePageQuery,
+  });
+
+  return generateSeoMetadata({
+    slug: '',
+    page: page,
+  });
+}
 
 export default async function page() {
   const { data: settings }: { data: SettingsQueryResult } = await sanityFetch({

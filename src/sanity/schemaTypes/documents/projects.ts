@@ -1,5 +1,5 @@
-import {defineType, defineField} from 'sanity'
-import {DocumentsIcon, DocumentIcon} from '@sanity/icons'
+import { defineType, defineField } from 'sanity';
+import { DocumentsIcon, DocumentIcon } from '@sanity/icons';
 
 export const projects = defineType({
   name: 'projects',
@@ -10,16 +10,21 @@ export const projects = defineType({
     {
       name: 'projectInit',
       title: 'Project Init',
-      options: {collapsible: true, collapsed: false},
+      options: { collapsible: true, collapsed: false },
     },
     {
       name: 'projectPage',
       title: 'Project Page',
-      options: {collapsible: true, collapsed: false},
+      options: { collapsible: true, collapsed: false },
+    },
+    {
+      name: 'seo',
+      title: 'SEO Settings',
+      options: { collapsible: true, collapsed: true },
     },
   ],
   fields: [
-     // ----- Project Init -----
+    // ----- Project Init -----
     defineField({
       name: 'title',
       title: 'Title',
@@ -37,7 +42,8 @@ export const projects = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      description: 'Required for published projects. Leave empty if project is marked as "coming soon". This slug will be used in the project URL.',
+      description:
+        'Required for published projects. Leave empty if project is marked as "coming soon". This slug will be used in the project URL.',
       options: {
         source: 'title',
         maxLength: 100,
@@ -51,9 +57,7 @@ export const projects = defineType({
       of: [
         {
           type: 'block',
-          styles: [
-            {title: 'Normal', value: 'normal'},
-          ],
+          styles: [{ title: 'Normal', value: 'normal' }],
         },
       ],
       fieldset: 'projectInit',
@@ -75,8 +79,34 @@ export const projects = defineType({
       name: 'sectionList',
       title: 'Section List',
       type: 'array',
-      of: [{type: 'section'},{type: 'relatedProjects'}],
+      of: [{ type: 'section' }, { type: 'relatedProjects' }],
       fieldset: 'projectPage',
+    }),
+    // ----- SEO -----
+    defineField({
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'object',
+      description: 'Displayed on social cards and search engine results.',
+      fieldset: 'seo',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Meta Title',
+          type: 'string',
+        }),
+        defineField({
+          name: 'description',
+          title: 'Meta Description',
+          type: 'text',
+        }),
+        defineField({
+          name: 'image',
+          title: 'Social Share Image',
+          type: 'image',
+          options: { hotspot: true },
+        }),
+      ],
     }),
   ],
   preview: {
@@ -86,20 +116,20 @@ export const projects = defineType({
       updatedAt: '_updatedAt',
       firstMediaGallery: 'images.mediaItems.0.asset',
     },
-    prepare({title, firstMediaGallery, comingSoon, updatedAt}) {
+    prepare({ title, firstMediaGallery, comingSoon, updatedAt }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet'
+        : 'No edits yet';
 
       return {
         title: `${title || 'Home Page'} ${comingSoon ? '(Coming Soon)' : ''}`,
         subtitle: `Last edited: ${formattedDate}`,
         media: firstMediaGallery || DocumentIcon,
-      }
+      };
     },
   },
-})
+});

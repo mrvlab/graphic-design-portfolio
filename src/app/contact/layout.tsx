@@ -1,14 +1,11 @@
 import '../globals.css';
 import { Analytics } from '@vercel/analytics/next';
-import { generateMetadata } from '@/utils/generateMetadata';
 import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DraftMode/disableDraftMode';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-
-export { generateMetadata };
 
 export default async function RootLayout({
   children,

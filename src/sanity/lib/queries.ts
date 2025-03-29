@@ -1,6 +1,57 @@
 import { defineQuery } from 'next-sanity';
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`);
+export const fetchSeo = defineQuery(`
+*[_type == "homePage"][0]{
+  seo {
+  title,
+  description,
+  image {
+    asset->{
+      _id,
+      url,
+      metadata {
+        dimensions
+      }
+    }
+  }
+}
+}
+`);
+
+export const fetchSeoTitle = defineQuery(`
+  *[_type == "projects" && slug.current == $slug][0]{
+    title,
+    seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
+    }
+  }
+  }
+`);
+
+export const settingsQuery = defineQuery(`
+*[_type == "settings"][0]{
+  _id,
+  title,
+  description,
+  title,
+  description,
+  image {
+    asset->{
+      _id,
+      url,
+      metadata { dimensions }
+    }
+  },
+  enterSiteText
+}
+`);
 
 export const navigationQuery = defineQuery(`
   *[_type == "navigation"] | order(_updatedAt desc)[0...12]{
@@ -36,7 +87,18 @@ export const fetchHomePageQuery = defineQuery(`
       }
     },
     comingSoon
+    },
+    seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
     }
+  }
   }
 `);
 export const fetchProjectsIndexQuery = defineQuery(`
@@ -54,8 +116,19 @@ export const fetchProjectsIndexQuery = defineQuery(`
         "url": asset->url
       }
     },
-    comingSoon
+    comingSoon,
+    },
+    seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
     }
+  }
   }
 `);
 
@@ -102,7 +175,18 @@ export const singleProjectQuery = defineQuery(`
           }
         }
       }
+    },
+    seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
     }
+  }
   }
 `);
 export const fetchAboutQuery = defineQuery(`
@@ -153,13 +237,16 @@ export const fetchAboutQuery = defineQuery(`
     title,
     category
   },
-  ogImage{
-    asset->{
-      _id,
-      url
-    },
-    alt,
-    metadataBase
+  seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
+    }
   }
 }
 `);
@@ -167,13 +254,16 @@ export const fetchContactQuery = defineQuery(`
   *[_type == "contactPage"][0]{
   _id,
   richText,
-  ogImage{
-    asset->{
-      _id,
-      url
-    },
-    alt,
-    metadataBase
+  seo {
+    title,
+    description,
+    image {
+      asset->{
+        _id,
+        url,
+        metadata { dimensions }
+      }
+    }
   }
 }
 `);

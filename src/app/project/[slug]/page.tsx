@@ -1,6 +1,10 @@
 // app/project/[slug]/page.tsx
 import { client } from '@/sanity/lib/client';
-import { projectsQuery, singleProjectQuery } from '@/sanity/lib/queries';
+import {
+  projectsQuery,
+  settingsQuery,
+  singleProjectQuery,
+} from '@/sanity/lib/queries';
 import { PortableText, QueryParams } from 'next-sanity';
 import { sanityFetch } from '@/sanity/lib/live';
 import { SingleProjectQueryResult } from '../../../../sanity.types';
@@ -11,6 +15,34 @@ export async function generateStaticParams() {
   return projects.map((project) => ({
     slug: project?.slug,
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<QueryParams>;
+}) {
+  const { data: project } = await sanityFetch({
+    query: singleProjectQuery,
+    params: await params,
+  });
+  const { data: settings } = await sanityFetch({
+    query: settingsQuery,
+    params: await params,
+  });
+
+  return {
+    title: `${project?.seo?.title || project?.title} | ${settings?.title || 'Martina Quirici'}`,
+    description: project?.seo?.description || '',
+    openGraph: {
+      images: [
+        {
+          url:
+            project?.seo?.image?.asset?.url || 'https://your-default-image.png',
+        },
+      ],
+    },
+  };
 }
 
 export default async function Page({

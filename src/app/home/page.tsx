@@ -3,6 +3,18 @@ import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import Link from 'next/link';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
+import { generateSeoMetadata } from '@/utils/generateMetadata';
+
+export async function generateMetadata() {
+  const { data: page } = await sanityFetch({
+    query: fetchHomePageQuery,
+  });
+
+  return generateSeoMetadata({
+    slug: 'home',
+    page: page,
+  });
+}
 
 const page = async () => {
   const { data: home }: { data: FetchHomePageQueryResult } = await sanityFetch({
