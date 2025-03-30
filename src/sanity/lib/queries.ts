@@ -82,6 +82,7 @@ export const fetchHomePageQuery = defineQuery(`
     richText,
     images {
       mediaItems[] {
+        _id,
         alt,
         "url": asset->url
       }
@@ -112,6 +113,7 @@ export const fetchProjectsIndexQuery = defineQuery(`
     richText,
     images {
       mediaItems[] {
+        _id,
         alt,
         "url": asset->url
       }
@@ -142,6 +144,7 @@ export const singleProjectQuery = defineQuery(`
     richText,
     images {
       mediaItems[] {
+        _id,
         alt,
         "url": asset->url
       }
@@ -151,8 +154,10 @@ export const singleProjectQuery = defineQuery(`
         _type,
         _key,
         richText,
+        richTextBottom,
         images {
           mediaItems[] {
+            _id,
             alt,
             "url": asset->url
           }
@@ -169,6 +174,7 @@ export const singleProjectQuery = defineQuery(`
           year,
           images {
             mediaItems[] {
+              _id,
               alt,
               "url": asset->url
             }
