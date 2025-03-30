@@ -4,7 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
-import ProjectImages from './ProjectImages';
+import ProjectsImages from '@/components/ProjectsImages/ProjectsImages';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -49,7 +49,7 @@ const page = async () => {
                 </span>
               </h2>
             </div>
-            <ProjectImages
+            <ProjectsImages
               images={project.images?.mediaItems ?? []}
               projectId={project._id}
               currentIndex={indx}

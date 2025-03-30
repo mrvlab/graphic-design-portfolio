@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
-import { useVisibleProjectIds } from '@/components/useVisibleProjectIds';
+import { useVisibleProjectIds } from '@/components/ProjectsImages/useVisibleProjectIds';
 
 type MediaItem = NonNullable<
   NonNullable<
@@ -18,22 +18,47 @@ type Props = {
   currentIndex: number;
 };
 
-export default function ProjectImages({
+export default function ProjectsImages({
   images,
   projectId,
   currentIndex,
 }: Props) {
-  const visibleProjects = useVisibleProjectIds();
+  const { visibleProjects, isScrollingDown } = useVisibleProjectIds();
   const isVisible = visibleProjects.includes(currentIndex);
 
+  const containerVariants = {
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+        staggerDirection: isScrollingDown ? 1 : -1,
+      },
+    },
+    hidden: {},
+  };
+
+  const imageVariants = {
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+    hidden: {
+      opacity: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <div className='grid grid-cols-2 gap-2'>
+    <motion.div
+      className='grid grid-cols-2 gap-2'
+      variants={containerVariants}
+      initial='hidden'
+      animate={isVisible ? 'visible' : 'hidden'}
+    >
       {images?.slice(0, 2).map((image, idx) => (
         <motion.div
           key={`${projectId}-${idx}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isVisible ? 1 : 0 }}
-          transition={{ duration: 0.5 }}
+          variants={imageVariants}
+          className='w-full h-full'
         >
           <Image
             src={image.url ?? ''}
@@ -44,6 +69,6 @@ export default function ProjectImages({
           />
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

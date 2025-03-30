@@ -1,11 +1,20 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 
 export function useVisibleProjectIds() {
   const [visibleProjects, setVisibleProjects] = useState<number[]>([]);
+  const [isScrollingDown, setIsScrollingDown] = useState(true);
+  const prevScrollY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => {
       const scrollY = window.scrollY;
+
+      // Scroll direction detection
+      const goingDown = scrollY > prevScrollY.current;
+      setIsScrollingDown(goingDown);
+      prevScrollY.current = scrollY;
 
       const projects = Array.from(
         document.querySelectorAll('[id^="project-"]')
@@ -64,10 +73,10 @@ export function useVisibleProjectIds() {
       setVisibleProjects(clamped);
     };
 
-    onScroll(); // Initial run on mount
+    onScroll(); // Initial run
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  return visibleProjects;
+  return { visibleProjects, isScrollingDown };
 }
