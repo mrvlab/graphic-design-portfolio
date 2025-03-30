@@ -10,6 +10,8 @@
   --font-lausanne: var(--font-lausanne-250);
   --font-lausanne-italic: var(--font-lausanne-300-italic);
   --font-lausanne-medium: var(--font-lausanne-450);
+  --aspect-3/4: 3 / 4;
+  --aspect-16/9: 16 / 9;
 }
 
 body {

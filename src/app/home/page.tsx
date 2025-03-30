@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
+import ProjectImages from './ProjectImages';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -30,33 +31,31 @@ const page = async () => {
   }
 
   return (
-    <div className='container max-w-4xl mx-auto my-20 px-4'>
-      <div className='border-b pb-8 mb-12'>
-        <h1 className='text-5xl font-bold text-gray-900'>
-          Home Page list of 12 projects
-        </h1>
-      </div>
-
-      <div>
-        {home.projects &&
-          home.projects.map((project) => (
-            <div key={project._id} className='flex flex-col gap-4 mb-8'>
-              <Link href={`/project/${project.slug}`}>
-                <h2 className='text-3xl font-bold text-gray-900'>
-                  {project.title}
-                </h2>
-              </Link>
-              <p className='flex gap-1.5 items-center text-xl  text-gray-600'>
-                Project status:{' '}
-                {project.comingSoon ? (
-                  <span className='text-red-500'> Coming soon</span>
-                ) : (
-                  <span className='text-green-500'> Available</span>
-                )}
-              </p>
+    <div className='grid grid-cols-2 gap-x-1 gap-y-12 px-1 pt-[140px]'>
+      {home.projects &&
+        home.projects.map((project, indx) => (
+          <Link
+            href={`/project/${project.slug}`}
+            key={project._id}
+            className='flex flex-col gap-4'
+            id={`project-${indx + 1}`}
+          >
+            <div>
+              <h2 className='flex flex-col'>
+                <span>({(indx + 1).toString().padStart(2, '0')})</span>
+                <span>{project.title}</span>
+                <span>
+                  {project.year ? new Date(project.year).getFullYear() : ''}
+                </span>
+              </h2>
             </div>
-          ))}
-      </div>
+            <ProjectImages
+              images={project.images?.mediaItems ?? []}
+              projectId={project._id}
+              currentIndex={indx}
+            />
+          </Link>
+        ))}
     </div>
   );
 };
