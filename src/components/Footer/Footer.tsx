@@ -12,7 +12,7 @@ const Footer = async () => {
   });
 
   return (
-    <footer className='flex flex-col items-center lg:flex-row lg:px-2 lg:justify-between'>
+    <footer className='flex flex-col items-center py-4 lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between backdrop-blur-md'>
       <div className='hidden lg:flex lg:pt-3 lg:pb-1'>
         {footer?.lefttext && <PortableText value={footer?.lefttext} />}
       </div>

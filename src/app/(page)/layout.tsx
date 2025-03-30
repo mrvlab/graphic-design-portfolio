@@ -21,7 +21,9 @@ export default async function RootLayout({
       <body
         className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
       >
-        <Navigation hideSideSections />
+        <nav className='flex max-lg:flex-col items-center px-2 bg-white z-50 max-lg:py-2'>
+          <Navigation hideFirstSection hideThirdSection />
+        </nav>
         {/* Main content */}
         <main className='flex flex-col flex-1'>{children}</main>
 
