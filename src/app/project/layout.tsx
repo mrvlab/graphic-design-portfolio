@@ -1,15 +1,12 @@
 import '../globals.css';
 import { Analytics } from '@vercel/analytics/next';
-import { generateMetadata } from '@/utils/generateMetadata';
 import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DraftMode/disableDraftMode';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-
-export { generateMetadata };
-
+import { lausanne300 } from '@/fonts/Lausanne';
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -19,20 +16,12 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
-      <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Liter&display=swap'
-          rel='stylesheet'
-        />
-      </head>
-      <body className='flex flex-col h-dvh pt-4 pb-2 lg:pt-3'>
-        <Navigation hideSideSections />
+      <body
+        className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
+      >
+        <nav className='flex max-lg:flex-col items-center px-2 bg-white z-50 max-lg:py-2'>
+          <Navigation hideFirstSection hideThirdSection />
+        </nav>
         {/* Main content */}
         <main className='flex flex-col flex-1'>{children}</main>
 

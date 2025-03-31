@@ -2,7 +2,23 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import Link from 'next/link';
 import React from 'react';
-import { FetchHomePageQueryResult } from '../../../sanity.types';
+import {
+  FetchHomePageQueryResult,
+  ProjectsQueryResult,
+} from '../../../sanity.types';
+import { generateSeoMetadata } from '@/utils/generateMetadata';
+import ProjectsImages from '@/components/ProjectsImages/ProjectsImages';
+import HomeProjectsTitle from '@/components/HomeProjectsTitle/HomeProjectsTitle';
+export async function generateMetadata() {
+  const { data: page } = await sanityFetch({
+    query: fetchHomePageQuery,
+  });
+
+  return generateSeoMetadata({
+    slug: 'home',
+    page: page,
+  });
+}
 
 const page = async () => {
   const { data: home }: { data: FetchHomePageQueryResult } = await sanityFetch({
@@ -18,33 +34,28 @@ const page = async () => {
   }
 
   return (
-    <div className='container max-w-4xl mx-auto my-20 px-4'>
-      <div className='border-b pb-8 mb-12'>
-        <h1 className='text-5xl font-bold text-gray-900'>
-          Home Page list of 12 projects
-        </h1>
-      </div>
+    <div className='grid grid-cols-2 gap-x-1 gap-y-12 px-1 pt-[140px] lg:grid-cols-4 lg:pl-2 lg:pr-0 lg:pt-0 lg:my-auto lg:mr-auto lg:aspect-[21/7] lg:max-w-[94.5%] lg:w-full lg:gap-[140px]'>
+      {home.projects &&
+        home.projects.map((project, indx) => (
+          <Link
+            href={project.slug ? `/project/${project.slug}` : '/home'}
+            key={project._id}
+            className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+            id={`project-${indx + 1}`}
+          >
+            <HomeProjectsTitle
+              project={project as ProjectsQueryResult[number]}
+              index={indx}
+            />
 
-      <div>
-        {home.projects &&
-          home.projects.map((project) => (
-            <div key={project._id} className='flex flex-col gap-4 mb-8'>
-              <Link href={`/project/${project.slug}`}>
-                <h2 className='text-3xl font-bold text-gray-900'>
-                  {project.title}
-                </h2>
-              </Link>
-              <p className='flex gap-1.5 items-center text-xl  text-gray-600'>
-                Project status:{' '}
-                {project.comingSoon ? (
-                  <span className='text-red-500'> Coming soon</span>
-                ) : (
-                  <span className='text-green-500'> Available</span>
-                )}
-              </p>
-            </div>
-          ))}
-      </div>
+            <ProjectsImages
+              images={project.images?.mediaItems ?? []}
+              projectId={project._id}
+              currentIndex={indx}
+              comingSoon={project.comingSoon}
+            />
+          </Link>
+        ))}
     </div>
   );
 };

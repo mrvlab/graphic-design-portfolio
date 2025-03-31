@@ -1,23 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
-  
-
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-liter: 'Liter', 'sans-serif';
+  --font-lausanne: var(--font-lausanne-250);
+  --font-lausanne-italic: var(--font-lausanne-300-italic);
+  --font-lausanne-medium: var(--font-lausanne-450);
+  --aspect-3/4: 3 / 4;
+  --aspect-16/9: 16 / 9;
 }
-
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-liter);
   font-weight: 400;
   font-style: normal;
   font-size: 0.813rem;

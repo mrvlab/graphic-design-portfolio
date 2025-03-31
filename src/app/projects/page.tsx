@@ -4,6 +4,18 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchProjectsIndexQuery } from '@/sanity/lib/queries';
 import Link from 'next/link';
 import { FetchProjectsIndexQueryResult } from '../../../sanity.types';
+import { generateSeoMetadata } from '@/utils/generateMetadata';
+
+export async function generateMetadata() {
+  const { data: page } = await sanityFetch({
+    query: fetchProjectsIndexQuery,
+  });
+
+  return generateSeoMetadata({
+    slug: 'projects',
+    page: page,
+  });
+}
 
 export default async function Page() {
   const { data }: { data: FetchProjectsIndexQueryResult } = await sanityFetch({

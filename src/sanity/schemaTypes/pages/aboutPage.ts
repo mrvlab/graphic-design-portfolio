@@ -6,6 +6,13 @@ export const aboutPage = defineType({
   title: 'About Page',
   type: 'document',
   icon: TranslateIcon,
+  fieldsets: [
+    {
+      name: 'seo',
+      title: 'SEO Settings',
+      options: { collapsible: true, collapsed: true },
+    },
+  ],
   fields: [
     defineField({
       name: 'languages',
@@ -129,36 +136,26 @@ export const aboutPage = defineType({
       ],
     }),
     defineField({
-      name: 'ogImage',
-      title: 'Open Graph Image',
-      type: 'image',
+      name: 'seo',
+      title: 'SEO Settings',
+      type: 'object',
       description: 'Displayed on social cards and search engine results.',
-      options: {
-        hotspot: true,
-      },
+      fieldset: 'seo',
       fields: [
         defineField({
-          name: 'alt',
-          title: 'Alternative text',
-          description: 'Important for accessibility and SEO.',
+          name: 'title',
+          title: 'Meta Title',
           type: 'string',
-          validation: (Rule) =>
-            Rule.custom((alt, context) => {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const hasImage = !!(context.document?.ogImage as any)?.asset
-                ?._ref;
-              if (hasImage && !alt) {
-                return 'Alternative text is required when an image is uploaded.';
-              }
-              return true;
-            }),
         }),
         defineField({
-          name: 'metadataBase',
-          title: 'Metadata Base URL',
-          type: 'url',
-          description:
-            'Used with Next.js generateMetadata(). Example: https://yourdomain.com',
+          name: 'description',
+          title: 'Meta Description',
+          type: 'text',
+        }),
+        defineField({
+          name: 'image',
+          title: 'Social Share Image',
+          type: 'image',
         }),
       ],
     }),
