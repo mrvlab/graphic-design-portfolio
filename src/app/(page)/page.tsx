@@ -30,7 +30,7 @@ export default async function page() {
         >
           <ComingSoonText />
         </div>
-        <div className='flex flex-col flex-1 justify-center items-center z-10'>
+        <div className='flex flex-col justify-center items-center z-10'>
           <Link href='/home'>{enterSiteText || '( Coming Soon )'}</Link>
         </div>
       </div>
