@@ -7,6 +7,7 @@ import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import { lausanne300 } from '@/fonts/Lausanne';
+import Blur from '@/components/NavBar/Blur';
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -20,6 +21,7 @@ export default async function RootLayout({
         className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
       >
         <nav className='flex max-lg:flex-col items-center px-2 bg-white z-50 max-lg:py-2'>
+          <Blur />
           <Navigation hideFirstSection hideThirdSection />
         </nav>
         {/* Main content */}

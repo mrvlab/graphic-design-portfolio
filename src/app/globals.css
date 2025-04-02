@@ -12,6 +12,36 @@
   --font-lausanne-medium: var(--font-lausanne-450);
   --aspect-3/4: 3 / 4;
   --aspect-16/9: 16 / 9;
+
+  --blur-height: 280%;
+  --mask-layer-1: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  --mask-layer-2: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgba(255, 255, 255, 0) 62.5%
+  );
+  --mask-layer-3: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  --mask-layer-4: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgb(255, 255, 255) 75%,
+    rgba(255, 255, 255, 0) 87.5%
+  );
 }
 
 body {
@@ -22,4 +52,21 @@ body {
   font-size: 0.813rem;
   line-height: 1.2;
   @apply font-[0.813rem] leading-[120%] lg:text-xs lg:leading-[110%];
+}
+
+.blur-mask-layer-1 {
+  -webkit-mask: var(--mask-layer-1);
+  mask: var(--mask-layer-1);
+}
+.blur-mask-layer-2 {
+  -webkit-mask: var(--mask-layer-2);
+  mask: var(--mask-layer-2);
+}
+.blur-mask-layer-3 {
+  -webkit-mask: var(--mask-layer-3);
+  mask: var(--mask-layer-3);
+}
+.blur-mask-layer-4 {
+  -webkit-mask: var(--mask-layer-4);
+  mask: var(--mask-layer-4);
 }

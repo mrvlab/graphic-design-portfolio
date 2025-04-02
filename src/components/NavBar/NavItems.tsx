@@ -35,7 +35,7 @@ const NavItems = ({ navItems }: Props) => {
     return (
       <li
         key={item._id}
-        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit`}
+        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit z-10`}
         data-sanity-id={item._id}
         data-sanity-type='navigation'
       >
@@ -55,11 +55,11 @@ const NavItems = ({ navItems }: Props) => {
   };
 
   return (
-    <ul className='flex w-full items-center flex-1 lg:justify-end'>
+    <>
       {renderNavLink(first, 'left')}
       {middle.map((item) => renderNavLink(item, 'center'))}
       {renderNavLink(last, 'right')}
-    </ul>
+    </>
   );
 };
 
