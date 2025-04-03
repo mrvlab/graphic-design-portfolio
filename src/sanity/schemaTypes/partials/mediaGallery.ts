@@ -17,7 +17,7 @@ export const mediaGallery = defineType({
           name: 'image',
           title: 'Image',
           type: 'image',
-          options: { hotspot: true },
+          options: { hotspot: true, metadata: ['lqip'] },
           fields: [
             defineField({
               name: 'alt',
@@ -34,11 +34,11 @@ export const mediaGallery = defineType({
       title: 'title',
       media: 'mediaItems.0.image',
     },
-    prepare({title, media}) {
+    prepare({ title, media }) {
       return {
         title: title || 'Media Gallery',
         media: media || ImageIcon,
-      }
+      };
     },
   },
 });

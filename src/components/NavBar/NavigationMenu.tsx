@@ -63,10 +63,12 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <ul
-          className={`${isMobile} ${isDesktop} flex w-full items-center lg:justify-end sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
+          className={`${isMobile} ${isDesktop} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 `}
         >
           <BlurDown />
-          <NavItems navItems={navItems} />
+          <div className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
+            <NavItems navItems={navItems} />
+          </div>
         </ul>
       )}
     </>

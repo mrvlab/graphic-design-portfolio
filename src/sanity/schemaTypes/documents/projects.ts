@@ -104,7 +104,7 @@ export const projects = defineType({
           name: 'image',
           title: 'Social Share Image',
           type: 'image',
-          options: { hotspot: true },
+          options: { hotspot: true, metadata: ['lqip'] },
         }),
       ],
     }),

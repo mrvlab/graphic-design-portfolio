@@ -4,13 +4,17 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-type ImageItem = {
-  url: string | null;
-  alt: string | null;
-};
+import type { FetchHomePageQueryResult } from '../../../sanity.types';
+import { urlFor } from '@/sanity/lib/image';
 
-type IHoverFadeImages = {
-  images: ImageItem[] | null;
+type MediaItem = NonNullable<
+  NonNullable<
+    NonNullable<FetchHomePageQueryResult>['projects']
+  >[number]['images']
+>['mediaItems'];
+
+type Props = {
+  images: MediaItem | null;
   projectId: string;
   comingSoon?: boolean | null;
 };
@@ -19,7 +23,7 @@ export default function HoverFadeImages({
   images,
   projectId,
   comingSoon = false,
-}: IHoverFadeImages) {
+}: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const items = useMemo(() => images?.slice(0, 2) ?? [], [images]);
 
@@ -32,30 +36,43 @@ export default function HoverFadeImages({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {items.map((image, idx) => (
-        <motion.div
-          key={`${projectId}-${idx}`}
-          className='relative w-full h-full'
-          initial={false}
-          animate={{
-            opacity: isHovered ? (comingSoon ? 0.2 : 1) : 0,
-          }}
-          transition={{
-            duration: isHovered ? 0.2 : 2.5,
-            ease: 'easeInOut',
-          }}
-        >
-          {image.url && (
+      {items.map((image, idx) => {
+        const ref = image.asset?._ref;
+        const imageUrl = ref ? urlFor(ref).width(800).height(1066).url() : null;
+        const blurDataURL = ref
+          ? urlFor(ref).width(24).height(24).blur(10).url()
+          : '';
+        const altText = image.alt?.trim() || 'Project image';
+
+        if (!imageUrl) return null;
+
+        return (
+          <motion.div
+            key={`${projectId}-${idx}`}
+            className='relative w-full h-full'
+            initial={false}
+            animate={{
+              opacity: isHovered ? (comingSoon ? 0.2 : 1) : 0,
+            }}
+            transition={{
+              duration: isHovered ? 0.2 : 2.5,
+              ease: 'easeInOut',
+            }}
+          >
             <Image
-              src={image.url}
-              alt={image.alt ?? ''}
+              src={imageUrl}
+              alt={altText}
               width={400}
-              height={400}
+              height={533}
               className='w-full object-cover aspect-3/4'
+              placeholder={blurDataURL ? 'blur' : undefined}
+              blurDataURL={blurDataURL}
+              loading='lazy'
+              sizes='(min-width: 1024px) 20vw, 50vw'
             />
-          )}
-        </motion.div>
-      ))}
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

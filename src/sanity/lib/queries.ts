@@ -6,13 +6,8 @@ export const fetchSeo = defineQuery(`
   title,
   description,
   image {
-    asset->{
-      _id,
-      url,
-      metadata {
-        dimensions
-      }
-    }
+    _type,
+    asset
   }
 }
 }
@@ -22,16 +17,13 @@ export const fetchSeoTitle = defineQuery(`
   *[_type == "projects" && slug.current == $slug][0]{
     title,
     seo {
-    title,
-    description,
-    image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
+      title,
+      description,
+      image {
+        _type,
+        asset
       }
     }
-  }
   }
 `);
 
@@ -43,11 +35,8 @@ export const settingsQuery = defineQuery(`
   title,
   description,
   image {
-    asset->{
-      _id,
-      url,
-      metadata { dimensions }
-    }
+    _type,
+    asset
   },
   enterSiteText
 }
@@ -81,10 +70,12 @@ export const fetchHomePageQuery = defineQuery(`
     year,
     richText,
     images {
+      _type,
       mediaItems[] {
+        _key,
         _id,
         alt,
-        "url": asset->url
+        asset
       }
     },
     comingSoon
@@ -93,11 +84,8 @@ export const fetchHomePageQuery = defineQuery(`
     title,
     description,
     image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
-      }
+      _type,
+      asset
     }
   }
   }
@@ -112,25 +100,32 @@ export const fetchProjectsIndexQuery = defineQuery(`
     year,
     richText,
     images {
+      _type,
       mediaItems[] {
+        _key,
         _id,
         alt,
-        "url": asset->url
+        asset
       }
     },
     comingSoon,
-    },
     seo {
-    title,
-    description,
-    image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
+      title,
+      description,
+      image {
+        _type,
+        asset
       }
     }
-  }
+    },
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
   }
 `);
 
@@ -143,10 +138,11 @@ export const singleProjectQuery = defineQuery(`
     year,
     richText,
     images {
+      _type,
       mediaItems[] {
-        _id,
+        _key,
         alt,
-        "url": asset->url
+        asset
       }
     },
     sectionList[] {
@@ -156,10 +152,11 @@ export const singleProjectQuery = defineQuery(`
         richText,
         richTextBottom,
         images {
+          _type,
           mediaItems[] {
-            _id,
+            _key,
             alt,
-            "url": asset->url
+            asset
           }
         }
       },
@@ -173,10 +170,11 @@ export const singleProjectQuery = defineQuery(`
           comingSoon,
           year,
           images {
+            _type,
             mediaItems[] {
-              _id,
+              _key,
               alt,
-              "url": asset->url
+              asset
             }
           }
         }
@@ -186,11 +184,8 @@ export const singleProjectQuery = defineQuery(`
     title,
     description,
     image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
-      }
+      _type,
+      asset
     }
   }
   }
@@ -221,10 +216,8 @@ export const fetchAboutQuery = defineQuery(`
   },
   images[]{
     ogImage{
-      asset->{
-        _id,
-        url
-      },
+      _key,
+      asset,
       alt,
       metadataBase
     }
@@ -247,11 +240,7 @@ export const fetchAboutQuery = defineQuery(`
     title,
     description,
     image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
-      }
+      asset
     }
   }
 }
@@ -264,11 +253,7 @@ export const fetchContactQuery = defineQuery(`
     title,
     description,
     image {
-      asset->{
-        _id,
-        url,
-        metadata { dimensions }
-      }
+      asset
     }
   }
 }
@@ -313,9 +298,24 @@ export const projectsQuery = defineQuery(`
     title,
     year,
     richText,
-    images,
-    comingSoon
-}
+    images {
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset
+      }
+    },
+    comingSoon,
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
 `);
 
 // export const sitemapData = defineQuery(`

@@ -49,6 +49,7 @@ export const projectsIndex = defineType({
           name: 'image',
           title: 'Social Share Image',
           type: 'image',
+          options: { hotspot: true, metadata: ['lqip'] },
         }),
       ],
     }),
