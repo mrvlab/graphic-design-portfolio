@@ -1,11 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useVisibleProjectIds } from './useVisibleProjectIds';
-import { urlFor } from '@/sanity/lib/image';
+import { imgData } from '@/sanity/lib/image';
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
-
+import NextImage from '@/components/Media/NextImage';
 type MediaItem = NonNullable<
   NonNullable<
     NonNullable<FetchHomePageQueryResult>['projects']
@@ -58,11 +57,10 @@ export default function ScrollFadeImages({
     >
       {images?.slice(0, 2).map((image, idx) => {
         const ref = image.asset?._ref;
-        const imageUrl = ref ? urlFor(ref).width(400).height(533).url() : '';
-        const blurDataURL = ref
-          ? urlFor(ref).width(24).height(24).blur(10).url()
-          : '';
-        const altText = image.alt?.trim() || 'Project image';
+        const { imageUrl } = imgData({
+          ref: ref || '',
+          alt: image.alt?.trim(),
+        });
 
         if (!imageUrl) return null;
 
@@ -72,16 +70,10 @@ export default function ScrollFadeImages({
             variants={imageVariants}
             className='w-full h-full'
           >
-            <Image
-              src={imageUrl}
-              alt={altText}
-              width={400}
-              height={533}
-              className='w-full h-full object-cover aspect-3/4'
-              placeholder={blurDataURL ? 'blur' : undefined}
-              blurDataURL={blurDataURL}
+            <NextImage
+              refId={ref}
               priority={currentIndex === 0 && idx === 0}
-              sizes='(min-width: 1024px) 20vw, 50vw'
+              className='w-full h-full'
             />
           </motion.div>
         );

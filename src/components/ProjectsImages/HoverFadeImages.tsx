@@ -2,10 +2,9 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
-import { urlFor } from '@/sanity/lib/image';
+import { imgData } from '@/sanity/lib/image';
+import NextImage from '../Media/NextImage';
 
 type MediaItem = NonNullable<
   NonNullable<
@@ -38,11 +37,10 @@ export default function HoverFadeImages({
     >
       {items.map((image, idx) => {
         const ref = image.asset?._ref;
-        const imageUrl = ref ? urlFor(ref).width(800).height(1066).url() : null;
-        const blurDataURL = ref
-          ? urlFor(ref).width(24).height(24).blur(10).url()
-          : '';
-        const altText = image.alt?.trim() || 'Project image';
+        const { imageUrl } = imgData({
+          ref: ref || '',
+          alt: image.alt?.trim(),
+        });
 
         if (!imageUrl) return null;
 
@@ -59,16 +57,10 @@ export default function HoverFadeImages({
               ease: 'easeInOut',
             }}
           >
-            <Image
-              src={imageUrl}
-              alt={altText}
-              width={400}
-              height={533}
-              className='w-full object-cover aspect-3/4'
-              placeholder={blurDataURL ? 'blur' : undefined}
-              blurDataURL={blurDataURL}
-              loading='lazy'
-              sizes='(min-width: 1024px) 20vw, 50vw'
+            <NextImage
+              refId={ref}
+              priority={idx === 0}
+              className={'w-full h-full'}
             />
           </motion.div>
         );
