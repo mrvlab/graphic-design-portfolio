@@ -19,7 +19,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
+        className={`$ ${lausanne300.className}  flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3`}
       >
         <Navigation hideFirstSection hideAllOnDesktop />
 

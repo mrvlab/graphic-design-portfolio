@@ -34,7 +34,7 @@ const page = async () => {
   }
 
   return (
-    <div className='grid grid-cols-2 gap-x-1 gap-y-12 px-1 pt-[140px] lg:grid-cols-4 lg:pl-2 lg:pr-0 lg:pt-0 lg:my-auto lg:mr-auto lg:aspect-[21/7] lg:max-w-[94.5%] lg:w-full lg:gap-[140px]'>
+    <div className='grid grid-cols-2 gap-x-1 gap-y-12 px-1 pt-[140px] pb-12 lg:grid-cols-4 lg:pl-2 lg:pr-0 lg:pt-0 lg:pb-0 lg:my-auto lg:mr-auto lg:aspect-[21/7] lg:max-w-[94.5%] lg:w-full lg:gap-[140px]'>
       {home.projects &&
         home.projects.map((project, indx) => {
           return (

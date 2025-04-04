@@ -5,6 +5,7 @@ import { useVisibleProjectIds } from './useVisibleProjectIds';
 import { imgData } from '@/sanity/lib/image';
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
+
 type MediaItem = NonNullable<
   NonNullable<
     NonNullable<FetchHomePageQueryResult>['projects']

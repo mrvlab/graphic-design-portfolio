@@ -23,7 +23,7 @@ export default async function page() {
   const enterSiteText = settings?.enterSiteText;
   return (
     <>
-      <div className='relative flex flex-col flex-1'>
+      <div className='relative flex flex-col justify-center flex-1'>
         <div
           id='logo'
           className='absolute w-full h-full flex items-center justify-center z-0 lg:px-[6%]'
