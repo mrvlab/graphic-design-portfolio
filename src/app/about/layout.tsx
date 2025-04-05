@@ -23,7 +23,7 @@ export default async function RootLayout({
       >
         <Navigation hideFirstSection hideAllOnDesktop />
 
-        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 bg-white z-50 max-lg:py-2 sticky top-0'>
+        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
           <BlurDown />
           <Navigation />
         </nav>
