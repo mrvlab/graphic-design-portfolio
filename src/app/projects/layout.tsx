@@ -19,19 +19,25 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${lausanne300.className} flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3 overflow-auto`}
+        className={`${lausanne300.className} flex flex-col h-full lg:h-dvh pb-2`}
       >
         <Navigation hideFirstSection hideAllOnDesktop />
 
-        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-4'>
+        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3'>
           <BlurDown />
           <Navigation />
         </nav>
         {/* Main content */}
-        <main className='flex flex-col flex-1'>{children}</main>
+        <main className='flex flex-col flex-1'>
+          {children}
 
-        {/* Footer */}
-        {await Footer()}
+          <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
+            {/* <BlurDown /> */}
+            {/* Footer */}
+            {await Footer()}
+          </div>
+        </main>
+
         {/* Other global utilities */}
         <SanityLive />
         {isDraft && (

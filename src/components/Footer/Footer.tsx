@@ -15,7 +15,7 @@ const Footer = async () => {
   });
 
   return (
-    <footer className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between backdrop-blur-md relative'>
+    <footer className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full'>
       <div className='hidden lg:flex lg:pt-3 lg:pb-1 z-10'>
         {footer?.lefttext && <PortableText value={footer?.lefttext} />}
       </div>
@@ -36,7 +36,7 @@ const Footer = async () => {
           <CreativeServicesDesktop />
         </div>
       </div>
-      <BlurUp />
+      {/* <BlurUp /> */}
     </footer>
   );
 };

@@ -1,14 +1,7 @@
-import { FetchProjectsIndexQueryResult } from '../../../sanity.types';
-import ProjectCard from './ProjectCard';
+import ProjectCard from './ProjectCard/ProjectCard';
+import IProjectList from './types/IProjectList';
 
-type ProjectListProps = {
-  project: NonNullable<
-    NonNullable<FetchProjectsIndexQueryResult>['projects']
-  >[number];
-  index: number;
-};
-
-function ProjectList({ project, index }: ProjectListProps) {
+function ProjectList({ project, index }: IProjectList) {
   if (!project) return null;
 
   return <ProjectCard key={project._id} project={project} index={index} />;
