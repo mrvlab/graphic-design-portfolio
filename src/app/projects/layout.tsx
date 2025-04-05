@@ -28,15 +28,13 @@ export default async function RootLayout({
           <Navigation />
         </nav>
         {/* Main content */}
-        <main className='flex flex-col flex-1'>
-          {children}
+        <main className='flex flex-col flex-1'>{children}</main>
 
-          <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
-            {/* <BlurDown /> */}
-            {/* Footer */}
-            {await Footer()}
-          </div>
-        </main>
+        <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
+          {/* <BlurDown /> */}
+          {/* Footer */}
+          {await Footer()}
+        </div>
 
         {/* Other global utilities */}
         <SanityLive />
