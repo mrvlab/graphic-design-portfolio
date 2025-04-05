@@ -23,14 +23,14 @@ export default async function page() {
   const enterSiteText = settings?.enterSiteText;
   return (
     <>
-      <div className='relative flex flex-col flex-1'>
+      <div className='relative flex flex-col justify-center flex-1'>
         <div
           id='logo'
           className='absolute w-full h-full flex items-center justify-center z-0 lg:px-[6%]'
         >
           <ComingSoonText />
         </div>
-        <div className='flex flex-col flex-1 justify-center items-center z-10'>
+        <div className='flex flex-col justify-center items-center z-10'>
           <Link href='/home'>{enterSiteText || '( Coming Soon )'}</Link>
         </div>
       </div>

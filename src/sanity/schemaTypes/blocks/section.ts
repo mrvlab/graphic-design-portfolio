@@ -45,6 +45,13 @@ export const section = defineType({
       title: 'Images',
       type: 'mediaGallery',
     }),
+    defineField({
+      name: 'sectionBgColor',
+      title: 'Section Background Color',
+      type: 'string',
+      description: 'Must be in hex format',
+      placeholder: '#000000',
+    }),
   ],
   preview: {
     select: {

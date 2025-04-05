@@ -1,5 +1,6 @@
 import { sanityFetch } from '@/sanity/lib/live';
 import { settingsQuery } from '@/sanity/lib/queries';
+import { urlForImage } from '@/sanity/lib/utils';
 import { Metadata } from 'next';
 import { toPlainText } from 'next-sanity';
 import { FetchSeoResult, FetchSeoTitleResult } from '../../sanity.types';
@@ -43,8 +44,8 @@ export async function generateSeoMetadata({
         : title;
 
   const image =
-    page?.seo?.image?.asset?.url ??
-    settings?.image?.asset?.url ??
+    urlForImage(page?.seo?.image)?.url() ??
+    urlForImage(settings?.image)?.url() ??
     'https://your-default-image.png';
 
   return {

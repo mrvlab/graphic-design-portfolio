@@ -7,7 +7,7 @@ import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import { lausanne300 } from '@/fonts/Lausanne';
-import Blur from '@/components/NavBar/Blur';
+import BlurDown from '@/components/NavBar/BlurDown';
 
 export default async function RootLayout({
   children,
@@ -19,12 +19,12 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
+        className={`${lausanne300.className}  flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3`}
       >
         <Navigation hideFirstSection hideAllOnDesktop />
 
-        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 bg-white z-50 max-lg:py-2 sticky top-0'>
-          <Blur />
+        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
+          <BlurDown />
           <Navigation />
         </nav>
         {/* Main content */}

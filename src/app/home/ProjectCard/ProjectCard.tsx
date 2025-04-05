@@ -1,0 +1,69 @@
+'use client';
+
+import HomeProjectsTitle from '@/components/HomeProjectsTitle/HomeProjectsTitle';
+import Link from 'next/link';
+import React, { useMemo, useState, useCallback } from 'react';
+import { ProjectsQueryResult } from '../../../../sanity.types';
+import { useIsMobile } from '@/utils/useIsMobile';
+import { useVisibleProjectIds } from './useVisibleProjectIds';
+import HoverFadeImages from './HoverFadeImages';
+import ScrollFadeImages from './ScrollFadeImages';
+import IHomeProjectCard from '../types/IHomeProjectCard';
+
+const ProjectCard = ({ project, index }: IHomeProjectCard) => {
+  const mediaItems = useMemo(
+    () =>
+      (project?.images?.mediaItems ?? []).map((item) => ({
+        ...item,
+        _id: null,
+      })),
+    [project?.images?.mediaItems]
+  );
+
+  const isMobile = useIsMobile();
+  const [isHovered, setIsHovered] = useState(false);
+  const { visibleProjects, isScrollingDown } = useVisibleProjectIds();
+  const isVisible = visibleProjects.includes(index);
+
+  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
+  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
+
+  if (!project) return null;
+  return (
+    <Link
+      href={project.slug ? `/project/${project.slug}` : '/home'}
+      key={project._id}
+      className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+      id={`project-${index + 1}`}
+    >
+      <HomeProjectsTitle
+        project={project as ProjectsQueryResult[number]}
+        index={index}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+
+      {isMobile ? (
+        <ScrollFadeImages
+          images={mediaItems}
+          projectId={project._id || ''}
+          currentIndex={index}
+          comingSoon={project.comingSoon || false}
+          isVisible={isVisible}
+          isScrollingDown={isScrollingDown}
+        />
+      ) : (
+        <HoverFadeImages
+          images={mediaItems}
+          projectId={project._id || ''}
+          comingSoon={project.comingSoon || false}
+          isHovered={isHovered}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+      )}
+    </Link>
+  );
+};
+
+export default ProjectCard;

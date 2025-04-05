@@ -8,7 +8,7 @@ import {
   FetchHeaderQueryResult,
   NavigationQueryResult,
 } from '../../../sanity.types';
-import Blur from './Blur';
+import BlurDown from './BlurDown';
 
 type Props = {
   hideFirstSection?: boolean;
@@ -42,7 +42,7 @@ const NavigationMenu = async ({
       {/* LEFT SECTION */}
       {!hideFirstSection && (
         <div
-          className={`${isMobile} ${isDesktop} lg:flex lg:flex-col lg:flex-1 relative z-10`}
+          className={`${isMobile} ${isDesktop} lg:flex lg:flex-col w-full relative z-10`}
         >
           <span>&copy; {getCurrentYear()}</span>
           <span>{header?.lefttext}</span>
@@ -53,7 +53,7 @@ const NavigationMenu = async ({
       {!hideSecondSection && (
         <Link
           href='/home'
-          className={`flex flex-col items-center flex-2 relative ${isMobile} ${isDesktop} z-10`}
+          className={`flex flex-col items-center relative w-full z-10 ${isMobile} ${isDesktop}`}
         >
           <h1>{header?.name}</h1>
           <h1>{header?.workTitle}</h1>
@@ -63,10 +63,12 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <ul
-          className={`${isMobile} ${isDesktop} flex w-full items-center flex-1 lg:justify-end sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
+          className={`${isMobile} ${isDesktop} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 `}
         >
-          <Blur />
-          <NavItems navItems={navItems} />
+          <BlurDown />
+          <div className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
+            <NavItems navItems={navItems} />
+          </div>
         </ul>
       )}
     </>
