@@ -1,7 +1,7 @@
-import IProject from './IProject';
+import IIndexProject from './IIndexProject';
 
 type IProjectCard = {
-  project: IProject;
+  project: IIndexProject;
   index: number;
 };
 

@@ -1,8 +1,8 @@
-import IProject from './IProject';
+import IIndexProject from './IIndexProject';
 
 interface ITextLayoutMobile {
   index: number;
-  project: IProject;
+  project: IIndexProject;
 }
 
 export default ITextLayoutMobile;

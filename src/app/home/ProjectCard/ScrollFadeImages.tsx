@@ -1,34 +1,17 @@
-'use client';
-
 import { motion } from 'framer-motion';
-import { useVisibleProjectIds } from './useVisibleProjectIds';
 import { imgData } from '@/sanity/lib/image';
-import type { FetchHomePageQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
-
-type MediaItem = NonNullable<
-  NonNullable<
-    NonNullable<FetchHomePageQueryResult>['projects']
-  >[number]['images']
->['mediaItems'];
-
-type Props = {
-  images: MediaItem;
-  projectId: string;
-  currentIndex: number;
-  comingSoon: boolean | null;
-};
+import IScrollFadeImages from '../types/IScrollFadeImages';
 
 export default function ScrollFadeImages({
   images,
   projectId,
   currentIndex,
   comingSoon = false,
-}: Props) {
-  const { visibleProjects, isScrollingDown } = useVisibleProjectIds();
-  const isVisible = visibleProjects.includes(currentIndex);
-
-  const containerVariants = {
+  isVisible,
+  isScrollingDown,
+}: IScrollFadeImages) {
+  const scrollContainerVariants = {
     visible: {
       transition: {
         staggerChildren: 0.2,
@@ -52,7 +35,7 @@ export default function ScrollFadeImages({
   return (
     <motion.div
       className='grid grid-cols-2 gap-2'
-      variants={containerVariants}
+      variants={scrollContainerVariants}
       initial='hidden'
       animate={isVisible ? 'visible' : 'hidden'}
     >

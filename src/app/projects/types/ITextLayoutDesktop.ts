@@ -1,8 +1,8 @@
-import IProject from './IProject';
+import IIndexProject from './IIndexProject';
 
 type ITextLayoutDesktop = {
   index: number;
-  project: IProject;
+  project: IIndexProject;
   setIsHovered: (isHovered: boolean) => void;
 };
 

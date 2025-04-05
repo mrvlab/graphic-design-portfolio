@@ -7,7 +7,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { PortableText } from 'next-sanity';
 import CreativeServicesMobile from './CreativeServicesMobile';
 import CreativeServicesDesktop from './CreativeServicesDesktop';
-import BlurUp from './BlurUp';
+// import BlurUp from './BlurUp';
 
 const Footer = async () => {
   const { data: footer }: { data: FetchFooterQueryResult } = await sanityFetch({

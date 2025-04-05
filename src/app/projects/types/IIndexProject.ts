@@ -1,7 +1,7 @@
 import { FetchProjectsIndexQueryResult } from '../../../../sanity.types';
 
-type IProject = NonNullable<
+type IIndexProject = NonNullable<
   NonNullable<FetchProjectsIndexQueryResult>['projects']
 >[number];
 
-export default IProject;
+export default IIndexProject;
