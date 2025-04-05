@@ -186,8 +186,8 @@ export const singleProjectQuery = defineQuery(`
     image {
       _type,
       asset
+      }
     }
-  }
   }
 `);
 export const fetchAboutQuery = defineQuery(`
@@ -240,6 +240,7 @@ export const fetchAboutQuery = defineQuery(`
     title,
     description,
     image {
+      _type,
       asset
     }
   }
@@ -253,6 +254,7 @@ export const fetchContactQuery = defineQuery(`
     title,
     description,
     image {
+      _type,
       asset
     }
   }

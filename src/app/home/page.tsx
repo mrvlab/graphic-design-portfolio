@@ -4,6 +4,7 @@ import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
 import ProjectList from './ProjectList';
+
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
     query: fetchHomePageQuery,
