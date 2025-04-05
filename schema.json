@@ -1764,6 +1764,13 @@
                     },
                     "optional": true
                   },
+                  "sectionBgColor": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": true
+                  },
                   "_type": {
                     "type": "objectAttribute",
                     "value": {
@@ -2490,6 +2497,13 @@
         "value": {
           "type": "inline",
           "name": "mediaGallery"
+        },
+        "optional": true
+      },
+      "sectionBgColor": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": true
       }

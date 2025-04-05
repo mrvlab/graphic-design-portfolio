@@ -272,6 +272,7 @@ export type Projects = {
       _key: string;
     }>;
     images?: MediaGallery;
+    sectionBgColor?: string;
     _type: "section";
     _key: string;
   } | {
@@ -384,6 +385,7 @@ export type Section = {
     _key: string;
   }>;
   images?: MediaGallery;
+  sectionBgColor?: string;
 };
 
 export type MediaGallery = {
@@ -915,7 +917,7 @@ export type FetchProjectsIndexQueryResult = {
   } | null;
 } | null;
 // Variable: singleProjectQuery
-// Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    title,    comingSoon,    "slug": slug.current,    year,    richText,    images {      _type,      mediaItems[] {        _key,        alt,        asset      }    },    sectionList[] {      _type == "section" => {        _type,        _key,        richText,        richTextBottom,        images {          _type,          mediaItems[] {            _key,            alt,            asset          }        }      },      _type == "relatedProjects" => {        _type,        _key,        projects[]->{          _id,          title,          "slug": slug.current,          comingSoon,          year,          images {            _type,            mediaItems[] {              _key,              alt,              asset            }          }        }      }    },    seo {    title,    description,    image {      _type,      asset    }  }  }
+// Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    title,    comingSoon,    "slug": slug.current,    year,    richText,    images {      _type,      mediaItems[] {        _key,        alt,        asset      }    },    sectionList[] {      _type == "section" => {        _type,        _key,        richText,        richTextBottom,        sectionBgColor,        images {          _type,          mediaItems[] {            _key,            alt,            asset          }        }      },      _type == "relatedProjects" => {        _type,        _key,        projects[]->{          _id,          title,          "slug": slug.current,          comingSoon,          year,          images {            _type,            mediaItems[] {              _key,              alt,              asset            }          }        }      }    },    seo {    title,    description,    image {      _type,      asset      }    }  }
 export type SingleProjectQueryResult = {
   _id: string;
   title: string | null;
@@ -1015,6 +1017,7 @@ export type SingleProjectQueryResult = {
       _type: "block";
       _key: string;
     }> | null;
+    sectionBgColor: string | null;
     images: {
       _type: "mediaGallery";
       mediaItems: Array<{
@@ -1044,7 +1047,7 @@ export type SingleProjectQueryResult = {
   } | null;
 } | null;
 // Variable: fetchAboutQuery
-// Query: *[_type == "aboutPage"][0]{  _id,  languages[]->{    _id,    title  },  experiences[]->{    _id,    title,    company,    startDate,    endDate  },  studies[]->{    _id,    title,    institution  },  publications[]->{    _id,    title,    url  },  images[]{    ogImage{      _key,      asset,      alt,      metadataBase    }  },  bodyTextSections[]{    title,    content  },  skills[]->{    _id,    title,    level  },  softwareTools[]->{    _id,    title,    category  },  seo {    title,    description,    image {      asset    }  }}
+// Query: *[_type == "aboutPage"][0]{  _id,  languages[]->{    _id,    title  },  experiences[]->{    _id,    title,    company,    startDate,    endDate  },  studies[]->{    _id,    title,    institution  },  publications[]->{    _id,    title,    url  },  images[]{    ogImage{      _key,      asset,      alt,      metadataBase    }  },  bodyTextSections[]{    title,    content  },  skills[]->{    _id,    title,    level  },  softwareTools[]->{    _id,    title,    category  },  seo {    title,    description,    image {      _type,      asset    }  }}
 export type FetchAboutQueryResult = {
   _id: string;
   languages: Array<{
@@ -1106,6 +1109,7 @@ export type FetchAboutQueryResult = {
     title: string | null;
     description: string | null;
     image: {
+      _type: "image";
       asset: {
         _ref: string;
         _type: "reference";
@@ -1116,7 +1120,7 @@ export type FetchAboutQueryResult = {
   } | null;
 } | null;
 // Variable: fetchContactQuery
-// Query: *[_type == "contactPage"][0]{  _id,  richText,  seo {    title,    description,    image {      asset    }  }}
+// Query: *[_type == "contactPage"][0]{  _id,  richText,  seo {    title,    description,    image {      _type,      asset    }  }}
 export type FetchContactQueryResult = {
   _id: string;
   richText: Array<{
@@ -1141,6 +1145,7 @@ export type FetchContactQueryResult = {
     title: string | null;
     description: string | null;
     image: {
+      _type: "image";
       asset: {
         _ref: string;
         _type: "reference";
@@ -1242,9 +1247,9 @@ declare module "@sanity/client" {
     "\n  *[_type == \"header\"][0]{\n    _id,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
     "\n  *[_type == \"homePage\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset\n      }\n    },\n    comingSoon\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  }\n": FetchHomePageQueryResult;
     "\n  *[_type == \"projectsIndex\"][0]{\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchProjectsIndexQueryResult;
-    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    title,\n    comingSoon,\n    \"slug\": slug.current,\n    year,\n    richText,\n    images {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset\n      }\n    },\n    sectionList[] {\n      _type == \"section\" => {\n        _type,\n        _key,\n        richText,\n        richTextBottom,\n        images {\n          _type,\n          mediaItems[] {\n            _key,\n            alt,\n            asset\n          }\n        }\n      },\n      _type == \"relatedProjects\" => {\n        _type,\n        _key,\n        projects[]->{\n          _id,\n          title,\n          \"slug\": slug.current,\n          comingSoon,\n          year,\n          images {\n            _type,\n            mediaItems[] {\n              _key,\n              alt,\n              asset\n            }\n          }\n        }\n      }\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  }\n": SingleProjectQueryResult;
-    "\n  *[_type == \"aboutPage\"][0]{\n  _id,\n  languages[]->{\n    _id,\n    title\n  },\n  experiences[]->{\n    _id,\n    title,\n    company,\n    startDate,\n    endDate\n  },\n  studies[]->{\n    _id,\n    title,\n    institution\n  },\n  publications[]->{\n    _id,\n    title,\n    url\n  },\n  images[]{\n    ogImage{\n      _key,\n      asset,\n      alt,\n      metadataBase\n    }\n  },\n  bodyTextSections[]{\n    title,\n    content\n  },\n  skills[]->{\n    _id,\n    title,\n    level\n  },\n  softwareTools[]->{\n    _id,\n    title,\n    category\n  },\n  seo {\n    title,\n    description,\n    image {\n      asset\n    }\n  }\n}\n": FetchAboutQueryResult;
-    "\n  *[_type == \"contactPage\"][0]{\n  _id,\n  richText,\n  seo {\n    title,\n    description,\n    image {\n      asset\n    }\n  }\n}\n": FetchContactQueryResult;
+    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    title,\n    comingSoon,\n    \"slug\": slug.current,\n    year,\n    richText,\n    images {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset\n      }\n    },\n    sectionList[] {\n      _type == \"section\" => {\n        _type,\n        _key,\n        richText,\n        richTextBottom,\n        sectionBgColor,\n        images {\n          _type,\n          mediaItems[] {\n            _key,\n            alt,\n            asset\n          }\n        }\n      },\n      _type == \"relatedProjects\" => {\n        _type,\n        _key,\n        projects[]->{\n          _id,\n          title,\n          \"slug\": slug.current,\n          comingSoon,\n          year,\n          images {\n            _type,\n            mediaItems[] {\n              _key,\n              alt,\n              asset\n            }\n          }\n        }\n      }\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n      }\n    }\n  }\n": SingleProjectQueryResult;
+    "\n  *[_type == \"aboutPage\"][0]{\n  _id,\n  languages[]->{\n    _id,\n    title\n  },\n  experiences[]->{\n    _id,\n    title,\n    company,\n    startDate,\n    endDate\n  },\n  studies[]->{\n    _id,\n    title,\n    institution\n  },\n  publications[]->{\n    _id,\n    title,\n    url\n  },\n  images[]{\n    ogImage{\n      _key,\n      asset,\n      alt,\n      metadataBase\n    }\n  },\n  bodyTextSections[]{\n    title,\n    content\n  },\n  skills[]->{\n    _id,\n    title,\n    level\n  },\n  softwareTools[]->{\n    _id,\n    title,\n    category\n  },\n  seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n}\n": FetchAboutQueryResult;
+    "\n  *[_type == \"contactPage\"][0]{\n  _id,\n  richText,\n  seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n}\n": FetchContactQueryResult;
     "\n  *[_type == \"footer\"][0]{\n    _id,\n    name,\n    rights,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
     "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    images {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": ProjectsQueryResult;
   }

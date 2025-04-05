@@ -151,6 +151,7 @@ export const singleProjectQuery = defineQuery(`
         _key,
         richText,
         richTextBottom,
+        sectionBgColor,
         images {
           _type,
           mediaItems[] {
