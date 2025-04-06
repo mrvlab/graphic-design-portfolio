@@ -6,57 +6,57 @@ import formatDate from '@/utils/formatDate';
 
 const MobileLayout = ({ about }: IMobileLayout) => {
   return (
-    <div
-      className='flex flex-col gap-6 lg:hidden'
-      aria-hidden='true'
-      role='complementary'
-      aria-label='Mobile layout version'
-    >
+    <div className='flex flex-col gap-6 lg:hidden'>
       {about.bodyTextSections?.map(
         (section) =>
           section.content && (
-            <div
+            <section
               key={`section-${section.title}`}
               className='flex flex-col gap-1'
+              aria-labelledby={`mobile-section-${section.title?.toLowerCase()}`}
             >
               <h2
                 className='pl-[59px] font-bold'
-                id={`section-${section.title?.toLowerCase()}`}
+                id={`mobile-section-${section.title?.toLowerCase()}`}
               >
                 {section.title}
               </h2>
-              <div aria-labelledby={`section-${section.title?.toLowerCase()}`}>
+              <div>
                 <PortableText value={section.content} />
               </div>
-            </div>
+            </section>
           )
       )}
 
       <div>
         <div className='grid grid-cols-2 gap-1'>
-          <div>
-            <h2 className='pl-[59px] font-bold' id='skills-section'>
+          <section
+            className='flex flex-col gap-1'
+            aria-labelledby='mobile-skills-section'
+          >
+            <h2 className='pl-[59px] font-bold' id='mobile-skills-section'>
               Skills
             </h2>
-            <ul
-              className='flex flex-wrap gap-1'
-              aria-labelledby='skills-section'
-            >
+            <ul className='flex flex-wrap gap-1'>
               {about.skills?.map((skill) => (
                 <li key={skill._id} className='w-full'>
                   {skill.title}
                 </li>
               ))}
             </ul>
-          </div>
-          <div>
-            <h2 className='pl-[59px] font-bold' id='software-tools-section'>
+          </section>
+
+          <section
+            className='flex flex-col gap-1'
+            aria-labelledby='mobile-software-tools-section'
+          >
+            <h2
+              className='pl-[59px] font-bold'
+              id='mobile-software-tools-section'
+            >
               Software Tools
             </h2>
-            <div
-              className='flex flex-col gap-2'
-              aria-labelledby='software-tools-section'
-            >
+            <div className='flex flex-col gap-2'>
               {about.softwareTools?.map(
                 (tool) =>
                   tool.richText && (
@@ -64,20 +64,20 @@ const MobileLayout = ({ about }: IMobileLayout) => {
                   )
               )}
             </div>
-          </div>
+          </section>
         </div>
 
         <ViewPortraitOnScroll about={about} />
       </div>
 
-      <div className='flex flex-col gap-1'>
-        <h2 className='pl-[59px] font-bold' id='languages-section'>
+      <section
+        className='flex flex-col gap-1'
+        aria-labelledby='mobile-languages-section'
+      >
+        <h2 className='pl-[59px] font-bold' id='mobile-languages-section'>
           Languages
         </h2>
-        <div
-          className='grid grid-cols-2 gap-x-1 gap-y-2'
-          aria-labelledby='languages-section'
-        >
+        <div className='grid grid-cols-2 gap-x-1 gap-y-2'>
           {about.languages?.map((language) => (
             <div
               key={language._id}
@@ -89,73 +89,83 @@ const MobileLayout = ({ about }: IMobileLayout) => {
                     : ''
               }`}
             >
-              <span>{language.language}</span>
+              <span role='heading' aria-level={3}>
+                {language.language}
+              </span>
               <span>{language.level}</span>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className='flex flex-col gap-1'>
-        <h2 className='pl-[59px] font-bold' id='experience-section'>
+      <section
+        className='flex flex-col gap-1'
+        aria-labelledby='mobile-experience-section'
+      >
+        <h2 className='pl-[59px] font-bold' id='mobile-experience-section'>
           Experience
         </h2>
-        <div
-          className='grid grid-cols-2 gap-x-1 gap-y-2'
-          aria-labelledby='experience-section'
-        >
+        <ul className='grid grid-cols-2 gap-x-1 gap-y-2'>
           {about.experiences?.map((experience) => (
-            <div key={experience._id} className='pr-3'>
+            <li key={experience._id} className='pr-3 list-none'>
               <h3>{experience.title}</h3>
               <p>{experience.location}</p>
               <p>{experience.role}</p>
               <p>
-                {formatDate(experience.startDate)}
+                <time dateTime={experience.startDate || undefined}>
+                  {formatDate(experience.startDate)}
+                </time>
                 {' - '}
-                {formatDate(experience.endDate)}
+                <time dateTime={experience.endDate || undefined}>
+                  {formatDate(experience.endDate)}
+                </time>
               </p>
-            </div>
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      </section>
 
-      <div className='flex flex-col gap-1'>
-        <h2 className='pl-[59px] font-bold' id='education-section'>
+      <section
+        className='flex flex-col gap-1'
+        aria-labelledby='mobile-education-section'
+      >
+        <h2 className='pl-[59px] font-bold' id='mobile-education-section'>
           Studies
         </h2>
-        <div
-          className='grid grid-cols-2 gap-x-1 gap-y-2'
-          aria-labelledby='education-section'
-        >
+        <ul className='grid grid-cols-2 gap-x-1 gap-y-2'>
           {about.studies?.map((study) => (
-            <div key={study._id} className='pr-3'>
+            <li key={study._id} className='pr-3 list-none'>
               <h3>{study.degree}</h3>
               <p>{study.institution}</p>
               <p>
-                {formatDate(study.startDate)}
+                <time dateTime={study.startDate || undefined}>
+                  {formatDate(study.startDate)}
+                </time>
                 {' - '}
-                {formatDate(study.endDate)}
+                <time dateTime={study.endDate || undefined}>
+                  {formatDate(study.endDate)}
+                </time>
               </p>
-            </div>
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      </section>
 
-      <div className='flex flex-col gap-1'>
-        <h2 className='pl-[59px] font-bold' id='publications-section'>
+      <section
+        className='flex flex-col gap-1'
+        aria-labelledby='mobile-publications-section'
+      >
+        <h2 className='pl-[59px] font-bold' id='mobile-publications-section'>
           Publications
         </h2>
-        <div
-          className='grid grid-cols-2 gap-x-1 gap-y-2'
-          aria-labelledby='publications-section'
-        >
+        <ul className='grid grid-cols-2 gap-x-1 gap-y-2'>
           {about.publications?.map((publication) => (
-            <div key={publication._id} className='pr-3'>
+            <li key={publication._id} className='pr-3 list-none'>
               <h3>{publication.title}</h3>
-            </div>
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      </section>
     </div>
   );
 };

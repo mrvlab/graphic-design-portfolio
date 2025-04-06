@@ -16,76 +16,94 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
 
   return (
     <div className='hidden lg:grid lg:grid-cols-24 lg:grid-rows-2 gap-2 lg:h-full'>
-      <div className='grid h-fit row-start-1 col-span-9'>
-        <h2 className='pl-12 font-bold'>Languages</h2>
+      <section
+        className='grid h-fit row-start-1 col-span-9'
+        aria-labelledby='languages-section'
+      >
+        <h2 className='pl-12 font-bold' id='languages-section'>
+          Languages
+        </h2>
         <div className='flex flex-col gap-2'>
           {languages?.map((language) => (
             <div key={language._id} className='flex flex-col w-full'>
-              <span>{language.language}</span>
+              <span role='heading' aria-level={3}>
+                {language.language}
+              </span>
               <span>{language.level}</span>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       <div className='row-start-2 col-span-9 h-fit'>
-        <div className='flex flex-col gap-2 pb-4'>
+        <section
+          className='flex flex-col gap-2 pb-4'
+          aria-labelledby='experience-section'
+        >
           <h2 className='pl-12 font-bold' id='experience-section'>
             Experience
           </h2>
-          <div className='grid grid-cols-3 gap-2'>
+          <ul className='grid grid-cols-3 gap-2'>
             {experiences?.map((experience) => (
-              <div key={experience._id}>
+              <li key={experience._id} className='list-none'>
                 <h3>{experience.title}</h3>
                 <p>{experience.location}</p>
                 <p>{experience.role}</p>
                 <p>
-                  {formatDate(experience.startDate)}
+                  <time dateTime={experience.startDate || undefined}>
+                    {formatDate(experience.startDate)}
+                  </time>
                   {' - '}
-                  {formatDate(experience.endDate)}
+                  <time dateTime={experience.endDate || undefined}>
+                    {formatDate(experience.endDate)}
+                  </time>
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </section>
 
-        <div className='flex flex-col gap-x-2 gap-y-1 pb-4'>
+        <section
+          className='flex flex-col gap-x-2 gap-y-1 pb-4'
+          aria-labelledby='education-section'
+        >
           <h2 className='pl-12 font-bold' id='education-section'>
             Studies
           </h2>
-          <div
-            className='grid grid-cols-3 gap-2'
-            aria-labelledby='education-section'
-          >
+          <ul className='grid grid-cols-3 gap-2'>
             {studies?.map((study) => (
-              <div key={study._id} className=''>
+              <li key={study._id} className='list-none'>
                 <h3>{study.degree}</h3>
                 <p>{study.institution}</p>
                 <p>
-                  {formatDate(study.startDate)}
+                  <time dateTime={study.startDate || undefined}>
+                    {formatDate(study.startDate)}
+                  </time>
                   {' - '}
-                  {formatDate(study.endDate)}
+                  <time dateTime={study.endDate || undefined}>
+                    {formatDate(study.endDate)}
+                  </time>
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </section>
 
-        <div className='flex flex-col gap-2'>
+        <section
+          className='flex flex-col gap-2'
+          aria-labelledby='publications-section'
+        >
           <h2 className='pl-12 font-bold' id='publications-section'>
             Publications
           </h2>
-          <div
-            className='grid grid-cols-3 gap-2'
-            aria-labelledby='publications-section'
-          >
+          <ul className='grid grid-cols-3 gap-2'>
             {publications?.map((publication) => (
-              <div key={publication._id}>
+              <li key={publication._id} className='list-none'>
                 <h3>{publication.title}</h3>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </section>
       </div>
 
       <div className='col-start-10 col-span-6 row-start-1 row-span-full self-center'>
@@ -98,9 +116,10 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
             {bodyTextSections?.map(
               (section) =>
                 section.content && (
-                  <div
+                  <section
                     key={`section-${section.title}`}
                     className='flex flex-col gap-1 h-fit'
+                    aria-labelledby={`section-${section.title?.toLowerCase()}`}
                   >
                     <h2
                       className='pl-[59px] font-bold'
@@ -108,41 +127,39 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                     >
                       {section.title}
                     </h2>
-                    <div
-                      aria-labelledby={`section-${section.title?.toLowerCase()}`}
-                    >
+                    <div>
                       <PortableText value={section.content} />
                     </div>
-                  </div>
+                  </section>
                 )
             )}
           </div>
 
           <div className='grid grid-cols-2 gap-2'>
-            <div className='flex flex-col gap-1'>
+            <section
+              className='flex flex-col gap-1'
+              aria-labelledby='skills-section'
+            >
               <h2 className='pl-[59px] font-bold' id='skills-section'>
                 Skills
               </h2>
-              <ul
-                className='flex flex-wrap gap-1'
-                aria-labelledby='skills-section'
-              >
+              <ul className='flex flex-wrap gap-1'>
                 {about.skills?.map((skill) => (
                   <li key={skill._id} className='w-full'>
                     {skill.title}
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
 
-            <div className='flex flex-col gap-1 pr-[49px]'>
+            <section
+              className='flex flex-col gap-1 pr-[49px]'
+              aria-labelledby='software-tools-section'
+            >
               <h2 className='pl-[59px] font-bold' id='software-tools-section'>
                 Software Tools
               </h2>
-              <div
-                className='flex flex-col gap-2'
-                aria-labelledby='software-tools-section'
-              >
+              <div className='flex flex-col gap-2'>
                 {about.softwareTools?.map(
                   (tool) =>
                     tool.richText && (
@@ -150,7 +167,7 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                     )
                 )}
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </div>
