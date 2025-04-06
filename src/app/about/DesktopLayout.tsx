@@ -140,7 +140,7 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                 Software Tools
               </h2>
               <div
-                className='flex flex-wrap gap-2'
+                className='flex flex-col gap-2'
                 aria-labelledby='software-tools-section'
               >
                 {about.softwareTools?.map(
