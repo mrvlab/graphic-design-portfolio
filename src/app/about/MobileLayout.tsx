@@ -21,7 +21,7 @@ const MobileLayout = ({ about }: IMobileLayout) => {
               >
                 {section.title}
               </h2>
-              <div>
+              <div className='leading-[125%]'>
                 <PortableText value={section.content} />
               </div>
             </section>

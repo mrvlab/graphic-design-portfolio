@@ -104,8 +104,8 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 0.813rem;
-  line-height: 1.2;
-  @apply font-[0.813rem] leading-[120%] lg:text-xs lg:leading-[110%];
+  line-height: 1.15;
+  @apply font-[0.813rem] leading-[115%] lg:text-xs;
 }
 
 .blur-mask-layer-down-1 {

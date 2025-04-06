@@ -23,9 +23,7 @@ const HomeProjectsTitle = ({
       onMouseLeave={onMouseLeave}
     >
       <div
-        className={`flex flex-col gap-0.5 lg:max-h-[42px] ${
-          isHovered ? 'italic' : ''
-        }`}
+        className={`flex flex-col lg:max-h-[42px] ${isHovered ? 'italic' : ''}`}
       >
         <span>({(index + 1).toString().padStart(2, '0')})</span>
         <span>{project.title}</span>
