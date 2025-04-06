@@ -17,30 +17,28 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <html lang='en'>
-      <body
-        className={`${lausanne.className} flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
-      >
-        <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2'>
-          <BlurDown />
-          <Navigation hideFirstSection hideThirdSection />
-        </nav>
-        {/* Main content */}
-        <main className='flex flex-col flex-1'>{children}</main>
+    <div
+      className={`${lausanne.className} flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
+    >
+      <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2'>
+        <BlurDown />
+        <Navigation hideFirstSection hideThirdSection />
+      </nav>
+      {/* Main content */}
+      <main className='flex flex-col flex-1'>{children}</main>
 
-        {/* Footer */}
-        <Footer />
+      {/* Footer */}
+      <Footer />
 
-        {/* Other global utilities */}
-        <SanityLive />
-        {isDraft && (
-          <>
-            <DisableDraftMode />
-            <VisualEditing />
-          </>
-        )}
-        <Analytics />
-      </body>
-    </html>
+      {/* Other global utilities */}
+      <SanityLive />
+      {isDraft && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
+      <Analytics />
+    </div>
   );
 }

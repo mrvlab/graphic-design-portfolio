@@ -6,7 +6,6 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import { lausanne } from '@/fonts/Lausanne';
 import BlurDown from '@/components/NavBar/BlurDown';
 
 export default async function RootLayout({
@@ -17,31 +16,28 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <html lang='en'>
-      <body
-        className={`${lausanne.className} flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3`}
-      >
-        <Navigation hideFirstSection hideAllOnDesktop />
+    <div className='flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3'>
+      <Navigation hideFirstSection hideAllOnDesktop />
 
-        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
-          <BlurDown />
-          <Navigation />
-        </nav>
-        {/* Main content */}
-        <main className='flex flex-col flex-1'>{children}</main>
+      <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
+        <BlurDown />
+        <Navigation />
+      </nav>
+      {/* Main content */}
+      <main className='flex flex-col flex-1'>{children}</main>
 
-        {/* Footer */}
-        {await Footer()}
-        {/* Other global utilities */}
-        <SanityLive />
-        {isDraft && (
-          <>
-            <DisableDraftMode />
-            <VisualEditing />
-          </>
-        )}
-        <Analytics />
-      </body>
-    </html>
+      {/* Footer */}
+      <Footer />
+
+      {/* Other global utilities */}
+      <SanityLive />
+      {isDraft && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
+      <Analytics />
+    </div>
   );
 }

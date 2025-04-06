@@ -1,13 +1,10 @@
-// components/RefImage.tsx
-'use client';
-
 import Image, { ImageProps } from 'next/image';
 import { imgData } from '@/sanity/lib/image';
 import clsx from 'clsx';
 
 type RefImageProps = {
-  refId?: string; // Sanity _ref
-  src?: string; // Fallback to direct URL if no ref
+  refId?: string;
+  src?: string;
   alt?: string;
   lqip?: boolean;
   blurStrength?: number;
@@ -63,6 +60,7 @@ export default function NextImage({
       priority={priority}
       placeholder={lqip && blurDataURL ? 'blur' : undefined}
       blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}
+      loading={priority ? 'eager' : 'lazy'}
       {...rest}
     />
   );

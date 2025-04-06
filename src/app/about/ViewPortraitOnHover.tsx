@@ -16,6 +16,8 @@ const ViewPortraitOnHover = ({
             priority={true}
             className='aspect-3/4 p-1 blur-[3.82px] transition-all duration-700 group-hover:blur-[0px]'
             alt='Portrait photograph'
+            sizes='(min-width: 1024px) 50vw, 100vw'
+            loading='eager'
           />
         )}
       </div>
