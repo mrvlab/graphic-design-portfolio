@@ -6,8 +6,7 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-
-import { lausanne300 } from '@/fonts/Lausanne';
+import { lausanne } from '@/fonts/Lausanne';
 
 export default async function RootLayout({
   children,
@@ -19,9 +18,9 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`$ ${lausanne300.className}  flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
+        className={`${lausanne.className} flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
       >
-        <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2'>
+        <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 lg:px-1'>
           <Navigation hideFirstSection hideThirdSection />
         </nav>
         {/* Main content */}

@@ -6,7 +6,7 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import { lausanne300 } from '@/fonts/Lausanne';
+import { lausanne } from '@/fonts/Lausanne';
 import BlurDown from '@/components/NavBar/BlurDown';
 
 export default async function RootLayout({
@@ -19,7 +19,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${lausanne300.className} flex flex-col h-full lg:h-dvh pb-2`}
+        className={`${lausanne.className} flex flex-col h-full lg:h-dvh pb-2`}
       >
         <Navigation hideFirstSection hideAllOnDesktop />
 

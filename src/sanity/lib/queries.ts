@@ -193,60 +193,66 @@ export const singleProjectQuery = defineQuery(`
 `);
 export const fetchAboutQuery = defineQuery(`
   *[_type == "aboutPage"][0]{
-  _id,
-  languages[]->{
     _id,
-    title
-  },
-  experiences[]->{
-    _id,
-    title,
-    company,
-    startDate,
-    endDate
-  },
-  studies[]->{
-    _id,
-    title,
-    institution
-  },
-  publications[]->{
-    _id,
-    title,
-    url
-  },
-  images[]{
-    ogImage{
-      _key,
-      asset,
-      alt,
-      metadataBase
-    }
-  },
-  bodyTextSections[]{
-    title,
-    content
-  },
-  skills[]->{
-    _id,
-    title,
-    level
-  },
-  softwareTools[]->{
-    _id,
-    title,
-    category
-  },
-  seo {
-    title,
-    description,
-    image {
+    languages[]->{
+      _id,
+      _type,
+      language,
+      level
+    },
+    experiences[]->{
+      _id,
+      _type,
+      title,
+      location,
+      role,
+      startDate,
+      endDate
+    },
+    studies[]->{
+      _id,
+      _type,
+      degree,
+      institution,
+      startDate,
+      endDate
+    },
+    publications[]->{
+      _id,
+      _type,
+      title,
+      href
+    },
+    portrait {
       _type,
       asset
+    },
+    bodyTextSections[]{
+      _key,
+      title,
+      content
+    },
+    skills[]->{
+      _id,
+      _type,
+      title
+    },
+    softwareTools[]->{
+      _id,
+      _type,
+      richText
+    },
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
     }
   }
-}
 `);
+
 export const fetchContactQuery = defineQuery(`
   *[_type == "contactPage"][0]{
   _id,

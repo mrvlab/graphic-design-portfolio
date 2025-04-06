@@ -56,7 +56,7 @@ const NavigationMenu = async ({
           className={`flex flex-col items-center relative w-full z-10 ${isMobile} ${isDesktop}`}
         >
           <h1>{header?.name}</h1>
-          <h1>{header?.workTitle}</h1>
+          <p>{header?.workTitle}</p>
         </Link>
       )}
 
@@ -65,7 +65,7 @@ const NavigationMenu = async ({
         <ul
           className={`${isMobile} ${isDesktop} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 `}
         >
-          <BlurDown />
+          {/* <BlurDown /> */}
           <div className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
             <NavItems navItems={navItems} />
           </div>
