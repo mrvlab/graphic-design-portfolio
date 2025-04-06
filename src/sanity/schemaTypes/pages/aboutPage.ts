@@ -68,10 +68,10 @@ export const aboutPage = defineType({
       ],
     }),
     defineField({
-      name: 'images',
-      title: 'Images',
-      type: 'array',
-      of: [{ type: 'mediaGallery' }],
+      name: 'portrait',
+      title: 'Portrait',
+      type: 'image',
+      options: { hotspot: true, metadata: ['lqip'] },
     }),
     defineField({
       name: 'bodyTextSections',

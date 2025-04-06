@@ -6,7 +6,7 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import { lausanne300 } from '@/fonts/Lausanne';
+import { lausanne } from '@/fonts/Lausanne';
 import BlurDown from '@/components/NavBar/BlurDown';
 
 export default async function RootLayout({
@@ -17,35 +17,31 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <html lang='en'>
-      <body
-        className={`${lausanne300.className} flex flex-col h-full lg:h-dvh pb-2`}
-      >
-        <Navigation hideFirstSection hideAllOnDesktop />
+    <div className={`${lausanne.className} flex flex-col h-full lg:h-dvh pb-2`}>
+      <Navigation hideFirstSection hideAllOnDesktop />
 
-        <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3'>
-          <BlurDown />
-          <Navigation />
-        </nav>
-        {/* Main content */}
-        <main className='flex flex-col flex-1'>{children}</main>
+      <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3'>
+        <BlurDown />
+        <Navigation />
+      </nav>
+      {/* Main content */}
+      <main className='flex flex-col flex-1'>{children}</main>
 
-        <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
-          {/* <BlurDown /> */}
-          {/* Footer */}
-          {await Footer()}
-        </div>
+      <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
+        {/* <BlurDown /> */}
+        {/* Footer */}
+        {await Footer()}
+      </div>
 
-        {/* Other global utilities */}
-        <SanityLive />
-        {isDraft && (
-          <>
-            <DisableDraftMode />
-            <VisualEditing />
-          </>
-        )}
-        <Analytics />
-      </body>
-    </html>
+      {/* Other global utilities */}
+      <SanityLive />
+      {isDraft && (
+        <>
+          <DisableDraftMode />
+          <VisualEditing />
+        </>
+      )}
+      <Analytics />
+    </div>
   );
 }

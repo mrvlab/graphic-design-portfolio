@@ -1,7 +1,9 @@
 @import 'tailwindcss';
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
+  --font-family-sans: var(--font-lausanne);
 }
 
 @theme inline {
@@ -12,6 +14,7 @@
   --font-lausanne-medium: var(--font-lausanne-450);
   --aspect-3/4: 3 / 4;
   --aspect-16/9: 16 / 9;
+  --aspect-2/3: 2 / 3;
 
   --blur-height: 280%;
   /* Blur Down */
@@ -75,14 +78,34 @@
   );
 }
 
+@layer base {
+  :root {
+    --font-family-sans: var(--font-lausanne);
+  }
+}
+
+@layer utilities {
+  .font-normal {
+    font-weight: 400;
+    font-style: normal;
+  }
+  .font-bold {
+    font-weight: 500;
+    font-style: normal;
+  }
+  .italic {
+    font-style: italic;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-weight: 400;
   font-style: normal;
   font-size: 0.813rem;
-  line-height: 1.2;
-  @apply font-[0.813rem] leading-[120%] lg:text-xs lg:leading-[110%];
+  line-height: 1.15;
+  @apply font-[0.813rem] leading-[115%] lg:text-xs;
 }
 
 .blur-mask-layer-down-1 {

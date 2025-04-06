@@ -8,7 +8,7 @@ import {
   FetchHeaderQueryResult,
   NavigationQueryResult,
 } from '../../../sanity.types';
-import BlurDown from './BlurDown';
+// import BlurDown from './BlurDown';
 
 type Props = {
   hideFirstSection?: boolean;
@@ -34,15 +34,22 @@ const NavigationMenu = async ({
     query: fetchHeaderQuery,
   });
 
-  const isMobile = hideAllOnMobile ? 'hidden' : '';
-  const isDesktop = hideAllOnDesktop ? 'lg:hidden' : '';
+  // Combine mobile and desktop visibility
+  const getVisibilityClasses = () => {
+    if (hideAllOnMobile && hideAllOnDesktop) return 'hidden';
+    if (hideAllOnMobile) return 'hidden lg:block';
+    if (hideAllOnDesktop) return 'block lg:hidden';
+    return 'block';
+  };
+
+  const visibilityClasses = getVisibilityClasses();
 
   return (
     <>
       {/* LEFT SECTION */}
       {!hideFirstSection && (
         <div
-          className={`${isMobile} ${isDesktop} lg:flex lg:flex-col w-full relative z-10`}
+          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10`}
         >
           <span>&copy; {getCurrentYear()}</span>
           <span>{header?.lefttext}</span>
@@ -53,23 +60,24 @@ const NavigationMenu = async ({
       {!hideSecondSection && (
         <Link
           href='/home'
-          className={`flex flex-col items-center relative w-full z-10 ${isMobile} ${isDesktop}`}
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-10`}
+          aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>
-          <h1>{header?.workTitle}</h1>
+          <p>{header?.workTitle}</p>
         </Link>
       )}
 
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
-        <ul
-          className={`${isMobile} ${isDesktop} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 `}
+        <div
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
         >
-          <BlurDown />
-          <div className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
+          {/* <BlurDown /> */}
+          <ul className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
             <NavItems navItems={navItems} />
-          </div>
-        </ul>
+          </ul>
+        </div>
       )}
     </>
   );

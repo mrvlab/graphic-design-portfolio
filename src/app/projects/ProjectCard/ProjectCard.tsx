@@ -77,6 +77,7 @@ function ProjectCard({ project, index }: IProjectCard) {
         <TextLayoutDesktop
           index={index}
           project={project}
+          isHovered={isHovered}
           setIsHovered={setIsHovered}
         />
 

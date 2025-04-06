@@ -6,6 +6,7 @@ type IHomeProjectsTitle = {
   index: number;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  isHovered: boolean;
 };
 
 const HomeProjectsTitle = ({
@@ -13,6 +14,7 @@ const HomeProjectsTitle = ({
   index,
   onMouseEnter,
   onMouseLeave,
+  isHovered,
 }: IHomeProjectsTitle) => {
   return (
     <h2
@@ -20,10 +22,14 @@ const HomeProjectsTitle = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className='flex flex-col gap-0.5 lg:max-h-[42px]'>
+      <div
+        className={`flex flex-col lg:max-h-[42px] ${isHovered ? 'italic' : ''}`}
+      >
         <span>({(index + 1).toString().padStart(2, '0')})</span>
         <span>{project.title}</span>
-        {project.year && (
+        {project.comingSoon ? (
+          <span>( Coming Soon )</span>
+        ) : (
           <div className='flex gap-2'>
             <span>Year:</span>
             <span>
@@ -31,8 +37,6 @@ const HomeProjectsTitle = ({
             </span>
           </div>
         )}
-
-        {project.comingSoon && <span>( Coming Soon )</span>}
       </div>
     </h2>
   );

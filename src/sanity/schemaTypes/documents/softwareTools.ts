@@ -8,6 +8,18 @@ export const softwareTools = defineType({
   icon: StackCompactIcon,
   fields: [
     defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required().error('Title is required.'),
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      validation: (Rule) => Rule.required().error('Category is required.'),
+    }),
+    defineField({
       name: 'richText',
       title: 'Rich Text',
       type: 'array',
@@ -17,17 +29,11 @@ export const softwareTools = defineType({
   ],
   preview: {
     select: {
-      richText: 'richText',
+      title: 'title',
+      category: 'category',
       updatedAt: '_updatedAt',
     },
-    prepare({ richText, updatedAt }) {
-      // Try to grab the first block's plain text
-      const firstBlock = richText?.[0];
-      const firstText =
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        firstBlock?.children?.map((child: any) => child.text).join('') ||
-        'Untitled';
-
+    prepare({ title, category, updatedAt }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -37,8 +43,8 @@ export const softwareTools = defineType({
         : 'No edits yet';
 
       return {
-        title: firstText,
-        subtitle: `Last edited: ${formattedDate}`,
+        title: title || 'Untitled',
+        subtitle: `${category} • Last edited: ${formattedDate}`,
       };
     },
   },
