@@ -39,6 +39,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
       <HomeProjectsTitle
         project={project as ProjectsQueryResult[number]}
         index={index}
+        isHovered={isHovered}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />

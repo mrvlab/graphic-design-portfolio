@@ -5,6 +5,7 @@ const TextLayoutDesktop = ({
   index,
   project,
   setIsHovered,
+  isHovered,
 }: ITextLayoutDesktop) => {
   return (
     <>
@@ -16,7 +17,7 @@ const TextLayoutDesktop = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <span>{project.title}</span>
+        <span>{isHovered ? `( ${project.title} )` : project.title}</span>
       </h2>
 
       <span
