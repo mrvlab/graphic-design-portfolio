@@ -76,6 +76,19 @@ export const projects = defineType({
     }),
     // ----- Project page -----
     defineField({
+      name: 'layout',
+      title: 'Layout',
+      type: 'string',
+      fieldset: 'projectPage',
+      options: {
+        list: [
+          { title: 'First Layout', value: 'firstLayout' },
+          { title: 'Second Layout', value: 'secondLayout' },
+          { title: 'Third Layout', value: 'thirdLayout' },
+        ],
+      },
+    }),
+    defineField({
       name: 'sectionList',
       title: 'Section List',
       type: 'array',

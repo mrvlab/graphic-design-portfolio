@@ -145,6 +145,7 @@ export const singleProjectQuery = defineQuery(`
         asset
       }
     },
+    layout,
     sectionList[] {
       _type == "section" => {
         _type,

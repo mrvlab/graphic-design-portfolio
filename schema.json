@@ -1458,6 +1458,27 @@
         },
         "optional": true
       },
+      "layout": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "firstLayout"
+            },
+            {
+              "type": "string",
+              "value": "secondLayout"
+            },
+            {
+              "type": "string",
+              "value": "thirdLayout"
+            }
+          ]
+        },
+        "optional": true
+      },
       "sectionList": {
         "type": "objectAttribute",
         "value": {
