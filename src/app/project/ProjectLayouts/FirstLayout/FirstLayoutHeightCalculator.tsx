@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from 'react';
 
-export const HeightCalculator = () => {
+export const FirstLayoutHeightCalculator = () => {
   const updateHeight = useCallback((element: HTMLElement) => {
     requestAnimationFrame(() => {
       const height = element.offsetHeight;
@@ -17,11 +17,14 @@ export const HeightCalculator = () => {
     // Wait for hydration
     if (typeof window === 'undefined') return;
 
-    const element = document.getElementById('first-media-section');
+    const parentElement = document.getElementById('first-layout');
+    if (!parentElement) return;
+
+    const element = parentElement.querySelector('#first-media-section');
     if (!element) return;
 
     // Initial measurement
-    updateHeight(element);
+    updateHeight(element as HTMLElement);
 
     // Setup ResizeObserver for the element
     const resizeObserver = new ResizeObserver((entries) => {
@@ -35,7 +38,7 @@ export const HeightCalculator = () => {
     resizeObserver.observe(element);
 
     // Also watch for window resize for any layout shifts
-    const handleWindowResize = () => updateHeight(element);
+    const handleWindowResize = () => updateHeight(element as HTMLElement);
     window.addEventListener('resize', handleWindowResize, { passive: true });
 
     // Cleanup

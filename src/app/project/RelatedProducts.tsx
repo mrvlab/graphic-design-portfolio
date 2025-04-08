@@ -11,13 +11,15 @@ const RelatedProducts = () => {
         <Carousel slides={SLIDES} />
       </section>
 
-      <section className='hidden lg:flex lg:flex-col lg:justify-center gap-8 min-h-dvh'>
-        <h3 className='w-full text-center font-bold'>( Related Products )</h3>
-        <div className='grid grid-cols-24'>
-          <div className='aspect-4/5 col-start-6 col-span-2 bg-orange-200'></div>
-          <div className='aspect-4/5 col-start-10 col-span-2 bg-amber-400'></div>
-          <div className='aspect-4/5 col-start-14 col-span-2 bg-amber-600'></div>
-          <div className='aspect-4/5 col-start-18 col-span-2 bg-amber-800'></div>
+      <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8 '>
+        <h3 className='lg:w-full lg:text-center lg:font-bold'>
+          ( Related Products )
+        </h3>
+        <div className='lg:grid lg:grid-cols-24'>
+          <div className='lg:aspect-4/5 lg:col-start-6 lg:col-span-2 lg:bg-orange-200'></div>
+          <div className='lg:aspect-4/5 lg:col-start-10 lg:col-span-2 lg:bg-amber-400'></div>
+          <div className='lg:aspect-4/5 lg:col-start-14 lg:col-span-2 lg:bg-amber-600'></div>
+          <div className='lg:aspect-4/5 lg:col-start-18 lg:col-span-2 lg:bg-amber-800'></div>
         </div>
       </section>
     </div>

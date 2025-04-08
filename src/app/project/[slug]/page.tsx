@@ -5,7 +5,8 @@ import { generateSeoMetadata } from '@/utils/generateMetadata';
 import { SingleProjectQueryResult } from '../../../../sanity.types';
 import { QueryParams } from 'next-sanity';
 import RelatedProducts from '../RelatedProducts';
-import FirstLayout from '../ProjectLayouts/FirstLayout';
+// import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
+import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -52,7 +53,8 @@ export default async function Page({
 
   return (
     <div className='flex flex-col h-full relative'>
-      <FirstLayout />
+      {/* <FirstLayout /> */}
+      <SecondLayout />
       <RelatedProducts />
     </div>
   );

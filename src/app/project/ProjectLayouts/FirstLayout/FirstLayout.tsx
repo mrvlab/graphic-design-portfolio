@@ -1,11 +1,11 @@
-import { HeightCalculator } from '@/components/HeightCalculator';
+import { FirstLayoutHeightCalculator } from '@/app/project/ProjectLayouts/FirstLayout/FirstLayoutHeightCalculator';
 import React from 'react';
 
 const FirstLayout = () => {
   return (
     <>
-      <HeightCalculator />
-      <div className='flex flex-col relative'>
+      <FirstLayoutHeightCalculator />
+      <div className='flex flex-col relative' id='first-layout'>
         <section className='flex flex-col justify-center items-center sticky top-0 min-h-dvh flex-1 bg-transparent z-10'>
           First section
         </section>
