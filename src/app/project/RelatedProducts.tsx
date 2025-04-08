@@ -5,7 +5,7 @@ const RelatedProducts = () => {
   const SLIDE_COUNT = 5;
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
   return (
-    <div>
+    <div className='bg-white z-10'>
       <section className='flex flex-col gap-6 lg:hidden'>
         <h3 className='text-center pt-32 font-bold'>( Related Products )</h3>
         <Carousel slides={SLIDES} />
