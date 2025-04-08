@@ -7,7 +7,7 @@ import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import BlurDown from '@/components/NavBar/BlurDown';
-
+import LenisScroller from '@/components/LenisScroller';
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -32,7 +32,10 @@ export default async function RootLayout({
         <div className='block lg:hidden z-10'>Close</div>
       </div>
       {/* Main content */}
-      <main className='flex flex-col flex-1 h-full'>{children}</main>
+      <main className='flex flex-col flex-1 h-full'>
+        <LenisScroller />
+        {children}
+      </main>
 
       {/* Footer */}
       <Footer />

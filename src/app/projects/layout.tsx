@@ -8,7 +8,7 @@ import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import { lausanne } from '@/fonts/Lausanne';
 import BlurDown from '@/components/NavBar/BlurDown';
-
+import LenisScroller from '@/components/LenisScroller';
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +25,10 @@ export default async function RootLayout({
         <Navigation />
       </nav>
       {/* Main content */}
-      <main className='flex flex-col flex-1'>{children}</main>
+      <main className='flex flex-col flex-1'>
+        <LenisScroller />
+        {children}
+      </main>
 
       <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
         {/* <BlurDown /> */}

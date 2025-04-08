@@ -6,6 +6,7 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
+import LenisScroller from '@/components/LenisScroller';
 
 export default async function RootLayout({
   children,
@@ -20,7 +21,10 @@ export default async function RootLayout({
         <Navigation hideFirstSection hideThirdSection />
       </nav>
       {/* Main content */}
-      <main className='flex flex-col flex-1'>{children}</main>
+      <main className='flex flex-col flex-1'>
+        <LenisScroller />
+        {children}
+      </main>
 
       {/* Footer */}
       <Footer />
