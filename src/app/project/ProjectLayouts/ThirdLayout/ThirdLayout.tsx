@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SecondLayout = () => {
+const ThirdLayout = () => {
   return (
     <>
       <div className='flex flex-col relative' id='second-layout'>
@@ -31,65 +31,28 @@ const SecondLayout = () => {
         <div className='relative w-full max-lg:z-20 bg-green-400'>
           <section
             id='second-media-section'
-            className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
+            className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-amber-950 lg:grid-cols-24 z-0'
           >
-            <div className='aspect-9/16 lg:aspect-[5/4] w-full h-full object-cover col-span-full absolute inset-0'>
-              second media 2
-            </div>
+            <div className='aspect-9/16 lg:aspect-[5/4] w-full h-full object-cover col-span-full absolute inset-0'></div>
           </section>
 
-          <div className='relative w-full max-lg:z-30 lg:bg-transparent'>
+          <div className='sticky top-0 w-full max-lg:z-20 lg:bg-transparent'>
             <section
               id='third-media-section'
-              className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
+              className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'
             >
               <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 bg-amber-600 '>
                 Third media 3
               </div>
             </section>
-            <div className='block'>
-              <section
-                id='fourth-media-section'
-                className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-30 w-full'
-              >
-                <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
-                  Fourth media 4
-                </div>
-              </section>
-              <section
-                id='fifth-media-section'
-                className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-30 w-full'
-              >
-                <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px] bg-amber-800 '>
-                  Fifth media 5
-                </div>
-              </section>
-              <section
-                id='sixth-media-section'
-                className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-30'
-              >
-                <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6  bg-amber-800 '>
-                  Sixth media 6
-                </div>
-              </section>
-            </div>
           </div>
         </div>
 
-        <section
-          id='seventh-media-section'
-          className='grid grid-cols-16 relative min-h-screen  lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
-        >
-          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px] bg-amber-600 '>
-            Seventh media 7
-          </div>
-        </section>
-
         <div
           id='eighth-media-section'
-          className='grid gap-y-[100px] relative bg-white lg:bg-transparent z-20'
+          className='grid max-lg:gap-y-[100px] sticky top-0 bg-white lg:bg-transparent z-20'
         >
-          <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
+          <section className='grid grid-cols-16 pt-[6.25rem] lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
                 first media 8
@@ -123,4 +86,4 @@ const SecondLayout = () => {
   );
 };
 
-export default SecondLayout;
+export default ThirdLayout;
