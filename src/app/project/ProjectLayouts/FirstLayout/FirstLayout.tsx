@@ -13,7 +13,7 @@ const FirstLayout = () => {
           id='first-media-section'
           className='grid grid-cols-16 relative h-dvh lg:h-fit bg-transparent lg:grid-cols-24 z-20'
         >
-          <div className='aspect-3/4 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 bg-amber-200 mt-[120px]'>
+          <div className='aspect-3/4 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 bg-amber-200 mt-[7.5rem]'>
             <div>First media 1</div>
           </div>
         </section>
@@ -56,14 +56,14 @@ const FirstLayout = () => {
         </section>
       </div>
 
-      <div className='flex flex-col max-lg:gap-y-[100px] relative bg-green-600 h-fit'>
+      <div className='flex flex-col max-lg:gap-y-[6.25rem] relative bg-green-600 h-fit'>
         <div className='flex flex-col relative'>
           <section
             id='third-bg-media-section'
             className='grid grid-cols-16 lg:sticky h-fit lg:top-0 min-lg:aspect-[5/4] lg:grid-cols-24 z-20'
           >
             <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
-              <div className='flex flex-col py-[100px] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
+              <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
                 Bröd text
               </div>
             </div>
@@ -75,7 +75,7 @@ const FirstLayout = () => {
           </section>
         </div>
 
-        <div className='grid gap-y-[100px] relative bg-green-600'>
+        <div className='grid gap-y-[6.25rem] relative bg-green-600'>
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
@@ -100,7 +100,7 @@ const FirstLayout = () => {
             </div>
           </section>
 
-          <div className='flex flex-col items-center justify-center max-lg:pb-[100px] lg:py-[90px]'>
+          <div className='flex flex-col items-center justify-center max-lg:pb-[6.25rem] lg:py-[5.625rem]'>
             <p>Designed during the pandemic</p>
             <p>All rights reserved to former employer</p>
           </div>

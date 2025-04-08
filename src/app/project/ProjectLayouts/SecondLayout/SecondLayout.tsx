@@ -16,10 +16,10 @@ const SecondLayout = () => {
 
         <section
           id='first-media-section'
-          className='flex flex-col justify-end min-h-screen w-full'
+          className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
         >
-          <div className='grid grid-cols-16 lg:grid-cols-24 pt-[69px] lg:aspect-[5/4] w-full'>
-            <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200 '>
+          <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
+            <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200'>
               First media 1
             </div>
             <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
@@ -48,9 +48,9 @@ const SecondLayout = () => {
             <div className='block'>
               <section
                 id='fourth-media-section'
-                className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-20 w-full'
+                className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-20 w-full'
               >
-                <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
+                <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
                   Fourth media 4
                 </div>
               </section>
@@ -64,7 +64,7 @@ const SecondLayout = () => {
               </section>
               <section
                 id='sixth-media-section'
-                className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 mt-[110px] lg:z-20'
+                className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-20'
               >
                 <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6  bg-amber-800 '>
                   Sixth media 6
