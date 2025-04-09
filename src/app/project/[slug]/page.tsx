@@ -52,12 +52,22 @@ export default async function Page({
       </div>
     );
   }
+  const layout = project.layout;
 
   return (
-    <div className='flex flex-col h-full relative'>
-      {/* <FirstLayout /> */}
-      <SecondLayout />
-      {/* <ThirdLayout /> */}
+    <div className='flex flex-col h-full relative' id='project-page'>
+      {(() => {
+        switch (layout) {
+          case 'firstLayout':
+            return <FirstLayout />;
+          case 'secondLayout':
+            return <SecondLayout />;
+          case 'thirdLayout':
+            return <ThirdLayout />;
+          default:
+            return <FirstLayout />;
+        }
+      })()}
       <RelatedProducts />
     </div>
   );
