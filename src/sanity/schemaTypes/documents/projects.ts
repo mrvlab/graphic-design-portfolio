@@ -69,8 +69,8 @@ export const projects = defineType({
       fieldset: 'projectInit',
     }),
     defineField({
-      name: 'images',
-      title: 'Images',
+      name: 'mediaGallery',
+      title: 'Media Gallery',
       type: 'mediaGallery',
       fieldset: 'projectInit',
     }),
@@ -127,7 +127,7 @@ export const projects = defineType({
       title: 'title',
       comingSoon: 'comingSoon',
       updatedAt: '_updatedAt',
-      firstMediaGallery: 'images.mediaItems.0.asset',
+      firstMediaGallery: 'mediaGallery.mediaItems.0.asset',
     },
     prepare({ title, firstMediaGallery, comingSoon, updatedAt }) {
       const formattedDate = updatedAt
