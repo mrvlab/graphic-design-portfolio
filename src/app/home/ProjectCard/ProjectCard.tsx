@@ -29,7 +29,41 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
   if (!project) return null;
-  return (
+  return project.comingSoon ? (
+    <div
+      key={project._id}
+      className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+      id={`project-${index + 1}`}
+    >
+      <HomeProjectsTitle
+        project={project as ProjectsQueryResult[number]}
+        index={index}
+        isHovered={isHovered}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+
+      {isMobile ? (
+        <ScrollFadeImages
+          images={mediaItems}
+          projectId={project._id || ''}
+          currentIndex={index}
+          comingSoon={project.comingSoon || false}
+          isVisible={isVisible}
+          isScrollingDown={isScrollingDown}
+        />
+      ) : (
+        <HoverFadeImages
+          images={mediaItems}
+          projectId={project._id || ''}
+          comingSoon={project.comingSoon || false}
+          isHovered={isHovered}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+      )}
+    </div>
+  ) : (
     <Link
       href={project.slug ? `/project/${project.slug}` : '/home'}
       key={project._id}

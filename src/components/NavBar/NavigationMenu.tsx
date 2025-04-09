@@ -74,7 +74,7 @@ const NavigationMenu = async ({
           className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
         >
           {/* <BlurDown /> */}
-          <ul className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full'>
+          <ul className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full lg:gap-3'>
             <NavItems navItems={navItems} />
           </ul>
         </div>
