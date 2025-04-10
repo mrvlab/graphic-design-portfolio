@@ -1,7 +1,21 @@
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
+import { PortableText } from 'next-sanity';
+import NextImage from '@/components/Media/NextImage';
+import MuxVideo from '@/components/Media/MuxVideo';
 
 const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
+  if (!project?.sectionList) return null;
+
+  const sections = project.sectionList.filter(
+    (item) => item._type === 'section'
+  );
+  if (!sections) return null;
+
+  const firstSection = sections[0];
+  const secondSection = sections[1];
+  const thirdSection = sections[2];
+  const fourthSection = sections[3];
   return (
     <>
       <div className='flex flex-col relative' id='second-layout'>
@@ -9,10 +23,9 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           id='second-media-section'
           className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none'
         >
-          <div className='max-w-2xl mx-auto px-4'>
-            <span className='block'>Text section</span>
-            <span className='block'>With lots of text</span>
-          </div>
+          {firstSection.richText && (
+            <PortableText value={firstSection.richText} />
+          )}
         </section>
 
         <section
@@ -21,10 +34,24 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
         >
           <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
             <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200'>
-              First media 1
+              <NextImage
+                refId={firstSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
+                alt={firstSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
+                width={1920}
+                height={2400}
+                priority={true}
+                className='object-cover w-full h-full'
+              />
             </div>
             <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
-              Second media 2
+              <NextImage
+                refId={firstSection.mediaGallery?.mediaItems?.[1]?.asset?._id}
+                alt={firstSection.mediaGallery?.mediaItems?.[1]?.alt || ''}
+                width={1920}
+                height={2400}
+                priority={true}
+                className='object-cover w-full h-full'
+              />
             </div>
           </div>
         </section>
@@ -34,8 +61,15 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             id='second-media-section'
             className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
           >
-            <div className='aspect-9/16 lg:aspect-[5/4] w-full h-full object-cover col-span-full absolute inset-0'>
-              second media 2
+            <div className='aspect-9/16 lg:aspect-16/9 w-full h-full object-cover col-span-full absolute inset-0'>
+              <NextImage
+                refId={secondSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
+                alt={secondSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
+                width={1920}
+                height={1280}
+                priority={true}
+                className='object-cover w-full h-full'
+              />
             </div>
           </section>
 
@@ -45,7 +79,15 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
             >
               <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 bg-amber-600 '>
-                Third media 3
+                <NextImage
+                  refId={
+                    secondSection.mediaGallery?.mediaItems?.[1]?.asset?._id
+                  }
+                  alt={secondSection.mediaGallery?.mediaItems?.[1]?.alt || ''}
+                  width={1920}
+                  height={1280}
+                  priority={true}
+                />
               </div>
             </section>
             <div className='block'>
@@ -54,7 +96,12 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
                 <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
-                  Fourth media 4
+                  <MuxVideo
+                    playbackId={
+                      secondSection.mediaGallery?.mediaItems?.[2]?.asset
+                        ?.playbackId || ''
+                    }
+                  />
                 </div>
               </section>
               <section
@@ -62,7 +109,19 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
                 <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px] bg-amber-800 '>
-                  Fifth media 5
+                  {secondSection.mediaGallery?.mediaItems?.[3]?.asset && (
+                    <NextImage
+                      refId={
+                        secondSection.mediaGallery?.mediaItems?.[3]?.asset?._id
+                      }
+                      alt={
+                        secondSection.mediaGallery?.mediaItems?.[3]?.alt || ''
+                      }
+                      width={1920}
+                      height={2400}
+                      className='object-cover w-full h-full'
+                    />
+                  )}
                 </div>
               </section>
               <section
@@ -70,7 +129,19 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-30'
               >
                 <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6  bg-amber-800 '>
-                  Sixth media 6
+                  {secondSection.mediaGallery?.mediaItems?.[4]?.asset && (
+                    <NextImage
+                      refId={
+                        secondSection.mediaGallery?.mediaItems?.[4]?.asset?._id
+                      }
+                      alt={
+                        secondSection.mediaGallery?.mediaItems?.[4]?.alt || ''
+                      }
+                      width={1920}
+                      height={2400}
+                      className='object-cover w-full h-full'
+                    />
+                  )}
                 </div>
               </section>
             </div>
@@ -82,7 +153,15 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           className='grid grid-cols-16 relative min-h-screen  lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
         >
           <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px] bg-amber-600 '>
-            Seventh media 7
+            {thirdSection.mediaGallery?.mediaItems?.[0]?.asset && (
+              <NextImage
+                refId={thirdSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
+                alt={thirdSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
+                width={1920}
+                height={2400}
+                className='object-cover w-full h-full'
+              />
+            )}
           </div>
         </section>
 
@@ -93,7 +172,15 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
-                first media 8
+                {fourthSection.mediaGallery?.mediaItems?.[0]?.asset && (
+                  <NextImage
+                    refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
+                    alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
+                    width={1920}
+                    height={2400}
+                    className='object-cover w-full h-full'
+                  />
+                )}
               </div>
             </div>
           </section>
@@ -101,7 +188,15 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
-                second media 8
+                {fourthSection.mediaGallery?.mediaItems?.[1]?.asset && (
+                  <NextImage
+                    refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
+                    alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
+                    width={1920}
+                    height={2400}
+                    className='object-cover w-full h-full'
+                  />
+                )}
               </div>
             </div>
           </section>
@@ -109,14 +204,25 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 items-center justify-center lg:grid-cols-24 z-20 bg-white w-full'>
             <div className='col-start-2 col-span-8 lg:col-start-19 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-600 bg-opacity-80 backdrop-blur'>
-                third media 8
+                {fourthSection.mediaGallery?.mediaItems?.[2]?.asset && (
+                  <NextImage
+                    refId={
+                      fourthSection.mediaGallery?.mediaItems?.[2]?.asset?._id
+                    }
+                    alt={fourthSection.mediaGallery?.mediaItems?.[2]?.alt || ''}
+                    width={1920}
+                    height={2400}
+                    className='object-cover w-full h-full'
+                  />
+                )}
               </div>
             </div>
           </section>
 
-          <div className='flex flex-col items-center justify-center max-lg:pb-[100px] lg:py-[90px] bg-white z-20'>
-            <p>Designed during the pandemic</p>
-            <p>All rights reserved to former employer</p>
+          <div className='flex flex-col items-center justify-center text-center max-lg:pb-[100px] lg:py-[90px] bg-white z-20'>
+            {fourthSection.richTextBottom && (
+              <PortableText value={fourthSection.richTextBottom} />
+            )}
           </div>
         </div>
       </div>
