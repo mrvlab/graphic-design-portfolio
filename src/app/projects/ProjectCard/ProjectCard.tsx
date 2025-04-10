@@ -41,8 +41,8 @@ function ProjectCard({ project, index }: IProjectCard) {
   }, [isHovered, isDesktop]);
 
   const mediaItems = useMemo(
-    () => project?.images?.mediaItems ?? [],
-    [project?.images?.mediaItems]
+    () => project?.mediaGallery?.mediaItems ?? [],
+    [project?.mediaGallery?.mediaItems]
   );
 
   const heightClasses = useMemo(() => {

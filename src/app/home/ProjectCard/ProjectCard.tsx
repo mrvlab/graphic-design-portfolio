@@ -13,11 +13,11 @@ import IHomeProjectCard from '../types/IHomeProjectCard';
 const ProjectCard = ({ project, index }: IHomeProjectCard) => {
   const mediaItems = useMemo(
     () =>
-      (project?.images?.mediaItems ?? []).map((item) => ({
+      (project?.mediaGallery?.mediaItems ?? []).map((item) => ({
         ...item,
         _id: null,
       })),
-    [project?.images?.mediaItems]
+    [project?.mediaGallery?.mediaItems]
   );
 
   const isMobile = useIsMobile();
@@ -45,7 +45,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
 
       {isMobile ? (
         <ScrollFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           currentIndex={index}
           comingSoon={project.comingSoon || false}
@@ -54,7 +54,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
         />
       ) : (
         <HoverFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           comingSoon={project.comingSoon || false}
           isHovered={isHovered}
@@ -80,7 +80,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
 
       {isMobile ? (
         <ScrollFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           currentIndex={index}
           comingSoon={project.comingSoon || false}
@@ -89,7 +89,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
         />
       ) : (
         <HoverFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           comingSoon={project.comingSoon || false}
           isHovered={isHovered}

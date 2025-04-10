@@ -5,14 +5,14 @@ import NextImage from '../../../components/Media/NextImage';
 import IHoverFadeImages from '../types/IHoverFadeImages';
 
 export default function HoverFadeImages({
-  images,
+  mediaGallery,
   projectId,
   comingSoon = false,
   isHovered,
   onMouseEnter,
   onMouseLeave,
 }: IHoverFadeImages) {
-  const items = useMemo(() => images?.slice(0, 2) ?? [], [images]);
+  const items = useMemo(() => mediaGallery?.slice(0, 2) ?? [], [mediaGallery]);
 
   const imageData = useMemo(
     () =>
@@ -79,7 +79,7 @@ export default function HoverFadeImages({
         onMouseLeave={onMouseLeave}
         layoutId={`container-${projectId}`}
       >
-        {imageData.map(({ ref, imageUrl }, idx) => {
+        {imageData.map(({ ref, imageUrl }, idx: number) => {
           if (!imageUrl) return null;
 
           return (

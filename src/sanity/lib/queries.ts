@@ -69,7 +69,7 @@ export const fetchHomePageQuery = defineQuery(`
     title,
     year,
     richText,
-    images {
+    mediaGallery {
       _type,
       mediaItems[] {
         _key,
@@ -99,7 +99,7 @@ export const fetchProjectsIndexQuery = defineQuery(`
     title,
     year,
     richText,
-    images {
+    mediaGallery {
       _type,
       mediaItems[] {
         _key,
@@ -137,7 +137,7 @@ export const singleProjectQuery = defineQuery(`
     "slug": slug.current,
     year,
     richText,
-    images {
+    mediaGallery {
       _type,
       mediaItems[] {
         _key,
@@ -153,7 +153,7 @@ export const singleProjectQuery = defineQuery(`
         richText,
         richTextBottom,
         sectionBgColor,
-        images {
+        mediaGallery {
           _type,
           mediaItems[] {
             _key,
@@ -171,7 +171,7 @@ export const singleProjectQuery = defineQuery(`
           "slug": slug.current,
           comingSoon,
           year,
-          images {
+          mediaGallery {
             _type,
             mediaItems[] {
               _key,
@@ -308,7 +308,7 @@ export const projectsQuery = defineQuery(`
     title,
     year,
     richText,
-    images {
+    mediaGallery {
       _type,
       mediaItems[] {
         _key,

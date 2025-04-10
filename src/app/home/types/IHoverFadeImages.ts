@@ -1,7 +1,7 @@
 import MediaItem from './IMediaItem';
 
 type IHoverFadeImages = {
-  images: MediaItem | null;
+  mediaGallery: MediaItem | null;
   projectId: string;
   comingSoon?: boolean | null;
   isHovered: boolean;
