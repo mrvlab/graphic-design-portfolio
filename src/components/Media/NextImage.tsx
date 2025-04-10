@@ -27,7 +27,7 @@ export default function NextImage({
   width = 400,
   height = 533,
   className,
-  sizes = '(min-width: 1024px) 20vw, 50vw',
+  sizes,
   priority = false,
   ...rest
 }: RefImageProps) {
@@ -49,14 +49,16 @@ export default function NextImage({
 
   if (!imageUrl) return null;
 
+  const calculatedSizes = sizes || `(max-width: ${width}px) 100vw, ${width}px`;
+
   return (
     <Image
       src={imageUrl}
       alt={altText}
       width={width}
       height={height}
-      className={clsx('object-cover aspect-3/4', className)}
-      sizes={sizes}
+      className={clsx('object-cover', className)}
+      sizes={calculatedSizes}
       priority={priority}
       placeholder={lqip && blurDataURL ? 'blur' : undefined}
       blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}
