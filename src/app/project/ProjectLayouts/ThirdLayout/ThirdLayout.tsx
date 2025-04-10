@@ -51,9 +51,9 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
         <div
           id='eighth-media-section'
-          className='grid max-lg:gap-y-[100px] sticky top-0 bg-white lg:bg-transparent z-20'
+          className='grid gap-y-[6.25rem] relative bg-white z-20'
         >
-          <section className='grid grid-cols-16 pt-[6.25rem] lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
+          <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
                 first media 8
@@ -61,7 +61,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </div>
           </section>
 
-          <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
+          <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
                 second media 8
@@ -77,7 +77,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </div>
           </section>
 
-          <div className='flex flex-col items-center justify-center max-lg:pb-[100px] lg:py-[90px] bg-white z-20'>
+          <div className='flex flex-col items-center justify-center max-lg:pb-[6.25rem] lg:py-[5.625rem]'>
             <p>Designed during the pandemic</p>
             <p>All rights reserved to former employer</p>
           </div>
