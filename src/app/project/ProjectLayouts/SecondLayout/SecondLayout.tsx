@@ -1,6 +1,7 @@
 import React from 'react';
+import { SingleProjectQueryResult } from '../../../../../sanity.types';
 
-const SecondLayout = () => {
+const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   return (
     <>
       <div className='flex flex-col relative' id='second-layout'>

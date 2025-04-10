@@ -1,7 +1,12 @@
 import React from 'react';
 import Carousel from './Carousel';
+import { SingleProjectQueryResult } from '../../../sanity.types';
 
-const RelatedProducts = () => {
+const RelatedProducts = ({
+  project,
+}: {
+  project: SingleProjectQueryResult;
+}) => {
   const SLIDE_COUNT = 5;
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
   return (

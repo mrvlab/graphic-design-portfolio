@@ -5,9 +5,8 @@ import { generateSeoMetadata } from '@/utils/generateMetadata';
 import { SingleProjectQueryResult } from '../../../../sanity.types';
 import { QueryParams } from 'next-sanity';
 import RelatedProducts from '../RelatedProducts';
-// import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
-import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
+import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
 
 export async function generateStaticParams() {
@@ -59,16 +58,17 @@ export default async function Page({
       {(() => {
         switch (layout) {
           case 'firstLayout':
-            return <FirstLayout />;
+            return <FirstLayout project={project} />;
           case 'secondLayout':
-            return <SecondLayout />;
+            return <SecondLayout project={project} />;
           case 'thirdLayout':
-            return <ThirdLayout />;
+            return <ThirdLayout project={project} />;
           default:
-            return <FirstLayout />;
+            return <FirstLayout project={project} />;
         }
       })()}
-      <RelatedProducts />
+
+      <RelatedProducts project={project} />
     </div>
   );
 }
