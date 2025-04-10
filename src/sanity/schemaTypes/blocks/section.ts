@@ -56,7 +56,7 @@ export const section = defineType({
   preview: {
     select: {
       title: 'richText.0.children.0.text',
-      mediaGallery: 'mediaGallery.mediaItems.0.asset ',
+      mediaGallery: 'mediaGallery.mediaItems.0.asset',
     },
     prepare({ title, mediaGallery }) {
       return {

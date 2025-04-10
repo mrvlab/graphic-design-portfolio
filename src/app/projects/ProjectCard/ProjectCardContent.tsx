@@ -90,7 +90,7 @@ function ProjectCardContent({
           {mediaItems.slice(0, 5).map((image: IMediaItem, i: number) => {
             const heightClass = heightClasses[i] || '';
             const visibilityClass = i === 4 ? 'hidden lg:block' : '';
-            const ref = image.asset?._ref;
+            const ref = image.asset?._id;
 
             if (!ref) return null;
 

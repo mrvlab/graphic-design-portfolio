@@ -2,6 +2,7 @@ import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import { PortableText } from 'next-sanity';
 import NextImage from '@/components/Media/NextImage';
+import MuxVideo from '@/components/Media/MuxVideo';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -15,8 +16,6 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   const secondSection = sections[1];
   const thirdSection = sections[2];
   const fourthSection = sections[3];
-
-  console.log('secondSection:', secondSection);
 
   return (
     <>
@@ -37,7 +36,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             {firstSection.mediaGallery?.mediaItems?.[0]?.asset && (
               <div className='aspect-16/9 w-full h-full object-cover col-span-full sticky top-0'>
                 <NextImage
-                  refId={firstSection.mediaGallery.mediaItems[0].asset._ref}
+                  refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                   alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
                   width={1920}
                   height={1280}
@@ -54,7 +53,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className='aspect-4/5 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 bg-amber-200 mt-[7.5rem]'>
               {firstSection.mediaGallery?.mediaItems?.[1]?.asset && (
                 <NextImage
-                  refId={firstSection.mediaGallery.mediaItems[1].asset._ref}
+                  refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                   alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
                   width={1920}
                   height={2400}
@@ -71,7 +70,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className='aspect-4/5 col-start-2 col-span-14 lg:col-start-15 lg:col-span-9  bg-amber-400 lg:-translate-y-[10%]'>
               {firstSection.mediaGallery?.mediaItems?.[2]?.asset && (
                 <NextImage
-                  refId={firstSection.mediaGallery.mediaItems[2].asset._ref}
+                  refId={firstSection.mediaGallery.mediaItems[2].asset._id}
                   alt={firstSection.mediaGallery.mediaItems[2].alt || ''}
                   width={1920}
                   height={2400}
@@ -87,8 +86,13 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           id='third-media-section'
           className='grid grid-cols-16 relative min-h-dvh lg:grid-cols-24 bg-transparent p-6 z-20'
         >
-          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 bg-amber-600 '>
-            Third media 3
+          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
+            <MuxVideo
+              playbackId={
+                secondSection.mediaGallery?.mediaItems?.[0]?.asset
+                  ?.playbackId || ''
+              }
+            />
           </div>
         </section>
 
@@ -101,7 +105,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             {thirdSection.mediaGallery?.mediaItems?.[0]?.asset && (
               <div className='aspect-16/9 w-full h-full object-cover col-span-full sticky top-0'>
                 <NextImage
-                  refId={thirdSection.mediaGallery.mediaItems[0].asset._ref}
+                  refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                   alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
                   width={1920}
                   height={1280}
@@ -117,7 +121,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className='aspect-4/5 col-start-4 col-span-10 self-center lg:col-start-9 lg:col-span-8 bg-amber-200'>
               {thirdSection.mediaGallery?.mediaItems?.[1]?.asset && (
                 <NextImage
-                  refId={thirdSection.mediaGallery.mediaItems[1].asset._ref}
+                  refId={thirdSection.mediaGallery.mediaItems[1].asset._id}
                   alt={thirdSection.mediaGallery.mediaItems[1].alt || ''}
                   width={1920}
                   height={2400}
@@ -142,16 +146,16 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             >
               <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
                 <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
-                  Bröd text
+                  {fourthSection.richText && (
+                    <PortableText value={fourthSection.richText} />
+                  )}
                 </div>
               </div>
               <div className='col-start-2 col-span-14 lg:col-start-14 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
                 <div className='grid lg:flex lg:flex-col lg:w-full aspect-4/5 lg:mt-[15%] bg-amber-200'>
                   {fourthSection.mediaGallery?.mediaItems?.[0]?.asset && (
                     <NextImage
-                      refId={
-                        fourthSection.mediaGallery.mediaItems[0].asset._ref
-                      }
+                      refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
                       alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
                       width={1920}
                       height={2400}
@@ -169,9 +173,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
                   {fourthSection.mediaGallery?.mediaItems?.[1]?.asset && (
                     <NextImage
-                      refId={
-                        fourthSection.mediaGallery.mediaItems[1].asset._ref
-                      }
+                      refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
                       alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
                       width={1920}
                       height={2400}
@@ -187,9 +189,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
                   {fourthSection.mediaGallery?.mediaItems?.[2]?.asset && (
                     <NextImage
-                      refId={
-                        fourthSection.mediaGallery.mediaItems[2].asset._ref
-                      }
+                      refId={fourthSection.mediaGallery.mediaItems[2].asset._id}
                       alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
                       width={1920}
                       height={2400}
@@ -205,9 +205,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <div className='w-full aspect-4/5 bg-amber-600 bg-opacity-80 backdrop-blur'>
                   {fourthSection.mediaGallery?.mediaItems?.[3]?.asset && (
                     <NextImage
-                      refId={
-                        fourthSection.mediaGallery.mediaItems[3].asset._ref
-                      }
+                      refId={fourthSection.mediaGallery.mediaItems[3].asset._id}
                       alt={fourthSection.mediaGallery.mediaItems[3].alt || ''}
                       width={1920}
                       height={2400}

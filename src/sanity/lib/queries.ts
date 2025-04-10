@@ -75,7 +75,14 @@ export const fetchHomePageQuery = defineQuery(`
         _key,
         _id,
         alt,
-        asset
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
       }
     },
     comingSoon
@@ -105,7 +112,14 @@ export const fetchProjectsIndexQuery = defineQuery(`
         _key,
         _id,
         alt,
-        asset
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
       }
     },
     comingSoon,
@@ -142,52 +156,67 @@ export const singleProjectQuery = defineQuery(`
       mediaItems[] {
         _key,
         alt,
-        asset
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
       }
     },
     layout,
     sectionList[] {
-      _type == "section" => {
-        _type,
+      _type,
+      _key,
+      richText,
+      richTextBottom,
+      sectionBgColor,
+      mediaGallery {
+      _type,
+      mediaItems[] {
         _key,
-        richText,
-        richTextBottom,
-        sectionBgColor,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+        }
+      },
+      projects[]->{
+        _id,
+        title,
+        "slug": slug.current,
+        comingSoon,
+        year,
         mediaGallery {
-          _type,
-          mediaItems[] {
-            _key,
-            alt,
-            asset
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset-> {
+            _id,
+            _ref,
+            playbackId,
+            assetId,
+            filename,
+            url
           }
         }
       },
-      _type == "relatedProjects" => {
-        _type,
-        _key,
-        projects[]->{
-          _id,
-          title,
-          "slug": slug.current,
-          comingSoon,
-          year,
-          mediaGallery {
-            _type,
-            mediaItems[] {
-              _key,
-              alt,
-              asset
-            }
-          }
-        }
       }
     },
     seo {
-    title,
-    description,
-    image {
-      _type,
-      asset
+      title,
+      description,
+      image {
+        _type,
+        asset
       }
     }
   }
@@ -313,7 +342,14 @@ export const projectsQuery = defineQuery(`
       mediaItems[] {
         _key,
         alt,
-        asset
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
       }
     },
     comingSoon,

@@ -27,9 +27,9 @@ export const relatedProjects = defineType({
       title: 'projects.0.title',
       mediaGallery: 'projects.0.mediaGallery.mediaItems.0.asset',
     },
-    prepare({ title, mediaGallery }) {
+    prepare({ mediaGallery }) {
       return {
-        title: title || 'Section',
+        title: 'Related Projects',
         media: mediaGallery || DocumentIcon,
       };
     },

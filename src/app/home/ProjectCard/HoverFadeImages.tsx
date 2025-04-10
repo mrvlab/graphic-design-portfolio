@@ -17,7 +17,7 @@ export default function HoverFadeImages({
   const imageData = useMemo(
     () =>
       items.map((image) => {
-        const ref = image.asset?._ref;
+        const ref = image.asset?._id;
         return {
           ref,
           ...imgData({

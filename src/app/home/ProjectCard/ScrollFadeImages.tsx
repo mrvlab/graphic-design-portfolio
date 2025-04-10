@@ -41,7 +41,7 @@ export default function ScrollFadeImages({
     >
       {mediaGallery?.slice(0, 2).map((image, idx: number) => {
         if (!image) return null;
-        const ref = image.asset?._ref;
+        const ref = image.asset?._id;
         const { imageUrl } = imgData({
           ref: ref || '',
           alt: image.alt?.trim(),
