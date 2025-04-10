@@ -105,7 +105,7 @@ const Carousel: React.FC<PropType> = (props) => {
       .on('scroll', tweenScale)
       .on('select', onSelect)
       .on('slideFocus', tweenScale);
-  }, [emblaApi, tweenScale, onSelect]);
+  }, [emblaApi, tweenScale, onSelect, setTweenNodes, setTweenFactor]);
 
   return (
     <div className='embla'>
