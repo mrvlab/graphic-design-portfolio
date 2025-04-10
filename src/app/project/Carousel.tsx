@@ -7,30 +7,34 @@ import {
   EmblaOptionsType,
 } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
+import NextImage from '@/components/Media/NextImage';
+import { SingleProjectQueryResult } from '../../../sanity.types';
+
+type RelatedSection = Extract<
+  NonNullable<NonNullable<SingleProjectQueryResult>['sectionList']>[number],
+  { _type: 'relatedProjects' }
+>;
+
+type ICarousel = {
+  relatedProducts: RelatedSection;
+};
 
 const TWEEN_FACTOR_BASE = 0.52;
 
 const numberWithinRange = (number: number, min: number, max: number): number =>
   Math.min(Math.max(number, min), max);
 
-type PropType = {
-  slides: number[];
-  options?: EmblaOptionsType;
+const defaultOptions: EmblaOptionsType = {
+  loop: true,
+  active: true,
+  breakpoints: {
+    '(max-width: 1023px)': { active: true },
+    '(min-width: 1024px)': { active: false },
+  },
 };
 
-const Carousel: React.FC<PropType> = (props) => {
-  // Example of options with breakpoints and active state
-  const defaultOptions: EmblaOptionsType = {
-    loop: true,
-    active: true,
-    breakpoints: {
-      '(max-width: 1023px)': { active: true },
-      '(min-width: 1024px)': { active: false },
-    },
-  };
-
-  const { slides, options = defaultOptions } = props;
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(defaultOptions);
   const [activeIndex, setActiveIndex] = useState(0);
   const tweenFactor = useRef(0);
   const tweenNodes = useRef<HTMLElement[]>([]);
@@ -110,19 +114,33 @@ const Carousel: React.FC<PropType> = (props) => {
   return (
     <div className='embla'>
       <div className='embla__viewport' ref={emblaRef}>
-        <div className='embla__container'>
-          {slides.map((index) => {
+        <div className='embla__container lg:grid lg:grid-cols-24'>
+          {relatedProducts.projects?.map((project, index: number) => {
             const textClass =
               activeIndex === index ? 'opacity-100' : 'opacity-0';
+            const gridStartClass = `lg:col-start-${6 + index * 4}`;
+
             return (
-              <div className='embla__slide' key={index}>
-                <div className='embla__slide__number'>{index + 1}</div>
+              <div
+                className={`embla__slide lg:aspect-4/5 ${gridStartClass} lg:col-span-2`}
+                key={project._id}
+              >
+                <div className='embla__slide__number h-full'>
+                  <NextImage
+                    refId={project.mediaGallery?.mediaItems?.[0]?.asset?._id}
+                    alt={project.mediaGallery?.mediaItems?.[0]?.alt || ''}
+                    width={1920}
+                    height={1280}
+                    priority={true}
+                    className='object-cover w-full h-full'
+                  />
+                </div>
                 <div
                   className={`flex flex-col text-center pt-3 transition-opacity duration-300 ease-in ${textClass}`}
                 >
                   <span className=''>(0{index + 1})</span>
-                  <span className=''>Mud Studios</span>
-                  <span className=''>Year: 2024</span>
+                  <span className=''>{project.title || 'Untitled'}</span>
+                  <span className=''>Year: {project.year || '2024'}</span>
                 </div>
               </div>
             );

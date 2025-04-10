@@ -160,7 +160,7 @@ body {
   flex: 0 0 var(--slide-size);
   min-width: 0;
   padding-left: var(--slide-spacing);
-  aspect-ratio: 3/4;
+  aspect-ratio: 4/5;
   display: flex;
   flex-direction: column;
 }
