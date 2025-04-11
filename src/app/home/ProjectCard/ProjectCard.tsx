@@ -13,11 +13,11 @@ import IHomeProjectCard from '../types/IHomeProjectCard';
 const ProjectCard = ({ project, index }: IHomeProjectCard) => {
   const mediaItems = useMemo(
     () =>
-      (project?.images?.mediaItems ?? []).map((item) => ({
+      (project?.mediaGallery?.mediaItems ?? []).map((item) => ({
         ...item,
         _id: null,
       })),
-    [project?.images?.mediaItems]
+    [project?.mediaGallery?.mediaItems]
   );
 
   const isMobile = useIsMobile();
@@ -29,7 +29,41 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
   const handleMouseLeave = useCallback(() => setIsHovered(false), []);
 
   if (!project) return null;
-  return (
+  return project.comingSoon ? (
+    <div
+      key={project._id}
+      className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+      id={`project-${index + 1}`}
+    >
+      <HomeProjectsTitle
+        project={project as ProjectsQueryResult[number]}
+        index={index}
+        isHovered={isHovered}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      />
+
+      {isMobile ? (
+        <ScrollFadeImages
+          mediaGallery={mediaItems}
+          projectId={project._id || ''}
+          currentIndex={index}
+          comingSoon={project.comingSoon || false}
+          isVisible={isVisible}
+          isScrollingDown={isScrollingDown}
+        />
+      ) : (
+        <HoverFadeImages
+          mediaGallery={mediaItems}
+          projectId={project._id || ''}
+          comingSoon={project.comingSoon || false}
+          isHovered={isHovered}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+      )}
+    </div>
+  ) : (
     <Link
       href={project.slug ? `/project/${project.slug}` : '/home'}
       key={project._id}
@@ -46,7 +80,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
 
       {isMobile ? (
         <ScrollFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           currentIndex={index}
           comingSoon={project.comingSoon || false}
@@ -55,7 +89,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
         />
       ) : (
         <HoverFadeImages
-          images={mediaItems}
+          mediaGallery={mediaItems}
           projectId={project._id || ''}
           comingSoon={project.comingSoon || false}
           isHovered={isHovered}

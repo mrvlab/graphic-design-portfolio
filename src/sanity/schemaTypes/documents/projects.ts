@@ -69,12 +69,25 @@ export const projects = defineType({
       fieldset: 'projectInit',
     }),
     defineField({
-      name: 'images',
-      title: 'Images',
+      name: 'mediaGallery',
+      title: 'Media Gallery',
       type: 'mediaGallery',
       fieldset: 'projectInit',
     }),
     // ----- Project page -----
+    defineField({
+      name: 'layout',
+      title: 'Layout',
+      type: 'string',
+      fieldset: 'projectPage',
+      options: {
+        list: [
+          { title: 'First Layout', value: 'firstLayout' },
+          { title: 'Second Layout', value: 'secondLayout' },
+          { title: 'Third Layout', value: 'thirdLayout' },
+        ],
+      },
+    }),
     defineField({
       name: 'sectionList',
       title: 'Section List',
@@ -114,7 +127,7 @@ export const projects = defineType({
       title: 'title',
       comingSoon: 'comingSoon',
       updatedAt: '_updatedAt',
-      firstMediaGallery: 'images.mediaItems.0.asset',
+      firstMediaGallery: 'mediaGallery.mediaItems.0.asset',
     },
     prepare({ title, firstMediaGallery, comingSoon, updatedAt }) {
       const formattedDate = updatedAt

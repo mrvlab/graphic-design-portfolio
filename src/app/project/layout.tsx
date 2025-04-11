@@ -6,9 +6,8 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import Navigation from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import { lausanne } from '@/fonts/Lausanne';
 import BlurDown from '@/components/NavBar/BlurDown';
-
+import LenisScroller from '@/components/LenisScroller';
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -17,15 +16,26 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <div
-      className={`${lausanne.className} flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}
-    >
-      <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2'>
+    <div className='flex flex-col h-full pt-4 pb-2 lg:pt-0 '>
+      <Navigation hideFirstSection hideThirdSection hideAllOnDesktop />
+      <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3 lg:fixed lg:w-full'>
         <BlurDown />
+        <div className='hidden lg:block z-10'>50%</div>
         <Navigation hideFirstSection hideThirdSection />
+        <div className='hidden lg:block z-10'>Close</div>
       </nav>
+
+      <div
+        className={`flex  justify-between w-full sticky max-lg:top-0 max-lg:pt-[6px] z-50`}
+      >
+        <div className='block lg:hidden z-10'>50%</div>
+        <div className='block lg:hidden z-10'>Close</div>
+      </div>
       {/* Main content */}
-      <main className='flex flex-col flex-1'>{children}</main>
+      <main className='flex flex-col flex-1 h-full'>
+        <LenisScroller />
+        {children}
+      </main>
 
       {/* Footer */}
       <Footer />

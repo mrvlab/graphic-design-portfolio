@@ -1,7 +1,7 @@
 import IMediaItem from './IMediaItem';
 
 type IScrollFadeImages = {
-  images: IMediaItem;
+  mediaGallery: IMediaItem;
   projectId: string;
   currentIndex: number;
   comingSoon: boolean | null;

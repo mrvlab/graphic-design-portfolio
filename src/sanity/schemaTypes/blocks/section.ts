@@ -41,8 +41,8 @@ export const section = defineType({
       ],
     }),
     defineField({
-      name: 'images',
-      title: 'Images',
+      name: 'mediaGallery',
+      title: 'Media Gallery',
       type: 'mediaGallery',
     }),
     defineField({
@@ -56,7 +56,7 @@ export const section = defineType({
   preview: {
     select: {
       title: 'richText.0.children.0.text',
-      mediaGallery: 'images.mediaItems.0.asset',
+      mediaGallery: 'mediaGallery.mediaItems.0.asset',
     },
     prepare({ title, mediaGallery }) {
       return {

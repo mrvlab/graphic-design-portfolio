@@ -1,22 +1,7 @@
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import { imgData } from '@/sanity/lib/image';
 import clsx from 'clsx';
-
-type RefImageProps = {
-  refId?: string;
-  src?: string;
-  alt?: string;
-  lqip?: boolean;
-  blurStrength?: number;
-  width?: number;
-  height?: number;
-  className?: string;
-  sizes?: string;
-  priority?: boolean;
-} & Omit<
-  ImageProps,
-  'src' | 'alt' | 'width' | 'height' | 'placeholder' | 'blurDataURL'
->;
+import { INextImage } from './types/INextImage';
 
 export default function NextImage({
   refId,
@@ -27,10 +12,10 @@ export default function NextImage({
   width = 400,
   height = 533,
   className,
-  sizes = '(min-width: 1024px) 20vw, 50vw',
+  sizes,
   priority = false,
   ...rest
-}: RefImageProps) {
+}: INextImage) {
   const isSanityImage = Boolean(refId);
 
   const { imageUrl, blurDataURL, altText } = isSanityImage
@@ -49,14 +34,16 @@ export default function NextImage({
 
   if (!imageUrl) return null;
 
+  const calculatedSizes = sizes || `(max-width: ${width}px) 100vw, ${width}px`;
+
   return (
     <Image
       src={imageUrl}
       alt={altText}
       width={width}
       height={height}
-      className={clsx('object-cover aspect-3/4', className)}
-      sizes={sizes}
+      className={clsx('object-cover', className)}
+      sizes={calculatedSizes}
       priority={priority}
       placeholder={lqip && blurDataURL ? 'blur' : undefined}
       blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}

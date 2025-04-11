@@ -4,7 +4,7 @@ import NextImage from '@/components/Media/NextImage';
 import IScrollFadeImages from '../types/IScrollFadeImages';
 
 export default function ScrollFadeImages({
-  images,
+  mediaGallery,
   projectId,
   currentIndex,
   comingSoon = false,
@@ -39,8 +39,9 @@ export default function ScrollFadeImages({
       initial='hidden'
       animate={isVisible ? 'visible' : 'hidden'}
     >
-      {images?.slice(0, 2).map((image, idx) => {
-        const ref = image.asset?._ref;
+      {mediaGallery?.slice(0, 2).map((image, idx: number) => {
+        if (!image) return null;
+        const ref = image.asset?._id;
         const { imageUrl } = imgData({
           ref: ref || '',
           alt: image.alt?.trim(),

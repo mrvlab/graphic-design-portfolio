@@ -14,7 +14,9 @@
   --font-lausanne-medium: var(--font-lausanne-450);
   --aspect-3/4: 3 / 4;
   --aspect-16/9: 16 / 9;
+  --aspect-9/16: 9 / 16;
   --aspect-2/3: 2 / 3;
+  --aspect-4/5: 4 / 5;
 
   --blur-height: 280%;
   /* Blur Down */
@@ -140,4 +142,46 @@ body {
 .blur-mask-layer-up-4 {
   -webkit-mask: var(--mask-layer-up-4);
   mask: var(--mask-layer-up-4);
+}
+
+/* Carousel */
+.embla {
+  --slide-size: 45%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  aspect-ratio: 4/5;
+  display: flex;
+  flex-direction: column;
+}
+.embla__slide__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  background-color: coral;
+  transform-origin: center;
+  aspect-ratio: 4/5;
+}
+.embla__slide__text {
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
 }

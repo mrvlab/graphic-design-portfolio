@@ -1,10 +1,13 @@
-// app/project/[slug]/page.tsx
 import { client } from '@/sanity/lib/client';
 import { projectsQuery, singleProjectQuery } from '@/sanity/lib/queries';
-import { PortableText, QueryParams } from 'next-sanity';
 import { sanityFetch } from '@/sanity/lib/live';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
 import { SingleProjectQueryResult } from '../../../../sanity.types';
+import { QueryParams } from 'next-sanity';
+import RelatedProducts from '../RelatedProducts';
+import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
+import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
+import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -48,23 +51,24 @@ export default async function Page({
       </div>
     );
   }
+  const layout = project.layout;
 
   return (
-    <div className='container max-w-4xl mx-auto my-20 px-4'>
-      <div className='border-b pb-8 mb-12'>
-        <h1 className='text-5xl font-bold text-gray-900'>
-          {project.title} {project.year}
-        </h1>
-      </div>
-      {project.comingSoon && (
-        <p className='mt-4 text-xl text-gray-600'>
-          isComingSoon: {project.comingSoon ? 'Yes' : 'No'}
-        </p>
-      )}
+    <div className='flex flex-col h-full relative' id='project-page'>
+      {(() => {
+        switch (layout) {
+          case 'firstLayout':
+            return <FirstLayout project={project} />;
+          case 'secondLayout':
+            return <SecondLayout project={project} />;
+          case 'thirdLayout':
+            return <ThirdLayout project={project} />;
+          default:
+            return <FirstLayout project={project} />;
+        }
+      })()}
 
-      <div className='prose prose-lg prose-gray max-w-none'>
-        {project.richText && <PortableText value={project.richText} />}
-      </div>
+      <RelatedProducts project={project} />
     </div>
   );
 }

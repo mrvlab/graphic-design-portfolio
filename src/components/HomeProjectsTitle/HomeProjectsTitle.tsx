@@ -25,7 +25,7 @@ const HomeProjectsTitle = ({
       <div
         className={`flex flex-col lg:max-h-[42px] ${isHovered ? 'italic' : ''}`}
       >
-        <span>({(index + 1).toString().padStart(2, '0')})</span>
+        <span>{(index + 1).toFixed(1)}</span>
         <span>{project.title}</span>
         {project.comingSoon ? (
           <span>( Coming Soon )</span>
