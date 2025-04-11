@@ -37,7 +37,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
           >
             <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
-              <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200'>
+              <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1'>
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[0].asset._id}
@@ -59,7 +59,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   )
                 )}
               </div>
-              <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
+              <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 lg:-translate-y-[20%]'>
                 {firstSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[1].asset._id}
@@ -87,12 +87,12 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
       )}
 
       {secondSection && (
-        <div className='relative w-full max-lg:z-20 bg-green-400'>
+        <div className='relative w-full max-lg:z-20'>
           <section
             id='second-media-section'
             className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
           >
-            <div className='aspect-9/16 lg:aspect-16/9 w-full h-full object-cover col-span-full absolute inset-0'>
+            <div className='aspect-9/16 lg:aspect-3/2 w-full h-full object-cover col-span-full absolute inset-0'>
               {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                 <NextImage
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
@@ -120,7 +120,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               id='third-media-section'
               className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
             >
-              <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
+              <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
                 {secondSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage
                     refId={secondSection.mediaGallery.mediaItems[1].asset._id}
@@ -148,7 +148,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='fourth-media-section'
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
-                <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
+                <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px]'>
                   {secondSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[2].asset._id}
@@ -175,7 +175,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='fifth-media-section'
                 className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
-                <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px] bg-amber-800 '>
+                <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px]'>
                   {secondSection.mediaGallery?.mediaItems?.[3].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[3].asset._id}
@@ -202,7 +202,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='sixth-media-section'
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-30'
               >
-                <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6  bg-amber-800 '>
+                <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6'>
                   {secondSection.mediaGallery?.mediaItems?.[4].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[4].asset._id}
@@ -235,7 +235,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           id='seventh-media-section'
           className='grid grid-cols-16 relative min-h-screen  lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
         >
-          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px]'>
+          <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px]'>
             {thirdSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
               <NextImage
                 refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
@@ -268,7 +268,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
         >
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
-              <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
+              <div className='w-full aspect-4/5'>
                 {fourthSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
@@ -295,7 +295,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
-              <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
+              <div className='w-full aspect-4/5'>
                 {fourthSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
@@ -322,7 +322,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 items-center justify-center lg:grid-cols-24 z-20 bg-white w-full'>
             <div className='col-start-2 col-span-8 lg:col-start-19 lg:col-span-5 z-10'>
-              <div className='w-full aspect-4/5 bg-opacity-80 backdrop-blur'>
+              <div className='w-full aspect-4/5'>
                 {fourthSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[2].asset._id}

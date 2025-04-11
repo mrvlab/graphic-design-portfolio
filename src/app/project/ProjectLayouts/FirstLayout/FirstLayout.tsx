@@ -23,7 +23,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
       <div className='flex flex-col relative' id='first-layout'>
         {firstSection && (
           <>
-            <section className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none '>
+            <section className='flex flex-col justify-center items-center text-center fixed inset-0 h-screen flex-1 bg-transparent z-[5] pointer-events-none select-none '>
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (
                   <PortableText value={firstSection.richText} />
@@ -35,7 +35,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div>
               <section
                 id='first-bg-media-section'
-                className='flex flex-col sticky top-0 flex-1 h-dvh z-0 w-full aspect-4/5 lg:aspect-16/9'
+                className='flex flex-col sticky top-0 flex-1 h-vh z-0 w-full aspect-4/5 lg:aspect-3/2'
               >
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
@@ -60,9 +60,9 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
               <section
                 id='first-media-section'
-                className='grid grid-cols-16 relative h-dvh lg:h-fit bg-transparent lg:grid-cols-24 z-20'
+                className='grid grid-cols-16 relative h-screen lg:h-fit bg-transparent lg:grid-cols-24 z-20'
               >
-                <div className='aspect-4/5 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 bg-amber-200 mt-[7.5rem]'>
+                <div className='aspect-4/5 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 mt-[7.5rem]'>
                   {firstSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
@@ -88,9 +88,9 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
               <section
                 id='second-media-section'
-                className='grid grid-cols-16 relative h-dvh lg:min-h-dvh bg-transparent lg:grid lg:grid-cols-24 z-20'
+                className='grid grid-cols-16 relative h-screen lg:min-h-screen bg-transparent lg:grid lg:grid-cols-24 z-20'
               >
-                <div className='aspect-4/5 col-start-2 col-span-14 lg:col-start-15 lg:col-span-9  bg-amber-400 lg:-translate-y-[10%]'>
+                <div className='aspect-4/5 col-start-2 col-span-14 lg:col-start-15 lg:col-span-9 lg:-translate-y-[10%]'>
                   {firstSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[2].asset._id}
@@ -121,9 +121,9 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
         {secondSection && (
           <section
             id='third-media-section'
-            className='grid grid-cols-16 relative min-h-dvh lg:grid-cols-24 bg-transparent p-6 z-20'
+            className='grid grid-cols-16 relative min-h-screen lg:grid-cols-24 bg-transparent p-6 z-20'
           >
-            <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
+            <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
               {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                 <NextImage
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
@@ -152,13 +152,13 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div>
             <section
               id='first-bg-media-section'
-              className='flex flex-col sticky top-0 flex-1 h-dvh z-0 w-full aspect-4/5 lg:aspect-16/9'
+              className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-3/2'
               style={{
                 backgroundColor: `${fourthSection.sectionBgColor}`,
               }}
             >
               {thirdSection.mediaGallery?.mediaItems?.[0]?.asset && (
-                <div className='aspect-16/9 w-full h-full object-cover col-span-full sticky top-0'>
+                <div className='aspect-3/2 w-full h-full object-cover col-span-full sticky top-0'>
                   {thirdSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                     <NextImage
                       refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
@@ -184,9 +184,9 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </section>
             <section
               id='fourth-media-section'
-              className='grid grid-cols-16 sticky top-0 min-h-dvh lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
+              className='grid grid-cols-16 sticky top-0 min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
             >
-              <div className='aspect-4/5 col-start-4 col-span-10 self-center lg:col-start-9 lg:col-span-8 bg-amber-200'>
+              <div className='aspect-4/5 col-start-4 col-span-10 self-center lg:col-start-9 lg:col-span-8'>
                 {thirdSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage
                     refId={thirdSection.mediaGallery.mediaItems[1].asset._id}
@@ -232,7 +232,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   </div>
                 </div>
                 <div className='col-start-2 col-span-14 lg:col-start-14 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
-                  <div className='grid lg:flex lg:flex-col lg:w-full aspect-4/5 lg:mt-[15%] bg-amber-200'>
+                  <div className='grid lg:flex lg:flex-col lg:w-full aspect-4/5 lg:mt-[15%]'>
                     {fourthSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                       <NextImage
                         refId={
@@ -263,7 +263,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className={`grid gap-y-[6.25rem] relative`}>
               <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
                 <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
-                  <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
+                  <div className='w-full aspect-4/5'>
                     {fourthSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                       <NextImage
                         refId={
@@ -292,7 +292,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
               <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
                 <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
-                  <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
+                  <div className='w-full aspect-4/5'>
                     {fourthSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                       <NextImage
                         refId={
@@ -321,7 +321,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
               <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
                 <div className='col-start-2 col-span-8 lg:col-start-19 lg:col-span-5 z-10'>
-                  <div className='w-full aspect-4/5 bg-opacity-80 backdrop-blur'>
+                  <div className='w-full aspect-4/5'>
                     {fourthSection.mediaGallery?.mediaItems?.[3].asset?.url ? (
                       <NextImage
                         refId={
