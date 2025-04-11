@@ -247,9 +247,11 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </section>
 
             <div className='flex flex-col items-center justify-center text-center max-lg:pb-[100px] lg:py-[90px] bg-white z-20'>
-              {thirdSection.richTextBottom && (
-                <PortableText value={thirdSection.richTextBottom} />
-              )}
+              <div className='w-2/3'>
+                {thirdSection.richTextBottom && (
+                  <PortableText value={thirdSection.richTextBottom} />
+                )}
+              </div>
             </div>
           </div>
         )}

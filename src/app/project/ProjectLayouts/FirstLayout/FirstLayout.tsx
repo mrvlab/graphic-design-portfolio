@@ -349,9 +349,11 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
 
               <div className='flex flex-col items-center justify-center max-lg:pb-[6.25rem] lg:py-[5.625rem] text-center'>
-                {fourthSection.richTextBottom && (
-                  <PortableText value={fourthSection.richTextBottom} />
-                )}
+                <div className='w-2/3'>
+                  {fourthSection.richTextBottom && (
+                    <PortableText value={fourthSection.richTextBottom} />
+                  )}
+                </div>
               </div>
             </div>
           </div>
