@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NavigationQueryResult } from '../../../sanity.types';
-import HoverableTitle from '@/components/HoverableTitle';
 
 type Props = {
   navItems: NavigationQueryResult;
@@ -36,12 +35,20 @@ const NavItems = ({ navItems }: Props) => {
     return (
       <li
         key={item._id}
-        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 max-lg:px-3 lg:w-fit z-10`}
+        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit z-10`}
         data-sanity-id={item._id}
         data-sanity-type='navigation'
       >
-        <Link href={`/${slug}`} className='flex gap-1'>
-          <HoverableTitle name={item.name} isHovered={isActive(slug)} />
+        <Link href={`/${slug}`}>
+          {isActive(slug) ? (
+            <div className='flex gap-1'>
+              <span>(</span>
+              {item.name}
+              <span>)</span>
+            </div>
+          ) : (
+            <div className='flex'>{item.name}</div>
+          )}
         </Link>
       </li>
     );
