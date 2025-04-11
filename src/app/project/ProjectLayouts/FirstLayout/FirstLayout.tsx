@@ -35,7 +35,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div>
               <section
                 id='first-bg-media-section'
-                className='flex flex-col sticky top-0 flex-1 h-vh z-0 w-full aspect-4/5 lg:aspect-3/2'
+                className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-3/2'
               >
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
