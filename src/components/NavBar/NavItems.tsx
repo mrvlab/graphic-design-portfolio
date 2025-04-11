@@ -35,20 +35,20 @@ const NavItems = ({ navItems }: Props) => {
     return (
       <li
         key={item._id}
-        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit z-10`}
+        className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit lg:px-0 z-10`}
         data-sanity-id={item._id}
         data-sanity-type='navigation'
       >
         <Link href={`/${slug}`}>
-          {isActive(slug) ? (
-            <div className='flex gap-1'>
-              <span>(</span>
-              {item.name}
-              <span>)</span>
-            </div>
-          ) : (
-            <div className='flex'>{item.name}</div>
-          )}
+          <div className='flex gap-1'>
+            <span className={`${isActive(slug) ? 'opacity-100' : 'opacity-0'}`}>
+              (
+            </span>
+            {item.name}
+            <span className={`${isActive(slug) ? 'opacity-100' : 'opacity-0'}`}>
+              )
+            </span>
+          </div>
         </Link>
       </li>
     );
