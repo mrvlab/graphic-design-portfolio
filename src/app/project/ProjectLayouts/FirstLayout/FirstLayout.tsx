@@ -184,7 +184,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </section>
             <section
               id='fourth-media-section'
-              className='grid grid-cols-16 sticky top-0 min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
+              className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
             >
               <div className='aspect-4/5 col-start-4 col-span-10 self-center lg:col-start-9 lg:col-span-8'>
                 {thirdSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
