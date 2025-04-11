@@ -9,6 +9,7 @@ import {
 import useEmblaCarousel from 'embla-carousel-react';
 import NextImage from '@/components/Media/NextImage';
 import { SingleProjectQueryResult } from '../../../sanity.types';
+import Link from 'next/link';
 
 type RelatedSection = Extract<
   NonNullable<NonNullable<SingleProjectQueryResult>['sectionList']>[number],
@@ -121,7 +122,8 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
             const gridStartClass = `lg:col-start-${6 + index * 4}`;
 
             return (
-              <div
+              <Link
+                href={project.slug ? `/project/${project.slug}` : '/home'}
                 className={`embla__slide lg:aspect-4/5 ${gridStartClass} lg:col-span-2`}
                 key={project._id}
               >
@@ -142,7 +144,7 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
                   <span className=''>{project.title || 'Untitled'}</span>
                   <span className=''>Year: {project.year || '2024'}</span>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

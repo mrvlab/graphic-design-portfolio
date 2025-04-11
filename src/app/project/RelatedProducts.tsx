@@ -3,6 +3,7 @@ import Carousel from './Carousel';
 import { SingleProjectQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
+import Link from 'next/link';
 
 const RelatedProducts = ({
   project,
@@ -34,7 +35,8 @@ const RelatedProducts = ({
               3: 'lg:col-start-18',
             };
             return (
-              <div
+              <Link
+                href={project.slug ? `/project/${project.slug}` : '/home'}
                 key={project._id}
                 className={`lg:aspect-4/5 lg:col-span-2 ${colStartClasses[index as keyof typeof colStartClasses]}`}
               >
@@ -56,7 +58,7 @@ const RelatedProducts = ({
                     />
                   )
                 )}
-              </div>
+              </Link>
             );
           })}
         </div>
