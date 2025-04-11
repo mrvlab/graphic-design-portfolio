@@ -81,15 +81,17 @@ function ProjectCard({ project, index }: IProjectCard) {
       className='flex flex-col items-stretch border-t-[0.5px] pt-1 px-1 lg:gap-0 lg:relative lg:px-2 lg:min-h-[146px]'
       id={`project-${index + 1}`}
     >
-      <ProjectCardContent
-        project={project}
-        index={index}
-        isHovered={isHovered}
-        setIsHovered={setIsHovered}
-        mediaItems={mediaItems}
-        heightClasses={heightClasses}
-        animateState={animateState}
-      />
+      <div ref={cardRef}>
+        <ProjectCardContent
+          project={project}
+          index={index}
+          isHovered={isHovered}
+          setIsHovered={setIsHovered}
+          mediaItems={mediaItems}
+          heightClasses={heightClasses}
+          animateState={animateState}
+        />
+      </div>
     </Link>
   );
 }

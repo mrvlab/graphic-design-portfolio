@@ -3,6 +3,7 @@ import Carousel from './Carousel';
 import { SingleProjectQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
+import Link from 'next/link';
 
 const RelatedProducts = ({
   project,
@@ -21,7 +22,7 @@ const RelatedProducts = ({
         <Carousel relatedProducts={relatedProducts} />
       </section>
 
-      <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8 '>
+      <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8'>
         <h3 className='lg:w-full lg:text-center lg:font-bold'>
           ( Related Products )
         </h3>
@@ -34,7 +35,8 @@ const RelatedProducts = ({
               3: 'lg:col-start-18',
             };
             return (
-              <div
+              <Link
+                href={project.slug ? `/project/${project.slug}` : '/home'}
                 key={project._id}
                 className={`lg:aspect-4/5 lg:col-span-2 ${colStartClasses[index as keyof typeof colStartClasses]}`}
               >
@@ -56,7 +58,7 @@ const RelatedProducts = ({
                     />
                   )
                 )}
-              </div>
+              </Link>
             );
           })}
         </div>

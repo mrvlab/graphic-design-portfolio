@@ -8,7 +8,7 @@ import {
   FetchHeaderQueryResult,
   NavigationQueryResult,
 } from '../../../sanity.types';
-// import BlurDown from './BlurDown';
+import BlurDown from './BlurDown';
 
 type Props = {
   hideFirstSection?: boolean;
@@ -73,7 +73,9 @@ const NavigationMenu = async ({
         <div
           className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
         >
-          {/* <BlurDown /> */}
+          <div className='block lg:hidden'>
+            <BlurDown />
+          </div>
           <ul className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full lg:gap-3'>
             <NavItems navItems={navItems} />
           </ul>
