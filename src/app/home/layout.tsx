@@ -4,9 +4,8 @@ import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DraftMode/disableDraftMode';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
-import Navigation from '@/components/NavBar/NavigationMenu';
+import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import BlurDown from '@/components/NavBar/BlurDown';
 import LenisScroller from '@/components/LenisScroller';
 
 export default async function RootLayout({
@@ -18,11 +17,10 @@ export default async function RootLayout({
 
   return (
     <div className='flex flex-col h-full lg:h-dvh pt-4 pb-2 lg:pt-3'>
-      <Navigation hideFirstSection hideAllOnDesktop />
+      <NavigationMenu hideFirstSection hideAllOnDesktop />
 
       <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
-        <BlurDown />
-        <Navigation />
+        <NavigationMenu />
       </nav>
       {/* Main content */}
       <main className='flex flex-col flex-1'>

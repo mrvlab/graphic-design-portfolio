@@ -4,11 +4,11 @@ import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DraftMode/disableDraftMode';
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
-import Navigation from '@/components/NavBar/NavigationMenu';
+import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import { lausanne } from '@/fonts/Lausanne';
-import BlurDown from '@/components/NavBar/BlurDown';
 import LenisScroller from '@/components/LenisScroller';
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -18,11 +18,10 @@ export default async function RootLayout({
 
   return (
     <div className={`${lausanne.className} flex flex-col h-full lg:h-dvh pb-2`}>
-      <Navigation hideFirstSection hideAllOnDesktop />
+      <NavigationMenu hideFirstSection hideAllOnDesktop />
 
       <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3'>
-        <BlurDown />
-        <Navigation />
+        <NavigationMenu />
       </nav>
       {/* Main content */}
       <main className='flex flex-col flex-1'>
