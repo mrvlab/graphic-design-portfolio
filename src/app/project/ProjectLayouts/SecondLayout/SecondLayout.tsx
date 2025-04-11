@@ -233,7 +233,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
       {thirdSection && (
         <section
           id='seventh-media-section'
-          className='grid grid-cols-16 relative min-h-screen  lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
+          className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20  w-full'
         >
           <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px]'>
             {thirdSection.mediaGallery?.mediaItems?.[0].asset?.url ? (

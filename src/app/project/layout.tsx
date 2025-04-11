@@ -9,6 +9,7 @@ import Footer from '@/components/Footer/Footer';
 import BlurDown from '@/components/NavBar/BlurDown';
 import LenisScroller from '@/components/LenisScroller';
 import CloseButton from './CloseButton';
+import { ScrollProgress } from './ScrollProgress';
 
 export default async function RootLayout({
   children,
@@ -22,7 +23,9 @@ export default async function RootLayout({
       <NavigationMenu hideFirstSection hideThirdSection hideAllOnDesktop />
       <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3 lg:fixed lg:w-full'>
         <BlurDown />
-        <div className='hidden lg:block z-10 px-3 py-2.5'>50%</div>
+        <div className='hidden lg:block z-10 px-3 py-2.5'>
+          <ScrollProgress />
+        </div>
         <NavigationMenu hideFirstSection hideThirdSection />
         <CloseButton
           className='hidden lg:block z-10 px-3 py-2.5'
@@ -34,7 +37,9 @@ export default async function RootLayout({
         className={`flex  justify-between w-full sticky max-lg:top-0 max-lg:pt-[6px] z-50`}
       >
         <BlurDown />
-        <div className='block lg:hidden z-10 px-3 py-2.5'>50%</div>
+        <div className='block lg:hidden z-10 px-3 py-2.5'>
+          <ScrollProgress />
+        </div>
         <CloseButton
           className='block lg:hidden z-10 px-3 py-2.5'
           id='mobile-close'

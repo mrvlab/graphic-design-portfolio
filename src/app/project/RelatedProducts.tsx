@@ -22,7 +22,7 @@ const RelatedProducts = ({
         <Carousel relatedProducts={relatedProducts} />
       </section>
 
-      <section className='hidden lg:aspect-2/3 lg:flex lg:flex-col lg:justify-center lg:gap-8 '>
+      <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8'>
         <h3 className='lg:w-full lg:text-center lg:font-bold'>
           ( Related Products )
         </h3>
