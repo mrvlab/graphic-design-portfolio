@@ -1,22 +1,7 @@
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import { imgData } from '@/sanity/lib/image';
 import clsx from 'clsx';
-
-type RefImageProps = {
-  refId?: string;
-  src?: string;
-  alt?: string;
-  lqip?: boolean;
-  blurStrength?: number;
-  width?: number;
-  height?: number;
-  className?: string;
-  sizes?: string;
-  priority?: boolean;
-} & Omit<
-  ImageProps,
-  'src' | 'alt' | 'width' | 'height' | 'placeholder' | 'blurDataURL'
->;
+import { INextImage } from './types/INextImage';
 
 export default function NextImage({
   refId,
@@ -30,7 +15,7 @@ export default function NextImage({
   sizes,
   priority = false,
   ...rest
-}: RefImageProps) {
+}: INextImage) {
   const isSanityImage = Boolean(refId);
 
   const { imageUrl, blurDataURL, altText } = isSanityImage

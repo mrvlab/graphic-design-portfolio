@@ -16,60 +16,102 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   const secondSection = sections[1];
   const thirdSection = sections[2];
   const fourthSection = sections[3];
+
   return (
-    <>
-      <div className='flex flex-col relative' id='second-layout'>
-        <section
-          id='second-media-section'
-          className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none'
-        >
-          {firstSection.richText && (
-            <PortableText value={firstSection.richText} />
-          )}
-        </section>
-
-        <section
-          id='first-media-section'
-          className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
-        >
-          <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
-            <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200'>
-              <NextImage
-                refId={firstSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
-                alt={firstSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
-                width={1920}
-                height={2400}
-                priority={true}
-                className='object-cover w-full h-full'
-              />
+    <div className='flex flex-col relative' id='second-layout'>
+      {firstSection && (
+        <>
+          <section
+            id='second-media-section'
+            className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none'
+          >
+            <div className='flex flex-col justify-center items-center text-center w-2/3'>
+              {firstSection.richText && (
+                <PortableText value={firstSection.richText} />
+              )}
             </div>
-            <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
-              <NextImage
-                refId={firstSection.mediaGallery?.mediaItems?.[1]?.asset?._id}
-                alt={firstSection.mediaGallery?.mediaItems?.[1]?.alt || ''}
-                width={1920}
-                height={2400}
-                priority={true}
-                className='object-cover w-full h-full'
-              />
-            </div>
-          </div>
-        </section>
+          </section>
 
+          <section
+            id='first-media-section'
+            className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
+          >
+            <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
+              <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1 bg-amber-200'>
+                {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
+                  <NextImage
+                    refId={firstSection.mediaGallery.mediaItems[0].asset._id}
+                    alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
+                    className='w-full h-full object-cover'
+                    width={1920}
+                    height={2400}
+                    priority={true}
+                  />
+                ) : (
+                  firstSection.mediaGallery?.mediaItems?.[0].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        firstSection.mediaGallery.mediaItems[0].asset.playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
+                )}
+              </div>
+              <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
+                {firstSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
+                  <NextImage
+                    refId={firstSection.mediaGallery.mediaItems[1].asset._id}
+                    alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
+                    className='w-full h-full object-cover'
+                    width={1920}
+                    height={2400}
+                    priority={true}
+                  />
+                ) : (
+                  firstSection.mediaGallery?.mediaItems?.[1].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        firstSection.mediaGallery.mediaItems[1].asset.playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
+                )}
+              </div>
+            </div>
+          </section>
+        </>
+      )}
+
+      {secondSection && (
         <div className='relative w-full max-lg:z-20 bg-green-400'>
           <section
             id='second-media-section'
             className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
           >
             <div className='aspect-9/16 lg:aspect-16/9 w-full h-full object-cover col-span-full absolute inset-0'>
-              <NextImage
-                refId={secondSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
-                alt={secondSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
-                width={1920}
-                height={1280}
-                priority={true}
-                className='object-cover w-full h-full'
-              />
+              {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
+                <NextImage
+                  refId={secondSection.mediaGallery.mediaItems[0].asset._id}
+                  alt={secondSection.mediaGallery.mediaItems[0].alt || ''}
+                  className='w-full h-full object-cover'
+                  width={1920}
+                  height={2400}
+                />
+              ) : (
+                secondSection.mediaGallery?.mediaItems?.[0].asset
+                  ?.playbackId && (
+                  <MuxVideo
+                    playbackId={
+                      secondSection.mediaGallery.mediaItems[0].asset.playbackId
+                    }
+                    className='w-full h-full object-cover'
+                  />
+                )
+              )}
             </div>
           </section>
 
@@ -78,16 +120,27 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               id='third-media-section'
               className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
             >
-              <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 bg-amber-600 '>
-                <NextImage
-                  refId={
-                    secondSection.mediaGallery?.mediaItems?.[1]?.asset?._id
-                  }
-                  alt={secondSection.mediaGallery?.mediaItems?.[1]?.alt || ''}
-                  width={1920}
-                  height={1280}
-                  priority={true}
-                />
+              <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
+                {secondSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
+                  <NextImage
+                    refId={secondSection.mediaGallery.mediaItems[1].asset._id}
+                    alt={secondSection.mediaGallery.mediaItems[1].alt || ''}
+                    className='w-full h-full object-cover'
+                    width={1920}
+                    height={1280}
+                  />
+                ) : (
+                  secondSection.mediaGallery?.mediaItems?.[1].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        secondSection.mediaGallery.mediaItems[1].asset
+                          .playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
+                )}
               </div>
             </section>
             <div className='block'>
@@ -96,12 +149,26 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
                 <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px] bg-amber-800 '>
-                  <MuxVideo
-                    playbackId={
-                      secondSection.mediaGallery?.mediaItems?.[2]?.asset
-                        ?.playbackId || ''
-                    }
-                  />
+                  {secondSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
+                    <NextImage
+                      refId={secondSection.mediaGallery.mediaItems[2].asset._id}
+                      alt={secondSection.mediaGallery.mediaItems[2].alt || ''}
+                      className='w-full h-full object-cover'
+                      width={1920}
+                      height={1280}
+                    />
+                  ) : (
+                    secondSection.mediaGallery?.mediaItems?.[2].asset
+                      ?.playbackId && (
+                      <MuxVideo
+                        playbackId={
+                          secondSection.mediaGallery.mediaItems[2].asset
+                            .playbackId
+                        }
+                        className='w-full h-full object-cover'
+                      />
+                    )
+                  )}
                 </div>
               </section>
               <section
@@ -109,18 +176,25 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
                 <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px] bg-amber-800 '>
-                  {secondSection.mediaGallery?.mediaItems?.[3]?.asset && (
+                  {secondSection.mediaGallery?.mediaItems?.[3].asset?.url ? (
                     <NextImage
-                      refId={
-                        secondSection.mediaGallery?.mediaItems?.[3]?.asset?._id
-                      }
-                      alt={
-                        secondSection.mediaGallery?.mediaItems?.[3]?.alt || ''
-                      }
+                      refId={secondSection.mediaGallery.mediaItems[3].asset._id}
+                      alt={secondSection.mediaGallery.mediaItems[3].alt || ''}
+                      className='w-full h-full object-cover'
                       width={1920}
-                      height={2400}
-                      className='object-cover w-full h-full'
+                      height={1280}
                     />
+                  ) : (
+                    secondSection.mediaGallery?.mediaItems?.[3].asset
+                      ?.playbackId && (
+                      <MuxVideo
+                        playbackId={
+                          secondSection.mediaGallery.mediaItems[3].asset
+                            .playbackId
+                        }
+                        className='w-full h-full object-cover'
+                      />
+                    )
                   )}
                 </div>
               </section>
@@ -129,57 +203,91 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-30'
               >
                 <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6  bg-amber-800 '>
-                  {secondSection.mediaGallery?.mediaItems?.[4]?.asset && (
+                  {secondSection.mediaGallery?.mediaItems?.[4].asset?.url ? (
                     <NextImage
-                      refId={
-                        secondSection.mediaGallery?.mediaItems?.[4]?.asset?._id
-                      }
-                      alt={
-                        secondSection.mediaGallery?.mediaItems?.[4]?.alt || ''
-                      }
+                      refId={secondSection.mediaGallery.mediaItems[4].asset._id}
+                      alt={secondSection.mediaGallery.mediaItems[4].alt || ''}
+                      className='w-full h-full object-cover'
                       width={1920}
                       height={2400}
-                      className='object-cover w-full h-full'
                     />
+                  ) : (
+                    secondSection.mediaGallery?.mediaItems?.[4].asset
+                      ?.playbackId && (
+                      <MuxVideo
+                        playbackId={
+                          secondSection.mediaGallery.mediaItems[4].asset
+                            .playbackId
+                        }
+                        className='w-full h-full object-cover'
+                      />
+                    )
                   )}
                 </div>
               </section>
             </div>
           </div>
         </div>
+      )}
 
+      {thirdSection && (
         <section
           id='seventh-media-section'
           className='grid grid-cols-16 relative min-h-screen  lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
         >
-          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px] bg-amber-600 '>
-            {thirdSection.mediaGallery?.mediaItems?.[0]?.asset && (
+          <div className='aspect-16/9 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px]'>
+            {thirdSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
               <NextImage
-                refId={thirdSection.mediaGallery?.mediaItems?.[0]?.asset?._id}
-                alt={thirdSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
+                refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
+                alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
+                className='w-full h-full object-cover'
                 width={1920}
-                height={2400}
-                className='object-cover w-full h-full'
+                height={1280}
               />
+            ) : (
+              thirdSection.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
+                <MuxVideo
+                  playbackId={
+                    thirdSection.mediaGallery.mediaItems[0].asset.playbackId
+                  }
+                  className='w-full h-full object-cover'
+                />
+              )
             )}
           </div>
         </section>
+      )}
 
+      {fourthSection && (
         <div
           id='eighth-media-section'
           className='grid gap-y-[100px] relative bg-white lg:bg-transparent z-20'
+          style={{
+            backgroundColor: `${fourthSection.sectionBgColor}`,
+          }}
         >
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-2 col-span-8 lg:col-start-2 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-200 bg-opacity-80 backdrop-blur'>
-                {fourthSection.mediaGallery?.mediaItems?.[0]?.asset && (
+                {fourthSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
+                    className='w-full h-full object-cover'
                     width={1920}
                     height={2400}
-                    className='object-cover w-full h-full'
                   />
+                ) : (
+                  fourthSection.mediaGallery?.mediaItems?.[0].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        fourthSection.mediaGallery.mediaItems[0].asset
+                          .playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
                 )}
               </div>
             </div>
@@ -188,14 +296,25 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
             <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
               <div className='w-full aspect-4/5 bg-amber-400 bg-opacity-80 backdrop-blur'>
-                {fourthSection.mediaGallery?.mediaItems?.[1]?.asset && (
+                {fourthSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
+                    className='w-full h-full object-cover'
                     width={1920}
                     height={2400}
-                    className='object-cover w-full h-full'
                   />
+                ) : (
+                  fourthSection.mediaGallery?.mediaItems?.[1].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        fourthSection.mediaGallery.mediaItems[1].asset
+                          .playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
                 )}
               </div>
             </div>
@@ -203,17 +322,26 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 items-center justify-center lg:grid-cols-24 z-20 bg-white w-full'>
             <div className='col-start-2 col-span-8 lg:col-start-19 lg:col-span-5 z-10'>
-              <div className='w-full aspect-4/5 bg-amber-600 bg-opacity-80 backdrop-blur'>
-                {fourthSection.mediaGallery?.mediaItems?.[2]?.asset && (
+              <div className='w-full aspect-4/5 bg-opacity-80 backdrop-blur'>
+                {fourthSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                   <NextImage
-                    refId={
-                      fourthSection.mediaGallery?.mediaItems?.[2]?.asset?._id
-                    }
-                    alt={fourthSection.mediaGallery?.mediaItems?.[2]?.alt || ''}
+                    refId={fourthSection.mediaGallery.mediaItems[2].asset._id}
+                    alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
+                    className='w-full h-full object-cover'
                     width={1920}
                     height={2400}
-                    className='object-cover w-full h-full'
                   />
+                ) : (
+                  fourthSection.mediaGallery?.mediaItems?.[2].asset
+                    ?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        fourthSection.mediaGallery.mediaItems[2].asset
+                          .playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
                 )}
               </div>
             </div>
@@ -225,8 +353,8 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             )}
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

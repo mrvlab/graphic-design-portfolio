@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from './Carousel';
 import { SingleProjectQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
+import MuxVideo from '@/components/Media/MuxVideo';
 
 const RelatedProducts = ({
   project,
@@ -25,21 +26,39 @@ const RelatedProducts = ({
           ( Related Products )
         </h3>
         <div className='lg:grid lg:grid-cols-24'>
-          {relatedProducts.projects?.map((project, index) => (
-            <div
-              key={project._id}
-              className={`lg:aspect-4/5 lg:col-span-2 lg:col-start-${6 + index * 4}`}
-            >
-              <NextImage
-                refId={project.mediaGallery?.mediaItems?.[0]?.asset?._id}
-                alt={project.mediaGallery?.mediaItems?.[0]?.alt || ''}
-                width={1920}
-                height={1280}
-                priority={true}
-                className='object-cover w-full h-full'
-              />
-            </div>
-          ))}
+          {relatedProducts.projects?.map((project, index) => {
+            const colStartClasses = {
+              0: 'lg:col-start-6',
+              1: 'lg:col-start-10',
+              2: 'lg:col-start-14',
+              3: 'lg:col-start-18',
+            };
+            return (
+              <div
+                key={project._id}
+                className={`lg:aspect-4/5 lg:col-span-2 ${colStartClasses[index as keyof typeof colStartClasses]}`}
+              >
+                {project.mediaGallery?.mediaItems?.[0].asset?.url ? (
+                  <NextImage
+                    refId={project.mediaGallery.mediaItems[0].asset._id}
+                    alt={project.mediaGallery.mediaItems[0].alt || ''}
+                    className='w-full h-full object-cover'
+                    width={1920}
+                    height={1280}
+                  />
+                ) : (
+                  project.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
+                    <MuxVideo
+                      playbackId={
+                        project.mediaGallery?.mediaItems?.[0].asset?.playbackId
+                      }
+                      className='w-full h-full object-cover'
+                    />
+                  )
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
     </div>
