@@ -121,7 +121,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </div>
             </section>
 
-            <div className='sticky top-0 w-full max-lg:z-20 lg:bg-transparent'>
+            <div className='sticky top-0 w-full max-lg:z-20 lg:bg-transparent z-20'>
               <section
                 id='third-media-section'
                 className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'
