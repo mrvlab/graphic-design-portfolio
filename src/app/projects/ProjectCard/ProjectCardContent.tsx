@@ -9,7 +9,6 @@ import NextImage from '@/components/Media/NextImage';
 type IProjectCardContent = {
   project: IProjectCard['project'];
   index: number;
-  cardRef: React.RefObject<HTMLDivElement | null>;
   isHovered: boolean;
   setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
   mediaItems: IMediaItem[];
