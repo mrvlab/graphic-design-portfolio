@@ -34,7 +34,7 @@ const page = async () => {
   }
   return (
     <div className='flex flex-col justify-center items-center h-full relative'>
-      <div className='leading-[125%] text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full'>
+      <div className='leading-[125%] text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full hover-underline-links'>
         {contact.richText && <RichText content={contact.richText} />}
       </div>
       <SayHiSvgDesktop />

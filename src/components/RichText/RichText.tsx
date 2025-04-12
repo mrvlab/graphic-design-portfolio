@@ -1,5 +1,5 @@
-import { PortableText } from 'next-sanity';
 import React from 'react';
+import { PortableText } from '@portabletext/react';
 
 type IRichText = Array<{
   children?: Array<{
