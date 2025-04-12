@@ -31,7 +31,7 @@ export default async function RootLayout({
         {children}
       </main>
 
-      <div className='flex max-lg:flex-col w-full items-center px-2 z-50 max-lg:py-2 sticky bottom-0'>
+      <div className='flex max-lg:flex-col w-full items-center z-50 max-lg:py-2 lg:sticky lg:bottom-0'>
         {/* <BlurDown /> */}
         {/* Footer */}
         {await Footer()}
