@@ -49,7 +49,7 @@ const NavigationMenu = async ({
       {/* LEFT SECTION */}
       {!hideFirstSection && (
         <div
-          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10`}
+          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10 lg:col-span-4`}
         >
           <span>&copy; {getCurrentYear()}</span>
           <span>{header?.lefttext}</span>
@@ -60,7 +60,7 @@ const NavigationMenu = async ({
       {!hideSecondSection && (
         <Link
           href='/home'
-          className={`${visibilityClasses} flex flex-col items-center relative w-full z-10 pt-4 lg:pt-0`}
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-10 pt-4 lg:pt-0 lg:col-span-16`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>
@@ -71,12 +71,12 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <div
-          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10`}
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 lg:col-span-4 lg:justify-end`}
         >
           <div className='block lg:hidden'>
             <BlurDown />
           </div>
-          <ul className='max-lg:border-b-[0.5px] flex items-center lg:justify-end z-10 w-full lg:gap-3'>
+          <ul className='max-lg:border-b-[0.5px] flex items-center z-10 w-full lg:gap-3 lg:justify-between lg:max-w-[225px]'>
             <NavItems navItems={navItems} />
           </ul>
         </div>

@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <div className='flex flex-col h-full pt-4 pb-2 lg:pt-0 '>
       <NavigationMenu hideFirstSection hideThirdSection hideAllOnDesktop />
-      <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3 lg:fixed lg:w-full'>
+      <nav className='max-lg:hidden flex max-lg:flex-col lg:grid lg:grid-cols-24 items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3 lg:fixed lg:w-full'>
         <BlurDown />
         <div className='hidden lg:block z-10 px-3 py-2.5'>
           <ScrollProgress />

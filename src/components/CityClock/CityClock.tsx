@@ -32,7 +32,10 @@ const CityClock = ({ location }: ICityClock) => {
   }, []); // Empty dependency array ensures this runs only on mount and unmount
 
   return (
-    <div>{location ? `${location} ${time}` : `Madrid, Spain ${time}`}</div>
+    <>
+      <span className=''>{location ? location : 'Madrid, Spain'}</span>
+      <span className=''>{time}</span>
+    </>
   );
 };
 
