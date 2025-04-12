@@ -40,12 +40,16 @@ const NavItems = ({ navItems }: Props) => {
         data-sanity-type='navigation'
       >
         <Link href={`/${slug}`}>
-          <div className='flex gap-1'>
-            <span className={`${isActive(slug) ? 'opacity-100' : 'opacity-0'}`}>
+          <div className='flex gap-1 group'>
+            <span
+              className={`transition-opacity duration-400 ${isActive(slug) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+            >
               (
             </span>
             {item.name}
-            <span className={`${isActive(slug) ? 'opacity-100' : 'opacity-0'}`}>
+            <span
+              className={`transition-opacity duration-400 ${isActive(slug) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+            >
               )
             </span>
           </div>
