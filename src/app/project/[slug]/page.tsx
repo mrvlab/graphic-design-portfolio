@@ -8,6 +8,7 @@ import RelatedProducts from '../RelatedProducts';
 import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
 import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
+import CustomCursor from '../CustomCursor/CustomCursor';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -54,7 +55,11 @@ export default async function Page({
   const layout = project.layout;
 
   return (
-    <div className='flex flex-col h-full relative' id='project-page'>
+    <div
+      className='flex flex-col h-full relative cursor-none'
+      id='project-page'
+    >
+      <CustomCursor />
       {(() => {
         switch (layout) {
           case 'firstLayout':
