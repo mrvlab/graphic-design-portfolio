@@ -23,7 +23,7 @@ const HomeProjectsTitle = ({
       onMouseLeave={onMouseLeave}
     >
       <div
-        className={`flex flex-col lg:max-h-[42px] ${isHovered ? 'italic' : ''}`}
+        className={`flex flex-col lg:max-h-[42px] ${isHovered && !project.comingSoon ? 'italic' : ''}`}
       >
         <span>{(index + 1).toFixed(1)}</span>
         <span>{project.title}</span>
