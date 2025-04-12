@@ -13,7 +13,7 @@ const ViewPortraitOnScroll = ({ about }: IMobileLayout) => {
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.8 }
+      { threshold: 0.6 }
     );
 
     if (containerRef.current) {
@@ -29,16 +29,21 @@ const ViewPortraitOnScroll = ({ about }: IMobileLayout) => {
       className='flex justify-center items-center p-2.5 aspect-2/3'
     >
       <div className='h-fit w-1/2'>
-        {about.portrait?.asset?._ref && (
-          <NextImage
-            refId={about.portrait.asset._ref}
-            priority={true}
-            className={`p-1 transition-all duration-700 ${
-              isVisible ? 'blur-0' : 'blur-[3.82px]'
-            }`}
-            alt='Portrait photograph'
-          />
-        )}
+        <div className='flex flex-col justify-center items-center aspect-4/5 relative p-[0.5px] flex-1 overflow-hidden'>
+          <div className='relative w-full h-full'>
+            {about.portrait?.asset?._ref && (
+              <NextImage
+                refId={about.portrait.asset._ref}
+                className='object-cover'
+                alt='Portrait photograph'
+                fill
+              />
+            )}
+            <div
+              className={`absolute inset-0 transition-all duration-700 ${isVisible ? '' : 'backdrop-blur-[2.82px]'} pointer-events-none`}
+            ></div>
+          </div>
+        </div>
       </div>
     </div>
   );
