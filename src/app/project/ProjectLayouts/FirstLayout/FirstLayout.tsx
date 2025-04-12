@@ -1,8 +1,8 @@
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
-import { PortableText } from 'next-sanity';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
+import RichText from '@/components/RichText/RichText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -26,7 +26,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <section className='flex flex-col justify-center items-center text-center fixed inset-0 h-screen flex-1 bg-transparent z-[5] pointer-events-none select-none '>
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (
-                  <PortableText value={firstSection.richText} />
+                  <RichText content={firstSection.richText} />
                 )}
               </div>
             </section>
@@ -121,7 +121,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
         {secondSection && (
           <section
             id='third-media-section'
-            className='grid grid-cols-16 relative min-h-screen lg:grid-cols-24 bg-transparent p-6 z-20'
+            className='grid grid-cols-16 sticky top-0 min-h-screen lg:grid-cols-24 bg-transparent p-6 z-10'
           >
             <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
               {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
@@ -152,7 +152,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div>
             <section
               id='first-bg-media-section'
-              className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-3/2'
+              className='flex flex-col sticky top-0 flex-1 h-screen z-20 w-full aspect-4/5 lg:aspect-3/2'
               style={{
                 backgroundColor: `${fourthSection.sectionBgColor}`,
               }}
@@ -227,7 +227,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
                   <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
                     {fourthSection.richText && (
-                      <PortableText value={fourthSection.richText} />
+                      <RichText content={fourthSection.richText} />
                     )}
                   </div>
                 </div>
@@ -351,7 +351,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               <div className='flex flex-col items-center justify-center max-lg:pb-[6.25rem] lg:py-[5.625rem] text-center'>
                 <div className='w-2/3'>
                   {fourthSection.richTextBottom && (
-                    <PortableText value={fourthSection.richTextBottom} />
+                    <RichText content={fourthSection.richTextBottom} />
                   )}
                 </div>
               </div>

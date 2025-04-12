@@ -1,8 +1,8 @@
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
-import { PortableText } from 'next-sanity';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
+import RichText from '@/components/RichText/RichText';
 
 const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -27,7 +27,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             >
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (
-                  <PortableText value={firstSection.richText} />
+                  <RichText content={firstSection.richText} />
                 )}
               </div>
             </section>
@@ -249,7 +249,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className='flex flex-col items-center justify-center text-center max-lg:pb-[100px] lg:py-[90px] bg-white z-20'>
               <div className='w-2/3'>
                 {thirdSection.richTextBottom && (
-                  <PortableText value={thirdSection.richTextBottom} />
+                  <RichText content={thirdSection.richTextBottom} />
                 )}
               </div>
             </div>

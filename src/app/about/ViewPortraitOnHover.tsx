@@ -9,17 +9,22 @@ const ViewPortraitOnHover = ({
 }) => {
   return (
     <div className='flex justify-center items-center p-2.5 aspect-2/3'>
-      <div className='h-fit w-1/2 group'>
-        {portrait?.asset?._ref && (
-          <NextImage
-            refId={portrait.asset._ref}
-            priority={true}
-            className='aspect-3/4 p-1 blur-[3.82px] transition-all duration-700 group-hover:blur-[0px]'
-            alt='Portrait photograph'
-            sizes='(min-width: 1024px) 50vw, 100vw'
-            loading='eager'
-          />
-        )}
+      <div className='h-fit w-[40%] mb-[36%] group'>
+        <div className='flex flex-col justify-center items-center aspect-4/5 relative p-[0.5px] flex-1 overflow-hidden'>
+          <div className='relative w-full h-full'>
+            {portrait?.asset?._ref && (
+              <NextImage
+                refId={portrait.asset._ref}
+                className='object-cover'
+                alt='Portrait photograph'
+                priority={true}
+                loading='eager'
+                fill
+              />
+            )}
+            <div className='absolute inset-0 backdrop-blur-[2.82px] transition-all duration-700 group-hover:backdrop-blur-[0px] pointer-events-none'></div>
+          </div>
+        </div>
       </div>
     </div>
   );

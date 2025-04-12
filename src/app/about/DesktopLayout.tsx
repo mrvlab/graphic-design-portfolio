@@ -1,8 +1,8 @@
 import React from 'react';
 import IMobileLayout from './types/IAbout';
 import ViewPortraitOnHover from './ViewPortraitOnHover';
-import { PortableText } from 'next-sanity';
 import formatDate from '@/utils/formatDate';
+import RichText from '@/components/RichText/RichText';
 
 const DesktopLayout = ({ about }: IMobileLayout) => {
   const {
@@ -100,6 +100,17 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
             {publications?.map((publication) => (
               <li key={publication._id} className='list-none'>
                 <h3>{publication.title}</h3>
+                {publication.href && (
+                  <p>
+                    <a
+                      href={publication.href || ''}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      ( Read more )
+                    </a>
+                  </p>
+                )}
               </li>
             ))}
           </ul>
@@ -127,9 +138,7 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                     >
                       {section.title}
                     </h2>
-                    <div className='leading-[115%]'>
-                      <PortableText value={section.content} />
-                    </div>
+                    <RichText content={section.content} />
                   </section>
                 )
             )}
@@ -163,7 +172,7 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                 {about.softwareTools?.map(
                   (tool) =>
                     tool.richText && (
-                      <PortableText key={tool._id} value={tool.richText} />
+                      <RichText key={tool._id} content={tool.richText} />
                     )
                 )}
               </div>

@@ -1,8 +1,8 @@
-import { PortableText } from 'next-sanity';
 import React from 'react';
 import IMobileLayout from './types/IAbout';
 import ViewPortraitOnScroll from './ViewPortraitOnScroll';
 import formatDate from '@/utils/formatDate';
+import RichText from '@/components/RichText/RichText';
 
 const MobileLayout = ({ about }: IMobileLayout) => {
   return (
@@ -22,7 +22,7 @@ const MobileLayout = ({ about }: IMobileLayout) => {
                 {section.title}
               </h2>
               <div className='leading-[125%]'>
-                <PortableText value={section.content} />
+                <RichText content={section.content} />
               </div>
             </section>
           )
@@ -60,7 +60,7 @@ const MobileLayout = ({ about }: IMobileLayout) => {
               {about.softwareTools?.map(
                 (tool) =>
                   tool.richText && (
-                    <PortableText key={tool._id} value={tool.richText} />
+                    <RichText key={tool._id} content={tool.richText} />
                   )
               )}
             </div>

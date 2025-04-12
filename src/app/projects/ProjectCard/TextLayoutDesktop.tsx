@@ -1,6 +1,6 @@
-import { PortableText } from 'next-sanity';
 import ITextLayoutDesktop from '../types/ITextLayoutDesktop';
 import HoverableTitle from '@/components/HoverableTitle';
+import RichText from '@/components/RichText/RichText';
 
 const TextLayoutDesktop = ({
   index,
@@ -16,6 +16,7 @@ const TextLayoutDesktop = ({
 
       <HoverableTitle
         name={project.title}
+        comingSoon={project.comingSoon}
         isHovered={isHovered}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -26,10 +27,13 @@ const TextLayoutDesktop = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {project.richText && <PortableText value={project.richText} />}
-        {project.comingSoon && <span>( Coming Soon )</span>}
+        {project.richText && <RichText content={project.richText} />}
       </span>
-      <span className='hidden lg:block lg:row-start-1 lg:absolute lg:right-2 z-0'>
+      <span
+        className={`hidden lg:block lg:row-start-1 lg:absolute lg:right-2 z-0 ${
+          project.comingSoon ? 'opacity-0' : 'opacity-100'
+        }`}
+      >
         {project.year ? new Date(project.year).getFullYear() : ''}
       </span>
     </>
