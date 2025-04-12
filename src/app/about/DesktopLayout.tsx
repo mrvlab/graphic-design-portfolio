@@ -100,6 +100,17 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
             {publications?.map((publication) => (
               <li key={publication._id} className='list-none'>
                 <h3>{publication.title}</h3>
+                {publication.href && (
+                  <p>
+                    <a
+                      href={publication.href || ''}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      ( Read more )
+                    </a>
+                  </p>
+                )}
               </li>
             ))}
           </ul>
