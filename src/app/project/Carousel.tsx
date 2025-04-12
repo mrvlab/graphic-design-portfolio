@@ -10,6 +10,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import NextImage from '@/components/Media/NextImage';
 import { SingleProjectQueryResult } from '../../../sanity.types';
 import Link from 'next/link';
+import ProductInfo from './ProductInfo';
 
 type RelatedSection = Extract<
   NonNullable<NonNullable<SingleProjectQueryResult>['sectionList']>[number],
@@ -137,13 +138,11 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
                     className='object-cover w-full h-full'
                   />
                 </div>
-                <div
-                  className={`flex flex-col text-center pt-3 transition-opacity duration-300 ease-in ${textClass}`}
-                >
-                  <span className=''>(0{index + 1})</span>
-                  <span className=''>{project.title || 'Untitled'}</span>
-                  <span className=''>Year: {project.year || '2024'}</span>
-                </div>
+                <ProductInfo
+                  index={index}
+                  project={project}
+                  textClass={textClass}
+                />
               </Link>
             );
           })}

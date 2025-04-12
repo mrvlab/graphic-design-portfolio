@@ -4,7 +4,7 @@ import { SingleProjectQueryResult } from '../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
 import Link from 'next/link';
-
+import ProductInfo from './ProductInfo';
 const RelatedProducts = ({
   project,
 }: {
@@ -18,14 +18,12 @@ const RelatedProducts = ({
   return (
     <div className='bg-white z-10'>
       <section className='flex flex-col gap-6 lg:hidden'>
-        <h3 className='text-center pt-32 font-bold'>( Related Products )</h3>
+        <h3 className='text-center pt-32 font-bold'>( Other cases )</h3>
         <Carousel relatedProducts={relatedProducts} />
       </section>
 
       <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8'>
-        <h3 className='lg:w-full lg:text-center lg:font-bold'>
-          ( Related Products )
-        </h3>
+        <h3 className='lg:w-full lg:text-center'>( Other cases )</h3>
         <div className='lg:grid lg:grid-cols-24'>
           {relatedProducts.projects?.map((project, index) => {
             const colStartClasses = {
@@ -58,6 +56,7 @@ const RelatedProducts = ({
                     />
                   )
                 )}
+                <ProductInfo index={index} project={project} />
               </Link>
             );
           })}
