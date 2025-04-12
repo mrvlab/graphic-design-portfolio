@@ -1,15 +1,21 @@
 import React from 'react';
 
-type Props = {
+type IProductInfo = {
   index: number;
   project: {
     title: string | null;
     year: string | null;
   };
+  isComingSoon: boolean;
   textClass?: string;
 };
 
-const ProductInfo = ({ index, project, textClass = '' }: Props) => {
+const ProductInfo = ({
+  index,
+  project,
+  isComingSoon,
+  textClass = '',
+}: IProductInfo) => {
   return (
     <div
       className={`flex flex-col text-center pt-3 transition-opacity duration-300 ease-in ${textClass}`}
@@ -17,6 +23,7 @@ const ProductInfo = ({ index, project, textClass = '' }: Props) => {
       <span className=''>(0{index + 1})</span>
       <span className=''>{project.title || 'Untitled'}</span>
       <span className=''>Year: {project.year || '2024'}</span>
+      <span className=''>{isComingSoon ? '( Coming Soon )' : ''}</span>
     </div>
   );
 };

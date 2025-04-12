@@ -7,10 +7,10 @@ import {
   EmblaOptionsType,
 } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
-import NextImage from '@/components/Media/NextImage';
-import { SingleProjectQueryResult } from '../../../sanity.types';
+
+import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import Link from 'next/link';
-import ProductInfo from './ProductInfo';
+import ProjectCarouselContent from './ProjectCarouselContent';
 
 type RelatedSection = Extract<
   NonNullable<NonNullable<SingleProjectQueryResult>['sectionList']>[number],
@@ -122,28 +122,29 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
               activeIndex === index ? 'opacity-100' : 'opacity-0';
             const gridStartClass = `lg:col-start-${6 + index * 4}`;
 
-            return (
+            return project.slug && !project.comingSoon ? (
               <Link
                 href={project.slug ? `/project/${project.slug}` : '/home'}
-                className={`embla__slide lg:aspect-4/5 ${gridStartClass} lg:col-span-2`}
+                className={`embla__slide ${gridStartClass} lg:col-span-2`}
                 key={project._id}
               >
-                <div className='embla__slide__number h-full'>
-                  <NextImage
-                    refId={project.mediaGallery?.mediaItems?.[0]?.asset?._id}
-                    alt={project.mediaGallery?.mediaItems?.[0]?.alt || ''}
-                    width={1920}
-                    height={1280}
-                    priority={true}
-                    className='object-cover w-full h-full'
-                  />
-                </div>
-                <ProductInfo
-                  index={index}
+                <ProjectCarouselContent
                   project={project}
+                  index={index}
                   textClass={textClass}
                 />
               </Link>
+            ) : (
+              <div
+                key={project._id}
+                className={`embla__slide ${gridStartClass} lg:col-span-2`}
+              >
+                <ProjectCarouselContent
+                  project={project}
+                  index={index}
+                  textClass={textClass}
+                />
+              </div>
             );
           })}
         </div>

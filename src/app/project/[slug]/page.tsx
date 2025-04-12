@@ -4,7 +4,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
 import { SingleProjectQueryResult } from '../../../../sanity.types';
 import { QueryParams } from 'next-sanity';
-import RelatedProducts from '../RelatedProducts';
+import RelatedProducts from '../RelatedProducts/RelatedProducts/RelatedProducts';
 import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
 import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
