@@ -51,7 +51,7 @@ export default function NextImage({
       src={imageUrl}
       alt={altText}
       {...(!fill ? { width, height } : { fill })}
-      className={clsx('object-cover', className)}
+      className={clsx('object-cover object-top', className)}
       sizes={calculatedSizes}
       priority={priority}
       placeholder={lqip && blurDataURL ? 'blur' : undefined}
