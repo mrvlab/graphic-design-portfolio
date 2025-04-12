@@ -60,7 +60,7 @@ const NavigationMenu = async ({
       {!hideSecondSection && (
         <Link
           href='/home'
-          className={`${visibilityClasses} flex flex-col items-center relative w-full z-10`}
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-10 pt-4 lg:pt-0`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>

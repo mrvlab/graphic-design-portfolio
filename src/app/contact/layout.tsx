@@ -17,7 +17,7 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <div className='flex flex-col h-dvh pt-4 pb-2 lg:pt-3'>
+    <div className='flex flex-col h-dvh pb-2 lg:pt-3'>
       <NavigationMenu hideFirstSection hideAllOnDesktop />
 
       <nav className='max-lg:hidden flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 sticky top-0'>
