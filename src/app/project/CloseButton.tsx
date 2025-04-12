@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface CloseButtonProps {
   className?: string;
@@ -15,8 +16,23 @@ const CloseButton = ({
 }: CloseButtonProps) => {
   const router = useRouter();
 
+  // Navigate back to home or projects when closing a project
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/project/')) {
+      const previousPath = document.referrer;
+      const fromPath = previousPath.includes('/home') ? '/home' : '/projects';
+      window.history.replaceState({ from: fromPath }, '');
+    }
+  }, []);
+
   const handleClose = () => {
-    router.back();
+    const state = window.history.state;
+    if (state?.from) {
+      router.push(state.from);
+    } else {
+      router.push('/home');
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
