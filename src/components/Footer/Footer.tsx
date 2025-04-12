@@ -4,9 +4,9 @@ import CityClock from '../CityClock/CityClock';
 import { fetchFooterQuery } from '@/sanity/lib/queries';
 import { FetchFooterQueryResult } from '../../../sanity.types';
 import { sanityFetch } from '@/sanity/lib/live';
-import { PortableText } from 'next-sanity';
 import CreativeServicesMobile from './CreativeServicesMobile';
 import CreativeServicesDesktop from './CreativeServicesDesktop';
+import RichText from '../RichText/RichText';
 // import BlurUp from './BlurUp';
 
 const Footer = async () => {
@@ -17,7 +17,7 @@ const Footer = async () => {
   return (
     <footer className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full'>
       <div className='hidden lg:flex lg:pt-3 lg:pb-1 z-10'>
-        {footer?.lefttext && <PortableText value={footer?.lefttext} />}
+        {footer?.lefttext && <RichText content={footer?.lefttext} />}
       </div>
       <div className='lg:order-last z-10'>
         <CityClock location={footer?.location} />

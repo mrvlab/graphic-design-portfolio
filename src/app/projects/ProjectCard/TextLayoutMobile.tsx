@@ -1,5 +1,5 @@
-import { PortableText } from 'next-sanity';
 import ITextLayoutMobile from '../types/ITextLayoutMobile';
+import RichText from '@/components/RichText/RichText';
 
 const TextLayoutMobile = ({ index, project }: ITextLayoutMobile) => {
   return (
@@ -12,7 +12,7 @@ const TextLayoutMobile = ({ index, project }: ITextLayoutMobile) => {
       </h2>
 
       <span className='flex-[1]'>
-        {project.richText && <PortableText value={project.richText} />}
+        {project.richText && <RichText content={project.richText} />}
         {project.comingSoon && <span>( Coming Soon )</span>}
       </span>
       <span className='flex-[0.4]'>

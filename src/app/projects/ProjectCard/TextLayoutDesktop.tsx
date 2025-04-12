@@ -1,6 +1,6 @@
-import { PortableText } from 'next-sanity';
 import ITextLayoutDesktop from '../types/ITextLayoutDesktop';
 import HoverableTitle from '@/components/HoverableTitle';
+import RichText from '@/components/RichText/RichText';
 
 const TextLayoutDesktop = ({
   index,
@@ -26,7 +26,7 @@ const TextLayoutDesktop = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {project.richText && <PortableText value={project.richText} />}
+        {project.richText && <RichText content={project.richText} />}
         {project.comingSoon && <span>( Coming Soon )</span>}
       </span>
       <span className='hidden lg:block lg:row-start-1 lg:absolute lg:right-2 z-0'>

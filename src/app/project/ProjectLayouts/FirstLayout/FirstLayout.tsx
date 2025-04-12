@@ -1,8 +1,8 @@
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
-import { PortableText } from 'next-sanity';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
+import RichText from '@/components/RichText/RichText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -26,7 +26,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <section className='flex flex-col justify-center items-center text-center fixed inset-0 h-screen flex-1 bg-transparent z-[5] pointer-events-none select-none '>
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (
-                  <PortableText value={firstSection.richText} />
+                  <RichText content={firstSection.richText} />
                 )}
               </div>
             </section>
@@ -227,7 +227,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
                   <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
                     {fourthSection.richText && (
-                      <PortableText value={fourthSection.richText} />
+                      <RichText content={fourthSection.richText} />
                     )}
                   </div>
                 </div>
@@ -351,7 +351,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               <div className='flex flex-col items-center justify-center max-lg:pb-[6.25rem] lg:py-[5.625rem] text-center'>
                 <div className='w-2/3'>
                   {fourthSection.richTextBottom && (
-                    <PortableText value={fourthSection.richTextBottom} />
+                    <RichText content={fourthSection.richTextBottom} />
                   )}
                 </div>
               </div>
