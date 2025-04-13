@@ -1,11 +1,8 @@
 import React from 'react';
 
-const MobileScrollText = ({
-  isFirstSectionVisible,
-}: {
-  isFirstSectionVisible: boolean;
-}) => {
-  const isVisible = !isFirstSectionVisible;
+const MobileScrollText = ({ showScrollText }: { showScrollText: boolean }) => {
+  // For backward compatibility, we'll use the old prop name but with the new logic
+  const isVisible = showScrollText;
 
   return (
     <div

@@ -13,8 +13,7 @@ import { useProjectMobileScrollVisibility } from '@/app/project/utils/useProject
 import MobileScrollText from '../../MobileScrollText/MobileScrollText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
-  const { isFirstSectionVisible, hideScrollRef } =
-    useProjectMobileScrollVisibility();
+  const { showScrollText, hideScrollRef } = useProjectMobileScrollVisibility();
 
   if (!project?.sectionList) return null;
 
@@ -41,7 +40,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </div>
             </section>
 
-            <MobileScrollText isFirstSectionVisible={isFirstSectionVisible} />
+            <MobileScrollText showScrollText={showScrollText} />
 
             {/* // firstSection */}
             <div>

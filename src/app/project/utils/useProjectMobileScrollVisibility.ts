@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 
 interface UseScrollVisibilityResult {
-  isFirstSectionVisible: boolean;
+  showScrollText: boolean;
   hasScrolled: boolean;
   hideScrollRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const useProjectMobileScrollVisibility =
   (): UseScrollVisibilityResult => {
-    const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(false);
+    const [showScrollText, setShowScrollText] = useState(true);
     const [hasScrolled, setHasScrolled] = useState(false);
     const hideScrollRef = useRef<HTMLDivElement | null>(null);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const hasIntersectedRef = useRef<boolean>(false);
 
     useEffect(() => {
       const handleScroll = () => {
@@ -37,7 +38,13 @@ export const useProjectMobileScrollVisibility =
       if (!hideScrollRef.current) return;
 
       const observer = new IntersectionObserver(
-        ([entry]) => setIsFirstSectionVisible(entry.isIntersecting),
+        ([entry]) => {
+          // Once the element is intersected, hide the scroll text and keep it hidden
+          if (entry.isIntersecting && !hasIntersectedRef.current) {
+            hasIntersectedRef.current = true;
+            setShowScrollText(false);
+          }
+        },
         { threshold: 0.1 }
       );
 
@@ -45,5 +52,5 @@ export const useProjectMobileScrollVisibility =
       return () => observer.disconnect();
     }, []);
 
-    return { isFirstSectionVisible, hasScrolled, hideScrollRef };
+    return { showScrollText, hasScrolled, hideScrollRef };
   };
