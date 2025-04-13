@@ -3,6 +3,11 @@ import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
 import RichText from '@/components/RichText/RichText';
+import {
+  aspectRatio4to5,
+  aspectRatio3to2,
+  aspectRatio16to9,
+} from '@/utils/aspectRatioMeasurements';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -35,16 +40,16 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div>
               <section
                 id='first-bg-media-section'
-                className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-3/2'
+                className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-16/9'
               >
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={1080}
-                    priority={true}
+                    {...aspectRatio16to9}
+                    priority
+                    loading='eager'
                   />
                 ) : (
                   firstSection.mediaGallery?.mediaItems?.[0].asset
@@ -68,9 +73,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
-                      priority={true}
+                      {...aspectRatio4to5}
+                      priority
                     />
                   ) : (
                     firstSection.mediaGallery?.mediaItems?.[1].asset
@@ -95,8 +99,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[2].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[2].alt || ''}
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                       className='object-cover w-full h-full'
                     />
                   ) : (
@@ -128,9 +131,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <NextImage
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
                   alt={secondSection.mediaGallery.mediaItems[0].alt || ''}
-                  width={1920}
-                  height={1080}
                   className='object-cover w-full h-full'
+                  {...aspectRatio3to2}
                 />
               ) : (
                 secondSection.mediaGallery?.mediaItems?.[0].asset
@@ -152,7 +154,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div>
             <section
               id='first-bg-media-section'
-              className='flex flex-col sticky top-0 flex-1 h-screen z-20 w-full aspect-4/5 lg:aspect-3/2'
+              className='flex flex-col sticky top-0 flex-1 h-screen z-20 w-full'
               style={{
                 backgroundColor: `${fourthSection.sectionBgColor}`,
               }}
@@ -163,9 +165,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                       alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
-                      width={1920}
-                      height={1080}
                       className='object-cover w-full h-full'
+                      {...aspectRatio3to2}
                     />
                   ) : (
                     thirdSection.mediaGallery?.mediaItems?.[0].asset
@@ -191,9 +192,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={thirdSection.mediaGallery.mediaItems[1].asset._id}
                     alt={thirdSection.mediaGallery.mediaItems[1].alt || ''}
-                    width={1920}
-                    height={2400}
                     className='object-cover w-full h-full'
+                    {...aspectRatio4to5}
                   />
                 ) : (
                   thirdSection.mediaGallery?.mediaItems?.[1].asset
@@ -239,9 +239,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[0].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[0].asset
@@ -270,9 +269,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[1].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[1].asset
@@ -299,9 +297,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[2].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[2].asset
@@ -328,9 +325,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[3].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[3].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[3].asset

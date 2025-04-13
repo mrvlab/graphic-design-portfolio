@@ -3,6 +3,10 @@ import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
 import RichText from '@/components/RichText/RichText';
+import {
+  aspectRatio4to5,
+  aspectRatio3to2,
+} from '@/utils/aspectRatioMeasurements';
 
 const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -36,16 +40,15 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               id='first-media-section'
               className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
             >
-              <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
+              <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:gap-y-0 w-full z-10'>
                 <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1'>
                   {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
-                      priority={true}
+                      {...aspectRatio4to5}
+                      priority
                     />
                   ) : (
                     firstSection.mediaGallery?.mediaItems?.[0].asset
@@ -66,9 +69,8 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
-                      priority={true}
+                      {...aspectRatio4to5}
+                      priority
                     />
                   ) : (
                     firstSection.mediaGallery?.mediaItems?.[1].asset
@@ -92,18 +94,17 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div className='relative w-full max-lg:z-20'>
             <section
               id='second-media-section'
-              className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 lg:grid-cols-24 z-0'
+              className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 lg:grid-cols-24 z-20'
             >
-              <div className='aspect-9/16 lg:aspect-[5/4] w-full h-full object-cover col-span-full absolute inset-0'>
+              <div className='aspect-3/2 w-full h-full object-cover col-span-full absolute inset-0'>
                 {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={
                       secondSection.mediaGallery?.mediaItems?.[0]?.asset?._id
                     }
                     alt={secondSection.mediaGallery?.mediaItems?.[0]?.alt || ''}
-                    width={1920}
-                    height={1280}
-                    priority={true}
+                    {...aspectRatio3to2}
+                    priority
                     className='object-cover w-full h-full'
                   />
                 ) : (
@@ -124,7 +125,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             <div className='sticky top-0 w-full max-lg:z-20 lg:bg-transparent z-20'>
               <section
                 id='third-media-section'
-                className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'
+                className='grid grid-cols-16 relative min-h-screen lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'
               >
                 <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14'>
                   {secondSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
@@ -135,8 +136,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       alt={
                         secondSection.mediaGallery?.mediaItems?.[1]?.alt || ''
                       }
-                      width={1920}
-                      height={1280}
+                      {...aspectRatio3to2}
                       className='object-cover w-full h-full'
                     />
                   ) : (
@@ -173,8 +173,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                       alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     thirdSection.mediaGallery?.mediaItems?.[0].asset
@@ -200,8 +199,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={thirdSection.mediaGallery.mediaItems[1].asset._id}
                       alt={thirdSection.mediaGallery.mediaItems[1].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     thirdSection.mediaGallery?.mediaItems?.[1].asset
@@ -227,8 +225,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={thirdSection.mediaGallery.mediaItems[2].asset._id}
                       alt={thirdSection.mediaGallery.mediaItems[2].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     thirdSection.mediaGallery?.mediaItems?.[2].asset

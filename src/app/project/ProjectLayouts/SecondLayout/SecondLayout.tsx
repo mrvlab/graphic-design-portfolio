@@ -3,6 +3,10 @@ import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
 import RichText from '@/components/RichText/RichText';
+import {
+  aspectRatio4to5,
+  aspectRatio3to2,
+} from '@/utils/aspectRatioMeasurements';
 
 const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
   if (!project?.sectionList) return null;
@@ -36,15 +40,14 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             id='first-media-section'
             className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
           >
-            <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:aspect-[5/4] lg:gap-y-0 w-full z-10'>
+            <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:gap-y-0 w-full z-10'>
               <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1'>
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={2400}
+                    {...aspectRatio4to5}
                     priority={true}
                   />
                 ) : (
@@ -65,8 +68,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={2400}
+                    {...aspectRatio4to5}
                     priority={true}
                   />
                 ) : (
@@ -98,8 +100,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
                   alt={secondSection.mediaGallery.mediaItems[0].alt || ''}
                   className='w-full h-full object-cover'
-                  width={1920}
-                  height={2400}
+                  {...aspectRatio3to2}
                 />
               ) : (
                 secondSection.mediaGallery?.mediaItems?.[0].asset
@@ -118,7 +119,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div className='relative w-full max-lg:z-30 lg:bg-transparent'>
             <section
               id='third-media-section'
-              className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
+              className='grid grid-cols-16 relative min-h-screen lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-30 w-full'
             >
               <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 '>
                 {secondSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
@@ -126,8 +127,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     refId={secondSection.mediaGallery.mediaItems[1].asset._id}
                     alt={secondSection.mediaGallery.mediaItems[1].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={1280}
+                    {...aspectRatio3to2}
                   />
                 ) : (
                   secondSection.mediaGallery?.mediaItems?.[1].asset
@@ -148,14 +148,13 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='fourth-media-section'
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
-                <div className='aspect-3/4 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px]'>
+                <div className='aspect-4/5 col-start-2 col-span-10 max-lg:self-end lg:col-start-2 lg:col-span-6 lg:mt-[500px]'>
                   {secondSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[2].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[2].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={1280}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     secondSection.mediaGallery?.mediaItems?.[2].asset
@@ -175,14 +174,13 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='fifth-media-section'
                 className='grid grid-cols-16 relative h-fit bg-transparent lg:grid lg:grid-cols-24 lg:z-30 w-full'
               >
-                <div className='aspect-3/4 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px]'>
+                <div className='aspect-4/5 col-start-6 col-span-10 mt-[40%] lg:col-start-17 lg:col-span-6 lg:mt-[45px]'>
                   {secondSection.mediaGallery?.mediaItems?.[3].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[3].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[3].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={1280}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     secondSection.mediaGallery?.mediaItems?.[3].asset
@@ -202,14 +200,13 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='sixth-media-section'
                 className='grid grid-cols-16 relative min-h-svh bg-transparent lg:h-fit lg:grid lg:grid-cols-24 mt-[110px] lg:z-30'
               >
-                <div className='aspect-3/4 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6'>
+                <div className='aspect-4/5 col-start-2 col-span-10 lg:col-start-2 lg:col-span-6'>
                   {secondSection.mediaGallery?.mediaItems?.[4].asset?.url ? (
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[4].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[4].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                     />
                   ) : (
                     secondSection.mediaGallery?.mediaItems?.[4].asset
@@ -233,7 +230,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
       {thirdSection && (
         <section
           id='seventh-media-section'
-          className='grid grid-cols-16 relative min-h-screen lg:aspect-[5/4] bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20  w-full'
+          className='grid grid-cols-16 relative min-h-screen bg-white lg:h-fit lg:flex-1 lg:bg-transparent lg:grid-cols-24 z-20 w-full'
         >
           <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14 lg:mt-[240px]'>
             {thirdSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
@@ -241,8 +238,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                 alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
                 className='w-full h-full object-cover'
-                width={1920}
-                height={1280}
+                {...aspectRatio3to2}
               />
             ) : (
               thirdSection.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
@@ -274,8 +270,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={2400}
+                    {...aspectRatio4to5}
                   />
                 ) : (
                   fourthSection.mediaGallery?.mediaItems?.[0].asset
@@ -301,8 +296,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={2400}
+                    {...aspectRatio4to5}
                   />
                 ) : (
                   fourthSection.mediaGallery?.mediaItems?.[1].asset
@@ -328,8 +322,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     refId={fourthSection.mediaGallery.mediaItems[2].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={2400}
+                    {...aspectRatio4to5}
                   />
                 ) : (
                   fourthSection.mediaGallery?.mediaItems?.[2].asset
