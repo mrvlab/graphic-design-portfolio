@@ -13,7 +13,7 @@ const CreativeServices = () => {
   }
 
   return (
-    <div>
+    <>
       <div className='absolute top-4 lg:hidden'>
         <CreativeServicesMobile />
       </div>
@@ -21,7 +21,7 @@ const CreativeServices = () => {
       <div className='hidden lg:flex'>
         <CreativeServicesDesktop />
       </div>
-    </div>
+    </>
   );
 };
 
