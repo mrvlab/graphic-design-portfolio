@@ -43,10 +43,43 @@ export async function generateSeoMetadata({
         ? `${page.title} | ${settings.title}`
         : title;
 
-  const image =
-    urlForImage(page?.seo?.image)?.url() ??
-    urlForImage(settings?.image)?.url() ??
-    'https://your-default-image.png';
+  const imageUrl =
+    urlForImage(page?.seo?.image)?.url() ?? 'https://your-default-image.png';
+
+  let imageWidth = 1200;
+  let imageHeight = 630;
+
+  if (
+    page?.seo?.image &&
+    typeof page.seo.image === 'object' &&
+    'asset' in page.seo.image &&
+    page.seo.image.asset
+  ) {
+    try {
+      const imageAssetQuery = `*[_type == "sanity.imageAsset" && _id == $id][0]{
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      }`;
+
+      const imageAssetId = page.seo.image.asset._ref;
+      const { data: imageAsset } = await sanityFetch({
+        query: imageAssetQuery,
+        params: { id: imageAssetId },
+        stega: false,
+      });
+
+      if (imageAsset?.metadata?.dimensions) {
+        imageWidth = imageAsset.metadata.dimensions.width;
+        imageHeight = imageAsset.metadata.dimensions.height;
+      }
+    } catch (error) {
+      console.error('Error fetching image dimensions:', error);
+    }
+  }
 
   return {
     title: fullTitle,
@@ -55,17 +88,37 @@ export async function generateSeoMetadata({
       title,
       description,
       url,
-      images: [{ url: image }],
+      siteName: settings?.title || 'Martina Quirici',
+      locale: 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: imageUrl,
+          width: imageWidth,
+          height: imageHeight,
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [image],
+      images: [imageUrl],
     },
     metadataBase: new URL(baseUrl),
     alternates: {
       canonical: url,
+    },
+    other: {
+      'og:site_name': settings?.title || 'Martina Quirici',
+      'og:locale': 'en_US',
+      'og:type': 'website',
+      'og:image:width': imageWidth.toString(),
+      'og:image:height': imageHeight.toString(),
+      'og:image:alt': title,
+      'og:image:secure_url': imageUrl,
+      'og:image:type': 'image/jpeg',
     },
   };
 }
