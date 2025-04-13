@@ -63,7 +63,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     )
                   )}
                 </div>
-                <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 bg-amber-400 lg:-translate-y-[20%]'>
+                <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 lg:-translate-y-[20%]'>
                   {firstSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
