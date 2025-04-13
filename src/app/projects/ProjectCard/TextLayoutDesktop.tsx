@@ -31,7 +31,7 @@ const TextLayoutDesktop = ({
       </span>
       <span
         className={`hidden lg:block lg:row-start-1 lg:absolute lg:right-2 z-0 ${
-          project.comingSoon ? 'opacity-0' : 'opacity-100'
+          isHovered ? 'opacity-0' : 'opacity-100'
         }`}
       >
         {project.year ? new Date(project.year).getFullYear() : ''}
