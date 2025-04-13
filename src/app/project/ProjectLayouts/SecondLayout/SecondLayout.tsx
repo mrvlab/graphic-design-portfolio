@@ -289,7 +289,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           </section>
 
           <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 lg:items-center lg:justify-center lg:grid-cols-24 z-[25]'>
-            <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
+            <div className='col-start-8 col-span-8 lg:col-start-11 lg:w-[125%] -translate-x-[10%] lg:col-span-4 z-10'>
               <div className='w-full aspect-4/5'>
                 {fourthSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                   <NextImage

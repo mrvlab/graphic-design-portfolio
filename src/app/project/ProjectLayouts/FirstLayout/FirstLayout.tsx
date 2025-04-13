@@ -224,14 +224,14 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='third-bg-media-section'
                 className='grid grid-cols-16 lg:sticky h-fit lg:top-0 min-lg:aspect-[5/4] lg:grid-cols-24'
               >
-                <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
+                <div className='col-start-2 col-span-12 lg:col-start-2 lg:col-span-5 lg:h-full relative'>
                   <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
                     {fourthSection.richText && (
                       <RichText content={fourthSection.richText} />
                     )}
                   </div>
                 </div>
-                <div className='col-start-2 col-span-14 lg:col-start-14 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
+                <div className='col-start-2 col-span-14 lg:col-start-15 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
                   <div className='grid lg:flex lg:flex-col lg:w-full aspect-4/5 lg:mt-[15%]'>
                     {fourthSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                       <NextImage
@@ -289,7 +289,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
 
               <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
-                <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
+                <div className='col-start-8 col-span-8 lg:col-start-11 lg:w-[125%] -translate-x-[10%] lg:col-span-4 z-10'>
                   <div className='w-full aspect-4/5'>
                     {fourthSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                       <NextImage
