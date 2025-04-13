@@ -3,9 +3,7 @@ import { fetchContactQuery } from '@/sanity/lib/queries';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
 import React from 'react';
 import { FetchContactQueryResult } from '../../../sanity.types';
-import SayHiSvgDesktop from './SayHiSvgDesktop';
-import SayHiSvgMobile from './SayHiSvgMobile';
-import RichText from '@/components/RichText/RichText';
+import ContactContent from './ContactContent';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -34,11 +32,9 @@ const page = async () => {
   }
   return (
     <div className='flex flex-col justify-center items-center h-full relative'>
-      <div className='leading-[125%] text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full hover-underline-links'>
-        {contact.richText && <RichText content={contact.richText} />}
+      <div className='group relative w-full'>
+        <ContactContent contact={contact} />
       </div>
-      <SayHiSvgDesktop />
-      <SayHiSvgMobile />
     </div>
   );
 };
