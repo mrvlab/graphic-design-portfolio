@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
@@ -8,8 +9,13 @@ import {
   aspectRatio3to2,
   aspectRatio16to9,
 } from '@/utils/aspectRatioMeasurements';
+import { useProjectMobileScrollVisibility } from '@/app/project/utils/useProjectMobileScrollVisibility';
+import MobileScrollText from '../../MobileScrollText/MobileScrollText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
+  const { isFirstSectionVisible, hasScrolled, hideScrollRef } =
+    useProjectMobileScrollVisibility();
+
   if (!project?.sectionList) return null;
 
   const sections = project.sectionList.filter(
@@ -24,7 +30,6 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
   return (
     <>
-      {/* <FirstLayoutHeightCalculator /> */}
       <div className='flex flex-col relative' id='first-layout'>
         {firstSection && (
           <>
@@ -35,6 +40,11 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 )}
               </div>
             </section>
+
+            <MobileScrollText
+              isFirstSectionVisible={isFirstSectionVisible}
+              hasScrolled={hasScrolled}
+            />
 
             {/* // firstSection */}
             <div>
@@ -91,6 +101,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 </div>
               </section>
               <section
+                ref={hideScrollRef}
                 id='second-media-section'
                 className='grid grid-cols-16 relative h-screen lg:min-h-screen bg-transparent lg:grid lg:grid-cols-24 z-20'
               >

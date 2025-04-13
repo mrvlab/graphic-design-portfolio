@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
@@ -7,8 +9,13 @@ import {
   aspectRatio4to5,
   aspectRatio3to2,
 } from '@/utils/aspectRatioMeasurements';
+import { useProjectMobileScrollVisibility } from '../../utils/useProjectMobileScrollVisibility';
+import MobileScrollText from '../../MobileScrollText/MobileScrollText';
 
 const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
+  const { isFirstSectionVisible, hasScrolled, hideScrollRef } =
+    useProjectMobileScrollVisibility();
+
   if (!project?.sectionList) return null;
 
   const sections = project.sectionList.filter(
@@ -35,6 +42,10 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 )}
               </div>
             </section>
+            <MobileScrollText
+              isFirstSectionVisible={isFirstSectionVisible}
+              hasScrolled={hasScrolled}
+            />
 
             <section
               id='first-media-section'
@@ -63,7 +74,10 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     )
                   )}
                 </div>
-                <div className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 lg:-translate-y-[20%]'>
+                <div
+                  ref={hideScrollRef}
+                  className='aspect-4/5 col-start-6 col-span-10 lg:col-start-16 lg:col-span-6 lg:row-start-2 lg:-translate-y-[20%]'
+                >
                   {firstSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
