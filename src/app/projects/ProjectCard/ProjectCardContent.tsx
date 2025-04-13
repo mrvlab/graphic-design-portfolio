@@ -46,7 +46,7 @@ function ProjectCardContent({
 
   const imageVariants = {
     visible: {
-      opacity: isHovered ? (project.comingSoon ? 0.5 : 1) : 1,
+      opacity: isHovered ? (project.comingSoon ? 0.2 : 1) : 1,
       transform: 'none',
       transition: {
         duration: 0.5,

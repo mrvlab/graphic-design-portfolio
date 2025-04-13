@@ -51,7 +51,7 @@ export default function HoverFadeImages({
 
   const imageVariants = {
     visible: {
-      opacity: isHovered ? (comingSoon ? 0.5 : 1) : 1,
+      opacity: isHovered ? (comingSoon ? 0.2 : 1) : 1,
       transform: 'none',
       transition: {
         duration: 1,
