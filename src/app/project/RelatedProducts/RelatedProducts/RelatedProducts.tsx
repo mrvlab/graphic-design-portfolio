@@ -21,7 +21,7 @@ const RelatedProducts = ({
         <Carousel relatedProducts={relatedProducts} />
       </section>
 
-      <section className='hidden lg:aspect-16/9 lg:flex lg:flex-col lg:justify-center lg:gap-8'>
+      <section className='hidden lg:flex lg:flex-col lg:justify-center lg:gap-8 lg:h-screen'>
         <h3 className='lg:w-full lg:text-center'>( Other cases )</h3>
         <div className='lg:grid lg:grid-cols-24'>
           {relatedProducts.projects?.map((project, index) => {
