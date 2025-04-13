@@ -23,7 +23,7 @@ type IRichText = Array<{
 const RichText = ({ content }: { content: IRichText }) => {
   if (!content) return null;
   return (
-    <div className='leading-[115%] flex flex-col gap-[6px]'>
+    <div className='leading-[115%] flex flex-col gap-[6px] hover-underline-links'>
       <PortableText value={content} />
     </div>
   );
