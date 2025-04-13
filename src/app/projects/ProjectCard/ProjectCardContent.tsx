@@ -30,7 +30,7 @@ function ProjectCardContent({
       opacity: 1,
       transform: 'none',
       transition: {
-        staggerChildren: 0.14,
+        staggerChildren: 0.08,
         ease: [0.25, 0.1, 0.25, 1],
         duration: 0.3,
       },
