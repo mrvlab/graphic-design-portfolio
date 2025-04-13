@@ -11,27 +11,39 @@ export const useProjectMobileScrollVisibility =
     const [isFirstSectionVisible, setIsFirstSectionVisible] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
     const hideScrollRef = useRef<HTMLDivElement | null>(null);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-      const handleScroll = () => setHasScrolled(window.scrollY > 0);
+      const handleScroll = () => {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+
+        scrollTimeoutRef.current = setTimeout(() => {
+          setHasScrolled(window.scrollY > 0);
+        }, 100);
+      };
+
       window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+      };
     }, []);
 
     useEffect(() => {
+      if (!hideScrollRef.current) return;
+
       const observer = new IntersectionObserver(
         ([entry]) => setIsFirstSectionVisible(entry.isIntersecting),
         { threshold: 0.1 }
       );
 
-      const currentRef = hideScrollRef.current;
-      if (currentRef) observer.observe(currentRef);
+      observer.observe(hideScrollRef.current);
       return () => observer.disconnect();
     }, []);
 
-    return {
-      isFirstSectionVisible,
-      hasScrolled,
-      hideScrollRef,
-    };
+    return { isFirstSectionVisible, hasScrolled, hideScrollRef };
   };

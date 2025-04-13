@@ -13,7 +13,7 @@ import { useProjectMobileScrollVisibility } from '@/app/project/utils/useProject
 import MobileScrollText from '../../MobileScrollText/MobileScrollText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
-  const { isFirstSectionVisible, hasScrolled, hideScrollRef } =
+  const { isFirstSectionVisible, hideScrollRef } =
     useProjectMobileScrollVisibility();
 
   if (!project?.sectionList) return null;
@@ -41,10 +41,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </div>
             </section>
 
-            <MobileScrollText
-              isFirstSectionVisible={isFirstSectionVisible}
-              hasScrolled={hasScrolled}
-            />
+            <MobileScrollText isFirstSectionVisible={isFirstSectionVisible} />
 
             {/* // firstSection */}
             <div>
@@ -75,6 +72,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
               <section
                 id='first-media-section'
+                ref={hideScrollRef}
                 className='grid grid-cols-16 relative h-screen lg:h-fit bg-transparent lg:grid-cols-24 z-20'
               >
                 <div className='aspect-4/5 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 mt-[7.5rem]'>
@@ -101,7 +99,6 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 </div>
               </section>
               <section
-                ref={hideScrollRef}
                 id='second-media-section'
                 className='grid grid-cols-16 relative h-screen lg:min-h-screen bg-transparent lg:grid lg:grid-cols-24 z-20'
               >
