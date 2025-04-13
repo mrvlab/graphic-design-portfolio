@@ -160,8 +160,20 @@ const MobileLayout = ({ about }: IMobileLayout) => {
         </h2>
         <ul className='grid grid-cols-2 gap-x-1 gap-y-2'>
           {about.publications?.map((publication) => (
-            <li key={publication._id} className='pr-3 list-none'>
+            <li key={publication._id} className='list-none'>
               <h3>{publication.title}</h3>
+              {publication.href && (
+                <p>
+                  <a
+                    href={publication.href || ''}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='italic'
+                  >
+                    ( Read more )
+                  </a>
+                </p>
+              )}
             </li>
           ))}
         </ul>

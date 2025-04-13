@@ -102,11 +102,11 @@
 
   .hover-underline-links a {
     text-decoration: none;
+    @apply underline underline-offset-4 lg:no-underline;
   }
 
   .hover-underline-links a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.25em;
+    @apply lg:underline lg:underline-offset-4;
   }
 }
 
