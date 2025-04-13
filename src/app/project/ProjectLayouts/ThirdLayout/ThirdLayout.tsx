@@ -33,7 +33,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <>
             <section
               id='first-text-section'
-              className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none'
+              className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-svh lg:min-h-svh flex-1 bg-transparent z-[5] pointer-events-none select-none'
             >
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (

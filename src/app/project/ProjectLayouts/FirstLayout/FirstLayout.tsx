@@ -32,7 +32,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
       <div className='flex flex-col relative' id='first-layout'>
         {firstSection && (
           <>
-            <section className='flex flex-col justify-center items-center text-center fixed inset-0 h-screen flex-1 bg-transparent z-[5] pointer-events-none select-none '>
+            <section className='flex flex-col justify-center items-center text-center fixed inset-0 h-svh flex-1 bg-transparent z-[5] pointer-events-none select-none '>
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
                 {firstSection.richText && (
                   <RichText content={firstSection.richText} />
