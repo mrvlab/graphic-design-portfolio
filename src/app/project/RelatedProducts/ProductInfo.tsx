@@ -18,11 +18,13 @@ const ProductInfo = ({
 }: IProductInfo) => {
   return (
     <div
-      className={`flex flex-col text-center pt-3 transition-opacity duration-300 ease-in ${textClass}`}
+      className={`flex flex-col text-center pt-3 transition-opacity duration-300 ease-in ${textClass} lg:pt-0 lg:text-left lg:justify-center lg:opacity-0 lg:group-hover:opacity-100`}
     >
-      <span className=''>(0{index + 1})</span>
+      <span className=''>0.{index + 1}</span>
       <span className=''>{project.title || 'Untitled'}</span>
-      <span className=''>Year: {project.year || '2024'}</span>
+      <span className=''>
+        Year: {project.year ? new Date(project.year).getFullYear() : '2024'}
+      </span>
       <span className=''>{isComingSoon ? '( Coming Soon )' : ''}</span>
     </div>
   );

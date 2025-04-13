@@ -106,6 +106,7 @@ const DesktopLayout = ({ about }: IMobileLayout) => {
                       href={publication.href || ''}
                       target='_blank'
                       rel='noreferrer'
+                      className='hover:italic'
                     >
                       ( Read more )
                     </a>

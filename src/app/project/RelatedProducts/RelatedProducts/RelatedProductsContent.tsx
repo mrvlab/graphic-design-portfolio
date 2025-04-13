@@ -12,36 +12,52 @@ type RelatedSection = Extract<
 type RelatedProductsContentProps = {
   project: NonNullable<RelatedSection['projects']>[number];
   index: number;
+  isHovered: boolean;
+  isAnyHovered: boolean;
 };
 
 const RelatedProductsContent: React.FC<RelatedProductsContentProps> = ({
   project,
   index,
-}) => (
-  <>
-    <div className='aspect-4/5 relative'>
-      {project.mediaGallery?.mediaItems?.[0].asset?.url ? (
-        <NextImage
-          refId={project.mediaGallery.mediaItems[0].asset._id}
-          alt={project.mediaGallery.mediaItems[0].alt || ''}
-          className='object-cover'
-          fill
-        />
-      ) : (
-        project.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
-          <MuxVideo
-            playbackId={project.mediaGallery?.mediaItems?.[0].asset?.playbackId}
-            className='w-full h-full object-cover'
+  isHovered,
+  isAnyHovered,
+}) => {
+  const opacityClass = isHovered
+    ? 'opacity-100'
+    : isAnyHovered
+      ? 'opacity-20'
+      : 'opacity-100';
+
+  return (
+    <>
+      <div
+        className={`aspect-4/5 relative transition-opacity duration-300 ease-in-out ${opacityClass}`}
+      >
+        {project.mediaGallery?.mediaItems?.[0].asset?.url ? (
+          <NextImage
+            refId={project.mediaGallery.mediaItems[0].asset._id}
+            alt={project.mediaGallery.mediaItems[0].alt || ''}
+            className='object-cover'
+            fill
           />
-        )
-      )}
-    </div>
-    <ProductInfo
-      index={index}
-      project={project}
-      isComingSoon={project.comingSoon || false}
-    />
-  </>
-);
+        ) : (
+          project.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
+            <MuxVideo
+              playbackId={
+                project.mediaGallery?.mediaItems?.[0].asset?.playbackId
+              }
+              className='w-full h-full object-cover'
+            />
+          )
+        )}
+      </div>
+      <ProductInfo
+        index={index}
+        project={project}
+        isComingSoon={project.comingSoon || false}
+      />
+    </>
+  );
+};
 
 export default RelatedProductsContent;

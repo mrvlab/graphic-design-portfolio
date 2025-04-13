@@ -30,7 +30,7 @@ function ProjectCardContent({
       opacity: 1,
       transform: 'none',
       transition: {
-        staggerChildren: 0.14,
+        staggerChildren: 0.08,
         ease: [0.25, 0.1, 0.25, 1],
         duration: 0.3,
       },
@@ -46,7 +46,7 @@ function ProjectCardContent({
 
   const imageVariants = {
     visible: {
-      opacity: isHovered ? (project.comingSoon ? 0.5 : 1) : 1,
+      opacity: isHovered ? (project.comingSoon ? 0.2 : 1) : 1,
       transform: 'none',
       transition: {
         duration: 0.5,

@@ -9,7 +9,7 @@ const ViewPortraitOnHover = ({
 }) => {
   return (
     <div className='flex justify-center items-center p-2.5 aspect-2/3'>
-      <div className='h-fit w-[40%] mb-[36%] group'>
+      <div className='h-fit w-[40%] group'>
         <div className='flex flex-col justify-center items-center aspect-4/5 relative p-[0.5px] flex-1 overflow-hidden'>
           <div className='relative w-full h-full'>
             {portrait?.asset?._ref && (

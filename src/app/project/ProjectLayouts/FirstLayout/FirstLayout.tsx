@@ -1,10 +1,21 @@
+'use client';
 import React from 'react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import NextImage from '@/components/Media/NextImage';
 import MuxVideo from '@/components/Media/MuxVideo';
 import RichText from '@/components/RichText/RichText';
+import {
+  aspectRatio4to5,
+  aspectRatio3to2,
+  aspectRatio16to9,
+} from '@/utils/aspectRatioMeasurements';
+import { useProjectMobileScrollVisibility } from '@/app/project/utils/useProjectMobileScrollVisibility';
+import MobileScrollText from '../../MobileScrollText/MobileScrollText';
 
 const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
+  const { isFirstSectionVisible, hideScrollRef } =
+    useProjectMobileScrollVisibility();
+
   if (!project?.sectionList) return null;
 
   const sections = project.sectionList.filter(
@@ -19,7 +30,6 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
   return (
     <>
-      {/* <FirstLayoutHeightCalculator /> */}
       <div className='flex flex-col relative' id='first-layout'>
         {firstSection && (
           <>
@@ -31,20 +41,22 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </div>
             </section>
 
+            <MobileScrollText isFirstSectionVisible={isFirstSectionVisible} />
+
             {/* // firstSection */}
             <div>
               <section
                 id='first-bg-media-section'
-                className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-3/2'
+                className='flex flex-col sticky top-0 flex-1 h-screen z-0 w-full aspect-4/5 lg:aspect-16/9'
               >
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
                     className='w-full h-full object-cover'
-                    width={1920}
-                    height={1080}
-                    priority={true}
+                    {...aspectRatio16to9}
+                    priority
+                    loading='eager'
                   />
                 ) : (
                   firstSection.mediaGallery?.mediaItems?.[0].asset
@@ -60,6 +72,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
               <section
                 id='first-media-section'
+                ref={hideScrollRef}
                 className='grid grid-cols-16 relative h-screen lg:h-fit bg-transparent lg:grid-cols-24 z-20'
               >
                 <div className='aspect-4/5 col-start-4 col-span-10 lg:col-start-2 lg:col-span-6 mt-[7.5rem]'>
@@ -68,9 +81,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
                       className='w-full h-full object-cover'
-                      width={1920}
-                      height={2400}
-                      priority={true}
+                      {...aspectRatio4to5}
+                      priority
                     />
                   ) : (
                     firstSection.mediaGallery?.mediaItems?.[1].asset
@@ -95,8 +107,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={firstSection.mediaGallery.mediaItems[2].asset._id}
                       alt={firstSection.mediaGallery.mediaItems[2].alt || ''}
-                      width={1920}
-                      height={2400}
+                      {...aspectRatio4to5}
                       className='object-cover w-full h-full'
                     />
                   ) : (
@@ -128,9 +139,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 <NextImage
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
                   alt={secondSection.mediaGallery.mediaItems[0].alt || ''}
-                  width={1920}
-                  height={1080}
                   className='object-cover w-full h-full'
+                  {...aspectRatio3to2}
                 />
               ) : (
                 secondSection.mediaGallery?.mediaItems?.[0].asset
@@ -152,7 +162,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
           <div>
             <section
               id='first-bg-media-section'
-              className='flex flex-col sticky top-0 flex-1 h-screen z-20 w-full aspect-4/5 lg:aspect-3/2'
+              className='flex flex-col sticky top-0 flex-1 h-screen z-20 w-full'
               style={{
                 backgroundColor: `${fourthSection.sectionBgColor}`,
               }}
@@ -163,9 +173,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                       alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
-                      width={1920}
-                      height={1080}
                       className='object-cover w-full h-full'
+                      {...aspectRatio3to2}
                     />
                   ) : (
                     thirdSection.mediaGallery?.mediaItems?.[0].asset
@@ -191,9 +200,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={thirdSection.mediaGallery.mediaItems[1].asset._id}
                     alt={thirdSection.mediaGallery.mediaItems[1].alt || ''}
-                    width={1920}
-                    height={2400}
                     className='object-cover w-full h-full'
+                    {...aspectRatio4to5}
                   />
                 ) : (
                   thirdSection.mediaGallery?.mediaItems?.[1].asset
@@ -224,14 +232,14 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                 id='third-bg-media-section'
                 className='grid grid-cols-16 lg:sticky h-fit lg:top-0 min-lg:aspect-[5/4] lg:grid-cols-24'
               >
-                <div className='col-start-2 col-span-12 lg:col-start-3 lg:col-span-5 lg:h-full relative'>
+                <div className='col-start-2 col-span-12 lg:col-start-2 lg:col-span-5 lg:h-full relative'>
                   <div className='flex flex-col py-[6.25rem] lg:sticky lg:top-20 lg:mt-[25%] lg:mb-[40%]'>
                     {fourthSection.richText && (
                       <RichText content={fourthSection.richText} />
                     )}
                   </div>
                 </div>
-                <div className='col-start-2 col-span-14 lg:col-start-14 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
+                <div className='col-start-2 col-span-14 lg:col-start-15 lg:col-span-9 h-fit relative lg:pt-[6.25rem]'>
                   <div className='grid lg:flex lg:flex-col lg:w-full aspect-4/5 lg:mt-[15%]'>
                     {fourthSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                       <NextImage
@@ -239,9 +247,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[0].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[0].asset
@@ -270,9 +277,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[1].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[1].asset
@@ -291,7 +297,7 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               </section>
 
               <section className='grid grid-cols-16 lg:min-h-screen lg:sticky lg:top-0 z-20 lg:items-center lg:justify-center lg:grid-cols-24'>
-                <div className='col-start-8 col-span-8 lg:col-start-10 lg:col-span-5 z-10'>
+                <div className='col-start-8 col-span-8 lg:col-start-11 lg:w-[125%] -translate-x-[10%] lg:col-span-4 z-10'>
                   <div className='w-full aspect-4/5'>
                     {fourthSection.mediaGallery?.mediaItems?.[2].asset?.url ? (
                       <NextImage
@@ -299,9 +305,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[2].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[2].asset
@@ -328,9 +333,8 @@ const FirstLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           fourthSection.mediaGallery.mediaItems[3].asset._id
                         }
                         alt={fourthSection.mediaGallery.mediaItems[3].alt || ''}
-                        width={1920}
-                        height={2400}
                         className='object-cover w-full h-full'
+                        {...aspectRatio4to5}
                       />
                     ) : (
                       fourthSection.mediaGallery?.mediaItems?.[3].asset
