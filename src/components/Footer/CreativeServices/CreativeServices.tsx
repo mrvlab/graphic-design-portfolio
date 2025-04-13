@@ -1,0 +1,28 @@
+'use client';
+
+import React from 'react';
+import { usePathname } from 'next/navigation';
+import CreativeServicesMobile from './CreativeServicesMobile';
+import CreativeServicesDesktop from './CreativeServicesDesktop';
+
+const CreativeServices = () => {
+  const pathname = usePathname();
+
+  if (pathname !== '/home') {
+    return null;
+  }
+
+  return (
+    <div>
+      <div className='absolute top-4 lg:hidden'>
+        <CreativeServicesMobile />
+      </div>
+
+      <div className='hidden lg:flex'>
+        <CreativeServicesDesktop />
+      </div>
+    </div>
+  );
+};
+
+export default CreativeServices;
