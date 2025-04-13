@@ -26,7 +26,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
         {firstSection && (
           <>
             <section
-              id='second-media-section'
+              id='first-text-section'
               className='flex flex-col justify-center items-center text-center fixed inset-0 min-h-screen lg:min-h-dvh flex-1 bg-transparent z-[5] pointer-events-none select-none'
             >
               <div className='flex flex-col justify-center items-center text-center w-2/3'>
@@ -123,10 +123,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             </section>
 
             <div className='sticky top-0 w-full max-lg:z-20 lg:bg-transparent z-20'>
-              <section
-                id='third-media-section'
-                className='grid grid-cols-16 relative min-h-screen lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'
-              >
+              <section className='grid grid-cols-16 relative min-h-screen lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 lg:z-10 w-full'>
                 <div className='aspect-3/2 col-start-2 col-span-14 self-center lg:col-start-6 lg:col-span-14'>
                   {secondSection.mediaGallery?.mediaItems?.[1].asset?.url ? (
                     <NextImage
@@ -159,7 +156,7 @@ const ThirdLayout = ({ project }: { project: SingleProjectQueryResult }) => {
 
         {thirdSection && (
           <div
-            id='eighth-media-section'
+            id='third-media-section'
             className='grid gap-y-[100px] max-lg:pt-[100px] relative bg-white lg:bg-transparent z-20'
             style={{
               backgroundColor: `${thirdSection.sectionBgColor}`,
