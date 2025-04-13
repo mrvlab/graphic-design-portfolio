@@ -15,8 +15,8 @@ const Footer = async () => {
   });
 
   return (
-    <footer className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24'>
-      <div className='hidden lg:flex lg:pt-3 lg:pb-1 z-10 lg:col-span-4'>
+    <footer className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end'>
+      <div className='hidden lg:flex lg:pt-0 z-10 lg:col-span-4'>
         {footer?.lefttext && <RichText content={footer?.lefttext} />}
       </div>
       <div className='z-10 lg:col-span-12 lg:col-start-21 lg:flex lg:justify-end'>
