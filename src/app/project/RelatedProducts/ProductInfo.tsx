@@ -23,9 +23,13 @@ const ProductInfo = ({
       <span className=''>0.{index + 1}</span>
       <span className=''>{project.title || 'Untitled'}</span>
       <span className=''>
-        Year: {project.year ? new Date(project.year).getFullYear() : '2024'}
+        {!isComingSoon && (
+          <>Year: {project.year ? new Date(project.year).getFullYear() : ''}</>
+        )}
       </span>
-      <span className=''>{isComingSoon ? '( Coming Soon )' : ''}</span>
+      {isComingSoon && (
+        <span className=''>{isComingSoon ? '( Coming Soon )' : ''}</span>
+      )}
     </div>
   );
 };
