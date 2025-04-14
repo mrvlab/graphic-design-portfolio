@@ -10,6 +10,7 @@ interface INextImage extends Omit<ImageProps, 'src' | 'alt'> {
   lqip?: boolean;
   blurStrength?: number;
   hideScrollRef?: React.RefObject<HTMLImageElement | null>;
+  quality?: number;
 }
 
 export default function NextImage({
@@ -18,13 +19,14 @@ export default function NextImage({
   alt,
   lqip = true,
   blurStrength,
-  width = 400,
-  height = 533,
+  width = 800,
+  height = 1066,
   className,
   sizes,
   priority = false,
   fill,
   hideScrollRef,
+  quality = 90,
   ...rest
 }: INextImage) {
   const isSanityImage = Boolean(refId);
@@ -46,7 +48,10 @@ export default function NextImage({
   if (!imageUrl) return null;
 
   const calculatedSizes =
-    sizes || (fill ? '100vw' : `(max-width: ${width}px) 100vw, ${width}px`);
+    sizes ||
+    (fill
+      ? '100vw'
+      : `(max-width: 768px) 100vw, (max-width: 1200px) 80vw, ${width}px`);
 
   return (
     <Image
@@ -59,6 +64,7 @@ export default function NextImage({
       placeholder={lqip && blurDataURL ? 'blur' : undefined}
       blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}
       loading={priority ? 'eager' : 'lazy'}
+      quality={quality}
       ref={hideScrollRef}
       {...rest}
     />

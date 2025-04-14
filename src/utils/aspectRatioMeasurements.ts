@@ -4,8 +4,8 @@ export const aspectRatio16to9 = {
 };
 
 export const aspectRatio3to2 = {
-  width: 1620,
-  height: 1080,
+  width: 2400,
+  height: 1600,
 };
 
 export const aspectRatio4to5 = {

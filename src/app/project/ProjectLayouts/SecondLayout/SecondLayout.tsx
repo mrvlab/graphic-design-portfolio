@@ -53,7 +53,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[0].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[0].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-4/5 w-full h-full object-cover'
                     {...aspectRatio4to5}
                     priority={true}
                   />
@@ -64,7 +64,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       playbackId={
                         firstSection.mediaGallery.mediaItems[0].asset.playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                     />
                   )
                 )}
@@ -77,7 +77,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={firstSection.mediaGallery.mediaItems[1].asset._id}
                     alt={firstSection.mediaGallery.mediaItems[1].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-4/5 w-full h-full object-cover'
                     {...aspectRatio4to5}
                     priority={true}
                   />
@@ -88,7 +88,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                       playbackId={
                         firstSection.mediaGallery.mediaItems[1].asset.playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                     />
                   )
                 )}
@@ -104,13 +104,14 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             id='second-media-section'
             className='grid grid-cols-16 sticky top-0 min-h-screen w-full lg:h-fit lg:flex-1 bg-transparent lg:grid-cols-24 z-20'
           >
-            <div className='aspect-9/16 lg:aspect-3/2 w-full h-full object-cover col-span-full absolute inset-0'>
+            <div className='aspect-3/2 lg:aspect-4/5 w-full h-full object-cover col-span-full absolute inset-0'>
               {secondSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                 <NextImage
                   refId={secondSection.mediaGallery.mediaItems[0].asset._id}
                   alt={secondSection.mediaGallery.mediaItems[0].alt || ''}
-                  className='w-full h-full object-cover'
+                  className='aspect-3/2 w-full h-full object-cover'
                   {...aspectRatio3to2}
+                  quality={100}
                 />
               ) : (
                 secondSection.mediaGallery?.mediaItems?.[0].asset
@@ -119,7 +120,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     playbackId={
                       secondSection.mediaGallery.mediaItems[0].asset.playbackId
                     }
-                    className='w-full h-full object-cover'
+                    className='aspect-3/2 w-full h-full object-cover'
                   />
                 )
               )}
@@ -136,8 +137,9 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={secondSection.mediaGallery.mediaItems[1].asset._id}
                     alt={secondSection.mediaGallery.mediaItems[1].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-3/2 w-full h-full object-cover'
                     {...aspectRatio3to2}
+                    quality={100}
                   />
                 ) : (
                   secondSection.mediaGallery?.mediaItems?.[1].asset
@@ -147,7 +149,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                         secondSection.mediaGallery.mediaItems[1].asset
                           .playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-3/2 w-full h-full object-cover'
                     />
                   )
                 )}
@@ -163,7 +165,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[2].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[2].alt || ''}
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                       {...aspectRatio4to5}
                     />
                   ) : (
@@ -174,7 +176,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           secondSection.mediaGallery.mediaItems[2].asset
                             .playbackId
                         }
-                        className='w-full h-full object-cover'
+                        className='aspect-4/5 w-full h-full object-cover'
                       />
                     )
                   )}
@@ -189,7 +191,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[3].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[3].alt || ''}
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                       {...aspectRatio4to5}
                     />
                   ) : (
@@ -200,7 +202,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           secondSection.mediaGallery.mediaItems[3].asset
                             .playbackId
                         }
-                        className='w-full h-full object-cover'
+                        className='aspect-4/5 w-full h-full object-cover'
                       />
                     )
                   )}
@@ -215,7 +217,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                     <NextImage
                       refId={secondSection.mediaGallery.mediaItems[4].asset._id}
                       alt={secondSection.mediaGallery.mediaItems[4].alt || ''}
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                       {...aspectRatio4to5}
                     />
                   ) : (
@@ -226,7 +228,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                           secondSection.mediaGallery.mediaItems[4].asset
                             .playbackId
                         }
-                        className='w-full h-full object-cover'
+                        className='aspect-4/5 w-full h-full object-cover'
                       />
                     )
                   )}
@@ -247,8 +249,9 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
               <NextImage
                 refId={thirdSection.mediaGallery.mediaItems[0].asset._id}
                 alt={thirdSection.mediaGallery.mediaItems[0].alt || ''}
-                className='w-full h-full object-cover'
+                className='aspect-3/2 w-full h-full object-cover'
                 {...aspectRatio3to2}
+                quality={100}
               />
             ) : (
               thirdSection.mediaGallery?.mediaItems?.[0].asset?.playbackId && (
@@ -256,7 +259,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   playbackId={
                     thirdSection.mediaGallery.mediaItems[0].asset.playbackId
                   }
-                  className='w-full h-full object-cover'
+                  className='aspect-3/2 w-full h-full object-cover'
                 />
               )
             )}
@@ -279,7 +282,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[0].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[0].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-4/5 w-full h-full object-cover'
                     {...aspectRatio4to5}
                   />
                 ) : (
@@ -290,7 +293,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                         fourthSection.mediaGallery.mediaItems[0].asset
                           .playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                     />
                   )
                 )}
@@ -305,7 +308,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[1].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[1].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-4/5 w-full h-full object-cover'
                     {...aspectRatio4to5}
                   />
                 ) : (
@@ -316,7 +319,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                         fourthSection.mediaGallery.mediaItems[1].asset
                           .playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                     />
                   )
                 )}
@@ -331,7 +334,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                   <NextImage
                     refId={fourthSection.mediaGallery.mediaItems[2].asset._id}
                     alt={fourthSection.mediaGallery.mediaItems[2].alt || ''}
-                    className='w-full h-full object-cover'
+                    className='aspect-4/5 w-full h-full object-cover'
                     {...aspectRatio4to5}
                   />
                 ) : (
@@ -342,7 +345,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
                         fourthSection.mediaGallery.mediaItems[2].asset
                           .playbackId
                       }
-                      className='w-full h-full object-cover'
+                      className='aspect-4/5 w-full h-full object-cover'
                     />
                   )
                 )}
