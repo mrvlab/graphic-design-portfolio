@@ -1,0 +1,1 @@
+export { mediaGallery } from './mediaGallery';

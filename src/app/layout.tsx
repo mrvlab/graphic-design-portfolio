@@ -1,36 +1,20 @@
-import type { Metadata } from 'next';
-import { Analytics } from '@vercel/analytics/next';
-
 import './globals.css';
+import { lausanne } from '@/fonts/Lausanne';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Martina Quirici',
-  description: 'Art Direction : Graphic Designer',
+  description: 'Graphic Designer Portfolio',
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang='en'>
-      <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin='anonymous'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Liter&display=swap'
-          rel='stylesheet'
-        />
-      </head>
-      <body className={'antialiased lg:font-[0.75rem]'}>
-        {children}
-        <Analytics />
-      </body>
+      <body className={lausanne.className}>{children}</body>
     </html>
   );
 }

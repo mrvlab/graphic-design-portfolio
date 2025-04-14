@@ -1,26 +1,197 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
-  
-
+  --font-family-sans: var(--font-lausanne);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-liter: 'Liter', 'sans-serif';
+  --font-lausanne: var(--font-lausanne-250);
+  --font-lausanne-italic: var(--font-lausanne-300-italic);
+  --font-lausanne-medium: var(--font-lausanne-450);
+  --aspect-3/4: 3 / 4;
+  --aspect-16/9: 16 / 9;
+  --aspect-9/16: 9 / 16;
+  --aspect-2/3: 2 / 3;
+  --aspect-3/2: 3 / 2;
+  --aspect-4/5: 4 / 5;
+
+  --blur-height: 280%;
+  /* Blur Down */
+  --mask-layer-down-1: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  --mask-layer-down-2: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgba(255, 255, 255, 0) 62.5%
+  );
+  --mask-layer-down-3: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  --mask-layer-down-4: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgb(255, 255, 255) 75%,
+    rgba(255, 255, 255, 0) 87.5%
+  );
+
+  /* Blur Up */
+  --mask-layer-up-1: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  --mask-layer-up-2: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 12.5%,
+    rgb(255, 255, 255) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgba(255, 255, 255, 0) 62.5%
+  );
+  --mask-layer-up-3: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 37.5%,
+    rgb(255, 255, 255) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgba(255, 255, 255, 0) 75%
+  );
+  --mask-layer-up-4: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 50%,
+    rgb(255, 255, 255) 62.5%,
+    rgb(255, 255, 255) 75%,
+    rgba(255, 255, 255, 0) 87.5%
+  );
 }
 
+@layer base {
+  :root {
+    --font-family-sans: var(--font-lausanne);
+  }
+}
 
+@layer utilities {
+  .font-normal {
+    font-weight: 400;
+    font-style: normal;
+  }
+  .font-bold {
+    font-weight: 500;
+    font-style: normal;
+  }
+  .italic {
+    font-style: italic;
+  }
+
+  .hover-underline-links a {
+    text-decoration: none;
+    @apply underline underline-offset-4 lg:no-underline;
+  }
+
+  .hover-underline-links a:hover {
+    @apply lg:underline lg:underline-offset-4;
+  }
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-liter);
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
   font-size: 0.813rem;
-  line-height: 1.2;
-  @apply font-[0.813rem] leading-[120%] lg:text-xs lg:leading-[110%];
+  line-height: 1.15;
+  @apply font-[0.813rem] leading-[115%] lg:text-xs;
+}
+
+.blur-mask-layer-down-1 {
+  -webkit-mask: var(--mask-layer-down-1);
+  mask: var(--mask-layer-down-1);
+}
+.blur-mask-layer-down-2 {
+  -webkit-mask: var(--mask-layer-down-2);
+  mask: var(--mask-layer-down-2);
+}
+.blur-mask-layer-down-3 {
+  -webkit-mask: var(--mask-layer-down-3);
+  mask: var(--mask-layer-down-3);
+}
+.blur-mask-layer-down-4 {
+  -webkit-mask: var(--mask-layer-down-4);
+  mask: var(--mask-layer-down-4);
+}
+
+.blur-mask-layer-up-1 {
+  -webkit-mask: var(--mask-layer-up-1);
+  mask: var(--mask-layer-up-1);
+}
+.blur-mask-layer-up-2 {
+  -webkit-mask: var(--mask-layer-up-2);
+  mask: var(--mask-layer-up-2);
+}
+.blur-mask-layer-up-3 {
+  -webkit-mask: var(--mask-layer-up-3);
+  mask: var(--mask-layer-up-3);
+}
+.blur-mask-layer-up-4 {
+  -webkit-mask: var(--mask-layer-up-4);
+  mask: var(--mask-layer-up-4);
+}
+
+/* Carousel */
+.embla {
+  --slide-size: 45%;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+  aspect-ratio: 4/5;
+  display: flex;
+  flex-direction: column;
+}
+.embla__slide__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  background-color: coral;
+  transform-origin: center;
+  aspect-ratio: 4/5;
+}
+.embla__slide__text {
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  transform-origin: center;
+  transition: transform 0.2s ease-out;
 }

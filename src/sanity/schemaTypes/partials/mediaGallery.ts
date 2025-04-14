@@ -1,0 +1,52 @@
+import { ImageIcon } from '@sanity/icons';
+
+import { defineField, defineType } from 'sanity';
+
+export const mediaGallery = defineType({
+  name: 'mediaGallery',
+  title: 'Media Gallery',
+  type: 'object',
+  icon: ImageIcon,
+  fields: [
+    defineField({
+      name: 'mediaItems',
+      title: 'Media Items',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          options: { hotspot: true, metadata: ['lqip'] },
+          fields: [
+            defineField({
+              name: 'alt',
+              title: 'Alternative Text',
+              type: 'string',
+            }),
+          ],
+        }),
+        defineField({
+          name: 'video',
+          title: 'Video',
+          type: 'mux.video',
+          options: {
+            metadata: ['lqip'],
+          },
+        }),
+      ],
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'mediaItems.0.image',
+    },
+    prepare({ title, media }) {
+      return {
+        title: title || 'Media Gallery',
+        media: media || ImageIcon,
+      };
+    },
+  },
+});

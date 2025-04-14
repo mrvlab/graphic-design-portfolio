@@ -1,0 +1,377 @@
+import { defineQuery } from 'next-sanity';
+
+export const fetchSeo = defineQuery(`
+*[_type == "homePage"][0]{
+  seo {
+  title,
+  description,
+  image {
+    _type,
+    asset
+  }
+}
+}
+`);
+
+export const fetchSeoTitle = defineQuery(`
+  *[_type == "projects" && slug.current == $slug][0]{
+    title,
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
+`);
+
+export const settingsQuery = defineQuery(`
+*[_type == "settings"][0]{
+  _id,
+  title,
+  description,
+  title,
+  description,
+  image {
+    _type,
+    asset
+  },
+  enterSiteText
+}
+`);
+
+export const navigationQuery = defineQuery(`
+  *[_type == "navigation"] | order(_updatedAt desc)[0...12]{
+    _id,
+    name,
+    "slug": slug.current,
+    _updatedAt
+  }
+`);
+
+export const fetchHeaderQuery = defineQuery(`
+  *[_type == "header"][0]{
+    _id,
+    lefttext,
+    name,
+    workTitle,
+    projectCloseText
+  }
+`);
+export const fetchHomePageQuery = defineQuery(`
+  *[_type == "homePage"][0]{
+    projects[]->{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        _id,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+      }
+    },
+    comingSoon
+    },
+    seo {
+    title,
+    description,
+    image {
+      _type,
+      asset
+    }
+  }
+  }
+`);
+export const fetchProjectsIndexQuery = defineQuery(`
+  *[_type == "projectsIndex"][0]{
+    projects[]->{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        _id,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+      }
+    },
+    comingSoon,
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+    },
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
+`);
+
+export const singleProjectQuery = defineQuery(`
+  *[_type == "projects" && slug.current == $slug][0]{
+    _id,
+    title,
+    comingSoon,
+    "slug": slug.current,
+    year,
+    richText,
+    mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+      }
+    },
+    layout,
+    sectionList[] {
+      _type,
+      _key,
+      richText,
+      richTextBottom,
+      sectionBgColor,
+      mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+        }
+      },
+      projects[]->{
+        _id,
+        title,
+        "slug": slug.current,
+        comingSoon,
+        year,
+        mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset-> {
+            _id,
+            _ref,
+            playbackId,
+            assetId,
+            filename,
+            url
+          }
+        }
+      },
+      }
+    },
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
+`);
+export const fetchAboutQuery = defineQuery(`
+  *[_type == "aboutPage"][0]{
+    _id,
+    languages[]->{
+      _id,
+      _type,
+      language,
+      level
+    },
+    experiences[]->{
+      _id,
+      _type,
+      title,
+      location,
+      role,
+      startDate,
+      endDate
+    },
+    studies[]->{
+      _id,
+      _type,
+      degree,
+      institution,
+      startDate,
+      endDate
+    },
+    publications[]->{
+      _id,
+      _type,
+      title,
+      href
+    },
+    portrait {
+      _type,
+      asset
+    },
+    bodyTextSections[]{
+      _key,
+      title,
+      content
+    },
+    skills[]->{
+      _id,
+      _type,
+      title
+    },
+    softwareTools[]->{
+      _id,
+      _type,
+      richText
+    },
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
+`);
+
+export const fetchContactQuery = defineQuery(`
+  *[_type == "contactPage"][0]{
+  _id,
+  richText,
+  seo {
+    title,
+    description,
+    image {
+      _type,
+      asset
+    }
+  }
+}
+`);
+
+export const fetchFooterQuery = defineQuery(`
+  *[_type == "footer"][0]{
+    _id,
+    name,
+    rights,
+    location,
+    lefttext
+  }
+`);
+
+// export const getPageQuery = defineQuery(`
+//   *[_type == "page" && defined(slug.current)][0...12]{
+//     _id,
+//     name,
+//     title,
+//     subheading,
+//     "slug": slug.current,
+//     richText
+// }
+// `);
+
+// export const PAGE_QUERY = defineQuery(`
+//   *[_type == "page" && slug.current == $slug][0]{
+//     title,
+//     name,
+//     subheading,
+//     richText,
+//     mainImage
+//   }
+// `);
+
+export const projectsQuery = defineQuery(`
+  *[_type == "projects" && defined(slug.current)][0...100]{
+    _id,
+    name,
+    "slug": slug.current,
+    title,
+    year,
+    richText,
+    mediaGallery {
+      _type,
+      mediaItems[] {
+        _key,
+        alt,
+        asset-> {
+          _id,
+          _ref,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+      }
+    },
+    comingSoon,
+    seo {
+      title,
+      description,
+      image {
+        _type,
+        asset
+      }
+    }
+  }
+`);
+
+// export const sitemapData = defineQuery(`
+//   *[_type == "page" && defined(slug.current)] | order(_type asc) {
+//     "slug": slug.current,
+//     _type,
+//     _updatedAt,
+//   }
+// `);
+// export const pagesSlugs = defineQuery(`
+//   *[_type == "page" && defined(slug.current)]
+//   {"slug": slug.current}
+// `);

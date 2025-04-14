@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 
+type ICityClock = {
+  location: string | null | undefined;
+};
+
 const formatTime = () => {
   return new Intl.DateTimeFormat('en-US', {
     timeZone: 'Europe/Madrid',
@@ -11,7 +15,7 @@ const formatTime = () => {
   }).format(new Date());
 };
 
-const CityClock = () => {
+const CityClock = ({ location }: ICityClock) => {
   const [time, setTime] = useState(formatTime()); // Initial time setup
 
   useEffect(() => {
@@ -27,7 +31,12 @@ const CityClock = () => {
     return () => clearInterval(interval);
   }, []); // Empty dependency array ensures this runs only on mount and unmount
 
-  return <div>Madrid, Spain {time}</div>;
+  return (
+    <>
+      <span className=''>{location ? location : 'Madrid, Spain'}</span>
+      <span className=''>{time}</span>
+    </>
+  );
 };
 
 export default CityClock;
