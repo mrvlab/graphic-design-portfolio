@@ -3,15 +3,14 @@ import { imgData } from '@/sanity/lib/image';
 import clsx from 'clsx';
 import { ImageProps } from 'next/image';
 
-interface INextImage extends Omit<ImageProps, 'src' | 'alt'> {
+type INextImage = Omit<ImageProps, 'src' | 'alt'> & {
   refId?: string;
   src?: string;
   alt?: string;
   lqip?: boolean;
   blurStrength?: number;
   hideScrollRef?: React.RefObject<HTMLImageElement | null>;
-  quality?: number;
-}
+};
 
 export default function NextImage({
   refId,

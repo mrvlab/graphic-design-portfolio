@@ -1,8 +1,8 @@
 import NextImage from './NextImage';
 import MuxVideo from './MuxVideo';
-import { INextImage } from './types/INextImage';
+import { ImageProps } from 'next/image';
 
-type MediaProps = {
+type IMedia = {
   id?: string;
   playbackId?: string;
   className?: string;
@@ -13,7 +13,10 @@ type MediaProps = {
   lqip?: boolean;
   blurStrength?: number;
   sizes?: string;
-} & Omit<INextImage, 'refId'>;
+} & Omit<
+  ImageProps,
+  'src' | 'alt' | 'width' | 'height' | 'placeholder' | 'blurDataURL'
+>;
 
 export default function Media({
   id,
@@ -27,7 +30,7 @@ export default function Media({
   blurStrength,
   sizes,
   ...rest
-}: MediaProps) {
+}: IMedia) {
   if (!id && !playbackId) return null;
 
   if (playbackId) {
