@@ -36,9 +36,11 @@ const HoverableTitle = ({
         </span>
       </h2>
       <span
-        className={`transition-opacity duration-300 ${comingSoon && isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`flex gap-1 transition-opacity duration-300 ${comingSoon && isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
-        ( Coming Soon )
+        <span className='opacity-0'>(</span>
+        <span>Coming Soon</span>
+        <span className='opacity-0'>)</span>
       </span>
     </div>
   );
