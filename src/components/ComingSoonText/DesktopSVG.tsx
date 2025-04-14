@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DesktopSVG = () => {
+const DesktopSVG = ({ className }: { className?: string }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -8,6 +8,7 @@ const DesktopSVG = () => {
       width='100%'
       height='100%'
       fill='none'
+      className={className}
     >
       <path
         stroke='#979797'
