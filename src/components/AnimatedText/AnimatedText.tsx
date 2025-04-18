@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
-const SPEED = 12;
-const PARTICLE_SIZE = 20;
+const SPEED = 4;
+const FONT_SIZE = 32;
+const PARTICLE_SIZE = FONT_SIZE / 8; // Make particle size proportional to font size
 const TEXT = 'Creative services';
 
 class Particle {
@@ -28,98 +30,151 @@ class Particle {
       const dx = this.targetX - this.x;
       const dy = this.targetY - this.y;
       if (dx !== 0) {
-        this.x = dx > -2 && dx < 2 ? this.targetX : this.x + dx / SPEED;
+        if (dx > -2 && dx < 2) {
+          this.x = this.targetX;
+        } else {
+          this.x += dx / SPEED;
+        }
       }
       if (dy !== 0) {
-        this.y = dy > -2 && dy < 2 ? this.targetY : this.y + dy / SPEED;
+        if (dy > -2 && dy < 2) {
+          this.y = this.targetY;
+        } else {
+          this.y += dy / SPEED;
+        }
       }
     }
-  }
-
-  draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillText('X', this.x * PARTICLE_SIZE, this.y * PARTICLE_SIZE);
   }
 }
 
 export default function AnimatedText() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [scale, setScale] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const offscreenCanvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!containerRef.current || !offscreenCanvasRef.current) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const container = containerRef.current;
+    const offscreenCanvas = offscreenCanvasRef.current;
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+    if (!offscreenCtx) return;
 
-    // Create offscreen canvas for text measurement
-    const offScreenCanvas = document.createElement('canvas');
-    const offScreenCTX = offScreenCanvas.getContext('2d');
-    if (!offScreenCTX) return;
+    // Calculate container dimensions
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
 
-    offScreenCTX.font = 'bold 48px serif';
-    offScreenCTX.textBaseline = 'top';
-    const textMetrics = offScreenCTX.measureText(TEXT);
+    // Set up offscreen canvas with larger dimensions to ensure text fits
+    offscreenCtx.font = 'bold 32px serif';
+    offscreenCtx.textBaseline = 'middle';
+    offscreenCtx.textAlign = 'center';
+
+    const textMetrics = offscreenCtx.measureText(TEXT);
     const textWidth = Math.ceil(textMetrics.width);
     const textHeight = Math.ceil(
       textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent
     );
 
-    // Set canvas dimensions
-    canvas.width = textWidth * PARTICLE_SIZE;
-    canvas.height = textHeight * PARTICLE_SIZE;
-    offScreenCanvas.width = textWidth;
-    offScreenCanvas.height = textHeight;
+    // Make canvas larger than text to ensure proper centering
+    offscreenCanvas.width = textWidth * 1.2; // Add 20% padding
+    offscreenCanvas.height = textHeight * 1.2;
 
-    // Draw text on offscreen canvas
-    offScreenCTX.font = 'bold 48px serif';
-    offScreenCTX.fillText(TEXT, 0, textHeight);
+    // Calculate scale to fit
+    const scaleX =
+      (containerWidth * 0.8) / (offscreenCanvas.width * PARTICLE_SIZE);
+    const scaleY =
+      (containerHeight * 0.8) / (offscreenCanvas.height * PARTICLE_SIZE);
+    const newScale = Math.min(scaleX, scaleY, 1);
+    setScale(newScale);
 
-    // Get pixel data and create particles
-    const imageData = offScreenCTX.getImageData(0, 0, textWidth, textHeight);
-    const particles: Particle[] = [];
+    // Draw text centered in the canvas
+    offscreenCtx.font = 'bold 32px serif';
+    offscreenCtx.textBaseline = 'middle';
+    offscreenCtx.textAlign = 'center';
+    offscreenCtx.fillText(
+      TEXT,
+      offscreenCanvas.width / 2,
+      offscreenCanvas.height / 2
+    );
 
+    // Get pixel data
+    const imageData = offscreenCtx.getImageData(
+      0,
+      0,
+      offscreenCanvas.width,
+      offscreenCanvas.height
+    );
+    const newParticles: Particle[] = [];
+
+    // Create particles from pixel data
     for (let i = 0; i < imageData.data.length; i += 4) {
-      const x = (i % (textWidth * 4)) / 4;
-      const y = Math.floor(i / (textWidth * 4));
-      const randX =
-        Math.random() > 0.5
-          ? -Math.random() * textWidth
-          : Math.random() * textWidth;
-      const randY =
-        Math.random() > 0.5
-          ? -Math.random() * textHeight
-          : Math.random() * textHeight;
+      const x = (i % (offscreenCanvas.width * 4)) / 4;
+      const y = Math.floor(i / (offscreenCanvas.width * 4));
       const alpha = imageData.data[i + 3];
+
       if (alpha > 64) {
-        particles.push(
+        const randX =
+          Math.random() > 0.5
+            ? -Math.random() * offscreenCanvas.width
+            : Math.random() * offscreenCanvas.width;
+        const randY =
+          Math.random() > 0.5
+            ? -Math.random() * offscreenCanvas.height
+            : Math.random() * offscreenCanvas.height;
+
+        newParticles.push(
           new Particle(x, y, randX * PARTICLE_SIZE, randY * PARTICLE_SIZE)
         );
       }
     }
-    particlesRef.current = particles;
+
+    setParticles(newParticles);
+
+    // Calculate offset to center the text
+    const offsetX =
+      (containerWidth - offscreenCanvas.width * PARTICLE_SIZE * newScale) / 2;
+    const offsetY =
+      (containerHeight - offscreenCanvas.height * PARTICLE_SIZE * newScale) / 2;
+    setOffset({ x: offsetX, y: offsetY });
 
     // Animation function
     function animate(t: number) {
-      if (!ctx || !canvas) return;
-
-      ctx.fillStyle = 'black';
-      ctx.font = 'bold 12px serif';
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((particle) => {
+      newParticles.forEach((particle) => {
         particle.update(t);
-        particle.draw(ctx);
       });
+      setParticles([...newParticles]);
       animationFrameRef.current = requestAnimationFrame(animate);
     }
 
     // Start animation
-    const startTime = performance.now();
-    animate(startTime);
+    animate(performance.now());
 
-    // Cleanup
+    // Handle resize
+    const handleResize = () => {
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      const scaleX =
+        (containerWidth * 0.8) / (offscreenCanvas.width * PARTICLE_SIZE);
+      const scaleY =
+        (containerHeight * 0.8) / (offscreenCanvas.height * PARTICLE_SIZE);
+      const newScale = Math.min(scaleX, scaleY, 1);
+      setScale(newScale);
+
+      const offsetX =
+        (containerWidth - offscreenCanvas.width * PARTICLE_SIZE * newScale) / 2;
+      const offsetY =
+        (containerHeight - offscreenCanvas.height * PARTICLE_SIZE * newScale) /
+        2;
+      setOffset({ x: offsetX, y: offsetY });
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
+      window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -127,12 +182,38 @@ export default function AnimatedText() {
   }, []);
 
   return (
-    <div className='relative w-full h-full flex items-center justify-center'>
-      <canvas
-        ref={canvasRef}
-        className='block max-w-full max-h-full'
-        style={{ background: 'transparent' }}
-      />
+    <div
+      ref={containerRef}
+      className='relative w-full h-full flex items-center justify-center'
+    >
+      <canvas ref={offscreenCanvasRef} className='hidden' />
+      <div
+        className='relative'
+        style={{
+          width: 'fit-content',
+          height: 'fit-content',
+          transform: `scale(${scale})`,
+          transformOrigin: 'center center',
+          position: 'absolute',
+          left: offset.x,
+          top: offset.y,
+        }}
+      >
+        {particles.map((particle, index) => (
+          <motion.div
+            key={index}
+            className='absolute text-black font-bold'
+            style={{
+              left: particle.x * PARTICLE_SIZE,
+              top: particle.y * PARTICLE_SIZE,
+              fontSize: `${PARTICLE_SIZE}px`,
+              lineHeight: `${PARTICLE_SIZE}px`,
+            }}
+          >
+            X
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }

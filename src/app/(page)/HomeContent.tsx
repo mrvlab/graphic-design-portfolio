@@ -8,7 +8,7 @@ export function HomeContent({ enterSiteText }: { enterSiteText: string }) {
     <div className='relative flex flex-col justify-center flex-1 min-h-[50vh]'>
       <div
         id='logo'
-        className='absolute w-full h-full flex items-center justify-center z-0 lg:px-[6%]'
+        className='absolute w-full h-full flex items-center justify-center z-0'
       >
         <AnimatedText />
       </div>
