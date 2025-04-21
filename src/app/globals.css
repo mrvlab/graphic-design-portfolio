@@ -102,11 +102,13 @@
 
   .hover-underline-links a {
     text-decoration: none;
-    @apply underline underline-offset-4 lg:no-underline;
+    text-decoration-thickness: 0.8px;
+    @apply underline underline-offset-[1.8px] lg:no-underline;
   }
 
   .hover-underline-links a:hover {
-    @apply lg:underline lg:underline-offset-4;
+    text-decoration-thickness: 0.8px;
+    @apply lg:underline lg:underline-offset-[1.8px];
   }
 }
 
@@ -117,7 +119,7 @@ body {
   font-style: normal;
   font-size: 0.813rem;
   line-height: 1.15;
-  @apply font-[0.813rem] leading-[115%] lg:text-xs;
+  @apply font-[0.813rem] leading-[115%];
 }
 
 .blur-mask-layer-down-1 {
