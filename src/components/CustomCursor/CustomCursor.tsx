@@ -144,7 +144,7 @@ export default function CustomCursor() {
   if (
     typeof window === 'undefined' ||
     !mounted ||
-    pathname !== '/home' ||
+    pathname !== '/' ||
     !isDesktop
   ) {
     return null;

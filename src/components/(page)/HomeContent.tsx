@@ -24,7 +24,7 @@ export function HomeContent({ enterSiteText }: { enterSiteText: string }) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Link href='/home'>{enterSiteText}</Link>
+        <Link href='/'>{enterSiteText}</Link>
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
     </div>
   ) : (
     <Link
-      href={project.slug ? `/project/${project.slug}` : '/home'}
+      href={project.slug ? `/project/${project.slug}` : '/'}
       key={project._id}
       className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
       id={`project-${index + 1}`}

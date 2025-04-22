@@ -8,7 +8,7 @@ import CreativeServicesDesktop from './CreativeServicesDesktop';
 const CreativeServices = () => {
   const pathname = usePathname();
 
-  if (pathname !== '/home') {
+  if (pathname !== '/') {
     return null;
   }
 

@@ -124,7 +124,7 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
 
             return project.slug && !project.comingSoon ? (
               <Link
-                href={project.slug ? `/project/${project.slug}` : '/home'}
+                href={project.slug ? `/project/${project.slug}` : '/'}
                 className={`embla__slide ${gridStartClass} lg:col-span-2`}
                 key={project._id}
               >
