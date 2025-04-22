@@ -1,7 +1,7 @@
 import './globals.css';
 import { lausanne } from '@/fonts/Lausanne';
 import { Metadata } from 'next';
-import CustomCursor from '@/components/CustomCursor';
+import CustomCursor from '@/components/CustomCursor/CustomCursor';
 
 export const metadata: Metadata = {
   title: 'Martina Quirici',
