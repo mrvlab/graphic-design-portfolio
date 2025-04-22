@@ -114,7 +114,7 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
   }, [emblaApi, tweenScale, onSelect, setTweenNodes, setTweenFactor]);
 
   return (
-    <div className='embla'>
+    <div className='embla w-full'>
       <div className='embla__viewport' ref={emblaRef}>
         <div className='embla__container lg:grid lg:grid-cols-24'>
           {relatedProducts.projects?.map((project, index: number) => {
