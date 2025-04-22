@@ -20,8 +20,8 @@ const RelatedProducts = ({
 
   return (
     <div className='bg-white z-10'>
-      <section className='flex flex-col gap-6 lg:hidden'>
-        <h3 className='text-center pt-32 font-bold'>( Other cases )</h3>
+      <section className='flex flex-col justify-center items-center gap-6 h-svh sticky top-0 lg:hidden'>
+        <h3 className='text-center font-bold'>( Other cases )</h3>
         <Carousel relatedProducts={relatedProducts} />
       </section>
 

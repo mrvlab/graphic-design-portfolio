@@ -20,7 +20,9 @@ export default async function RootLayout({
 
   return (
     <div className='flex flex-col h-full pt-4 pb-2 lg:pt-0 '>
-      <NavigationMenu hideFirstSection hideThirdSection hideAllOnDesktop />
+      <div className='relative z-50 lg:hidden'>
+        <NavigationMenu hideFirstSection hideThirdSection hideAllOnDesktop />
+      </div>
       <nav className='max-lg:hidden flex max-lg:flex-col lg:grid lg:grid-cols-24 items-center px-2 z-50 max-lg:py-2 sticky top-0 lg:pt-3 lg:fixed lg:w-full'>
         <BlurDown />
         <div className='hidden lg:block z-10 px-3 py-2.5 lg:col-span-4'>
@@ -34,17 +36,19 @@ export default async function RootLayout({
       </nav>
 
       <div
-        className={`flex  justify-between w-full sticky max-lg:top-0 max-lg:pt-[6px] z-50`}
+        className={`flex justify-between w-full sticky max-lg:top-0 max-lg:pt-[6px] z-40`}
       >
         <BlurDown />
-        <div className='block lg:hidden z-10 px-3 py-2.5'>
-          <ScrollProgress />
+        <div className='flex w-full justify-between lg:hidden'>
+          <div className='z-10 px-3 py-2.5'>
+            <ScrollProgress />
+          </div>
+          <CloseButton
+            className='z-10 px-3 py-2.5'
+            id='mobile-close'
+            ariaHidden={true}
+          />
         </div>
-        <CloseButton
-          className='block lg:hidden z-10 px-3 py-2.5'
-          id='mobile-close'
-          ariaHidden={true}
-        />
       </div>
       {/* Main content */}
       <main className='flex flex-col flex-1 h-full'>

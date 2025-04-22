@@ -47,7 +47,7 @@ const SecondLayout = ({ project }: { project: SingleProjectQueryResult }) => {
             id='first-media-section'
             className='flex flex-col justify-end h-fit min-h-screen lg:min-h-screen w-full'
           >
-            <div className='grid grid-cols-16 lg:grid-cols-24 pt-[34rem] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:gap-y-0 w-full z-10'>
+            <div className='grid grid-cols-16 lg:grid-cols-24 pt-[calc(100svh-20rem)] md:pt-[calc(100svh-30rem)] max-lg:pb-[12.5rem] gap-y-[12.5rem] lg:pt-[4.3125rem] lg:gap-y-0 w-full z-10'>
               <div className='aspect-4/5 col-start-2 col-span-12 lg:col-start-2 lg:col-span-7 lg:row-start-1'>
                 {firstSection.mediaGallery?.mediaItems?.[0].asset?.url ? (
                   <NextImage
