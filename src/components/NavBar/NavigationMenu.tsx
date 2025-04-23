@@ -71,12 +71,12 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <div
-          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-10 lg:col-span-4 lg:justify-end bg-white`}
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-10 lg:col-span-4 lg:justify-end`}
         >
           <div className='block lg:hidden'>
             <BlurDown />
           </div>
-          <ul className='max-lg:border-b-[0.5px] flex items-center z-10 w-full lg:gap-3 lg:justify-between lg:max-w-[225px]'>
+          <ul className='max-lg:border-b-[0.5px] flex items-center z-10 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] bg-white'>
             <NavItems navItems={navItems} />
           </ul>
         </div>
