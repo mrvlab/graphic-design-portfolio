@@ -1,7 +1,6 @@
 import './globals.css';
 import { lausanne } from '@/fonts/Lausanne';
 import { Metadata } from 'next';
-import CustomCursor from '@/components/CustomCursor/CustomCursor';
 
 export const metadata: Metadata = {
   title: 'Martina Quirici',
@@ -15,10 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className={lausanne.className}>
-        <CustomCursor />
-        {children}
-      </body>
+      <body className={lausanne.className}>{children}</body>
     </html>
   );
 }

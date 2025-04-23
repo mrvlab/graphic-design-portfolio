@@ -120,7 +120,6 @@ body {
   font-size: 0.813rem;
   line-height: 1.15;
   @apply font-[0.813rem] leading-[115%];
-  cursor: default;
 }
 
 .blur-mask-layer-down-1 {
