@@ -60,7 +60,7 @@ const NavigationMenu = async ({
       {!hideSecondSection && (
         <Link
           href='/'
-          className={`${visibilityClasses} flex flex-col items-center relative w-full z-50 pt-4 lg:pt-0 lg:col-span-16`}
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-50 py-4 lg:py-0 lg:col-span-16`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>
@@ -71,7 +71,7 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <div
-          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 max-lg:pt-[6px] z-10 lg:col-span-4 lg:justify-end`}
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-10 lg:col-span-4 lg:justify-end bg-white`}
         >
           <div className='block lg:hidden'>
             <BlurDown />
