@@ -34,7 +34,7 @@ const Footer = async () => {
         <BlurUp />
       </div>
 
-      <div className='absolute inset-0 flex items-center justify-center z-50 pointer-events-none bottom-[2rem]'>
+      <div className='absolute inset-0 flex items-center justify-center z-50 pointer-events-none bottom-[1rem]'>
         <CreativeServices />
       </div>
     </footer>
