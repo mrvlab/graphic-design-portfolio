@@ -19,7 +19,7 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <div className='flex flex-col h-full pt-4 pb-2 lg:pt-0 '>
+    <div className='flex flex-col h-full pb-2'>
       <div className='relative z-50 lg:hidden'>
         <NavigationMenu hideFirstSection hideThirdSection hideAllOnDesktop />
       </div>
@@ -35,9 +35,7 @@ export default async function RootLayout({
         />
       </nav>
 
-      <div
-        className={`flex justify-between w-full sticky max-lg:top-0 max-lg:pt-[6px] z-40`}
-      >
+      <div className={`flex justify-between w-full sticky max-lg:top-0 z-40`}>
         <BlurDown />
         <div className='flex w-full justify-between lg:hidden'>
           <div className='z-10 px-3 py-2.5'>
