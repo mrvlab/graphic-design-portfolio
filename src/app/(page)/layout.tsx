@@ -25,7 +25,7 @@ export default async function RootLayout({
         <NavigationMenu />
       </nav>
       {/* Main content */}
-      <main className='flex flex-col flex-1'>
+      <main className='flex flex-col flex-1 max-lg:pb-12'>
         <LenisScroller />
         {children}
       </main>
