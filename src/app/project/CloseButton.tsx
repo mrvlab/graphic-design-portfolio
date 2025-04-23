@@ -21,7 +21,7 @@ const CloseButton = ({
     const currentPath = window.location.pathname;
     if (currentPath.includes('/project/')) {
       const previousPath = document.referrer;
-      const fromPath = previousPath.includes('/home') ? '/home' : '/projects';
+      const fromPath = previousPath.includes('/') ? '/' : '/projects';
       window.history.replaceState({ from: fromPath }, '');
     }
   }, []);
@@ -31,7 +31,7 @@ const CloseButton = ({
     if (state?.from) {
       router.push(state.from);
     } else {
-      router.push('/home');
+      router.push('/');
     }
   };
 

@@ -8,17 +8,17 @@ import CreativeServicesDesktop from './CreativeServicesDesktop';
 const CreativeServices = () => {
   const pathname = usePathname();
 
-  if (pathname !== '/home') {
+  if (pathname !== '/') {
     return null;
   }
 
   return (
     <>
-      <div className='absolute top-4 lg:hidden'>
+      <div className=' lg:hidden'>
         <CreativeServicesMobile />
       </div>
 
-      <div className='hidden lg:flex'>
+      <div className='hidden lg:flex '>
         <CreativeServicesDesktop />
       </div>
     </>
