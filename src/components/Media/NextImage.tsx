@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { imgData } from '@/sanity/lib/image';
 import clsx from 'clsx';
@@ -53,19 +55,27 @@ export default function NextImage({
       : `(max-width: 768px) 100vw, (max-width: 1200px) 80vw, ${width}px`);
 
   return (
-    <Image
-      src={imageUrl}
-      alt={altText}
-      {...(!fill ? { width, height } : { fill })}
-      className={clsx('object-cover object-top', className)}
-      sizes={calculatedSizes}
-      priority={priority}
-      placeholder={lqip && blurDataURL ? 'blur' : undefined}
-      blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}
-      loading={priority ? 'eager' : 'lazy'}
-      quality={quality}
-      ref={hideScrollRef}
-      {...rest}
-    />
+    <div className='relative w-full h-full'>
+      <Image
+        src={imageUrl}
+        alt={altText}
+        {...(!fill ? { width, height } : { fill })}
+        className={clsx(
+          'object-cover object-top opacity-0 transition-opacity duration-300 ease-in-out [&.loaded]:opacity-100',
+          className
+        )}
+        sizes={calculatedSizes}
+        priority={priority}
+        placeholder={lqip && blurDataURL ? 'blur' : undefined}
+        blurDataURL={lqip && blurDataURL ? blurDataURL : undefined}
+        loading={priority ? 'eager' : 'lazy'}
+        quality={quality}
+        ref={hideScrollRef}
+        onLoad={(e) => {
+          e.currentTarget.classList.add('loaded');
+        }}
+        {...rest}
+      />
+    </div>
   );
 }
