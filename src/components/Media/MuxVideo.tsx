@@ -53,7 +53,7 @@ export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
   }, []);
 
   if (!isMounted) {
-    return null;
+    return <div className={clsx('w-full h-full', className)} />;
   }
 
   return (
@@ -67,7 +67,7 @@ export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
       preload='auto'
       theme='minimal'
       className={clsx(
-        'mux-player-ui-none [--media-control-display:none]',
+        'mux-player-ui-none [--media-control-display:none] object-top opacity-0 transition-opacity duration-300 ease-in-out [&.loaded]:opacity-100',
         className
       )}
       style={
@@ -75,8 +75,13 @@ export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
           width: '100%',
           height: '100%',
           '--controls-backdrop-color': 'transparent',
+          '--media-background-color': 'transparent',
+          backgroundColor: 'transparent',
         } as React.CSSProperties
       }
+      onPlay={(e: Event) => {
+        (e.currentTarget as HTMLElement).classList.add('loaded');
+      }}
     />
   );
 }
