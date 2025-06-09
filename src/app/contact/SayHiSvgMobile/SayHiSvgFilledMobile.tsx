@@ -5,6 +5,8 @@ const SayHiSvgFilledMobile = () => {
     <svg
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
+      width={355}
+      height={95}
       viewBox='0 0 355 95'
       className='block lg:hidden absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 opacity-100 group-hover:opacity-0 group-active:opacity-0 transition-opacity duration-600 ease-in-out'
     >

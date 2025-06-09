@@ -5,6 +5,8 @@ const SayHiSvgOutlinedDesktop = () => {
     <svg
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
+      width={541}
+      height={152}
       viewBox='0 0 541 152'
       className='hidden lg:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-600 ease-in-out'
     >
