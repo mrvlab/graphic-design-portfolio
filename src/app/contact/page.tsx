@@ -32,7 +32,7 @@ const page = async () => {
   }
   return (
     <div className='flex flex-col justify-center items-center h-full relative'>
-      <div className='group relative w-full'>
+      <div className='group relative w-full mx-auto'>
         <ContactContent contact={contact} />
       </div>
     </div>
