@@ -3193,6 +3193,13 @@
           "type": "string"
         }
       },
+      "enterSiteText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "projects": {
         "type": "objectAttribute",
         "value": {

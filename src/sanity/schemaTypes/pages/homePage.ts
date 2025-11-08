@@ -16,6 +16,14 @@ export const homePage = defineType({
   ],
   fields: [
     defineField({
+      name: 'enterSiteText',
+      title: 'Enter Site Text',
+      type: 'string',
+      description: 'Text displayed on the entrance overlay button.',
+      initialValue: 'Enter Site',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'projects',
       title: 'Projects',
       description: 'Select up to 12 projects to display on the home page.',

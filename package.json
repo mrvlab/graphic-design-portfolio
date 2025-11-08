@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typegen": "npx sanity@latest schema extract && npx sanity@latest typegen generate --enforce-required-fields",
     "schema": "npx sanity@latest schema extract",
     "types": "npx sanity@latest typegen generate"
   },
   "dependencies": {
-    "@mux/mux-player-react": "^3.3.4",
+    "@mux/mux-player-react": "^3.8.0",
     "@sanity/icons": "^3.7.0",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.81.0",
@@ -20,6 +21,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.6.2",
+    "gsap": "^3.13.0",
     "lenis": "^1.2.3",
     "next": "15.2.2",
     "next-sanity": "^9.9.5",

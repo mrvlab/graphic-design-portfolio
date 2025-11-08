@@ -62,6 +62,7 @@ export const fetchHeaderQuery = defineQuery(`
 `);
 export const fetchHomePageQuery = defineQuery(`
   *[_type == "homePage"][0]{
+    enterSiteText,
     projects[]->{
     _id,
     name,

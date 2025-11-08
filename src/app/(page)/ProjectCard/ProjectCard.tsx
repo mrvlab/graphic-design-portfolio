@@ -32,7 +32,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
   return project.comingSoon ? (
     <div
       key={project._id}
-      className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+      className='flex items-stretch gap-4 lg:gap-6 lg:relative lg:justify-center'
       id={`project-${index + 1}`}
     >
       <HomeProjectsTitle
@@ -50,16 +50,12 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
           currentIndex={index}
           comingSoon={project.comingSoon || false}
           isVisible={isVisible}
-          isScrollingDown={isScrollingDown}
         />
       ) : (
         <HoverFadeImages
           mediaGallery={mediaItems}
           projectId={project._id || ''}
           comingSoon={project.comingSoon || false}
-          isHovered={isHovered}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         />
       )}
     </div>
@@ -67,7 +63,7 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
     <Link
       href={project.slug ? `/project/${project.slug}` : '/'}
       key={project._id}
-      className='flex flex-col items-stretch gap-4 lg:gap-0 lg:relative'
+      className='flex items-stretch gap-4 lg:gap-6 lg:relative lg:justify-center'
       id={`project-${index + 1}`}
     >
       <HomeProjectsTitle
@@ -85,16 +81,12 @@ const ProjectCard = ({ project, index }: IHomeProjectCard) => {
           currentIndex={index}
           comingSoon={project.comingSoon || false}
           isVisible={isVisible}
-          isScrollingDown={isScrollingDown}
         />
       ) : (
         <HoverFadeImages
           mediaGallery={mediaItems}
           projectId={project._id || ''}
           comingSoon={project.comingSoon || false}
-          isHovered={isHovered}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         />
       )}
     </Link>

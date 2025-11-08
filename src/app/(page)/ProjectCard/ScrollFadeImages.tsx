@@ -9,17 +9,18 @@ export default function ScrollFadeImages({
   currentIndex,
   comingSoon = false,
   isVisible,
-  isScrollingDown,
 }: IScrollFadeImages) {
-  const scrollContainerVariants = {
-    visible: {
-      transition: {
-        staggerChildren: 0.2,
-        staggerDirection: isScrollingDown ? 1 : -1,
-      },
-    },
-    hidden: {},
-  };
+  const firstImage = mediaGallery?.[0];
+  
+  if (!firstImage) return null;
+
+  const ref = firstImage.asset?._id;
+  const { imageUrl } = imgData({
+    ref: ref || '',
+    alt: firstImage.alt?.trim(),
+  });
+
+  if (!imageUrl) return null;
 
   const imageVariants = {
     visible: {
@@ -34,35 +35,16 @@ export default function ScrollFadeImages({
 
   return (
     <motion.div
-      className='grid grid-cols-2 gap-2'
-      variants={scrollContainerVariants}
+      className='w-full'
+      variants={imageVariants}
       initial='hidden'
       animate={isVisible ? 'visible' : 'hidden'}
     >
-      {mediaGallery?.slice(0, 2).map((image, idx: number) => {
-        if (!image) return null;
-        const ref = image.asset?._id;
-        const { imageUrl } = imgData({
-          ref: ref || '',
-          alt: image.alt?.trim(),
-        });
-
-        if (!imageUrl) return null;
-
-        return (
-          <motion.div
-            key={`${projectId}-${idx}`}
-            variants={imageVariants}
-            className='w-full h-full'
-          >
-            <NextImage
-              refId={ref}
-              priority={currentIndex === 0 && idx === 0}
-              className='w-full h-full'
-            />
-          </motion.div>
-        );
-      })}
+      <NextImage
+        refId={ref}
+        priority={currentIndex === 0}
+        className='w-full h-full'
+      />
     </motion.div>
   );
 }

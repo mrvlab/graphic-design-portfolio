@@ -1,14 +1,14 @@
-import { fetchHeaderQuery, navigationQuery } from '@/sanity/lib/queries';
-import { getCurrentYear } from '@/utils/getCurrentYear';
-import React from 'react';
-import NavItems from './NavItems';
-import Link from 'next/link';
-import { sanityFetch } from '@/sanity/lib/live';
+import { fetchHeaderQuery, navigationQuery } from "@/sanity/lib/queries";
+import { getCurrentYear } from "@/utils/getCurrentYear";
+import React from "react";
+import NavItems from "./NavItems";
+import Link from "next/link";
+import { sanityFetch } from "@/sanity/lib/live";
 import {
   FetchHeaderQueryResult,
   NavigationQueryResult,
-} from '../../../sanity.types';
-import BlurDown from './BlurDown';
+} from "../../../sanity.types";
+import BlurDown from "./BlurDown";
 
 type Props = {
   hideFirstSection?: boolean;
@@ -36,10 +36,10 @@ const NavigationMenu = async ({
 
   // Combine mobile and desktop visibility
   const getVisibilityClasses = () => {
-    if (hideAllOnMobile && hideAllOnDesktop) return 'hidden';
-    if (hideAllOnMobile) return 'hidden lg:block';
-    if (hideAllOnDesktop) return 'block lg:hidden';
-    return 'block';
+    if (hideAllOnMobile && hideAllOnDesktop) return "hidden";
+    if (hideAllOnMobile) return "hidden lg:block";
+    if (hideAllOnDesktop) return "block lg:hidden";
+    return "block";
   };
 
   const visibilityClasses = getVisibilityClasses();
@@ -59,8 +59,9 @@ const NavigationMenu = async ({
       {/* CENTER SECTION */}
       {!hideSecondSection && (
         <Link
-          href='/'
-          className={`${visibilityClasses} flex flex-col items-center relative w-full z-50 py-4 lg:py-0 lg:col-span-16`}
+          href="/"
+          id="mobile-nav-home"
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-200 py-4 lg:py-0 lg:col-span-16`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>
@@ -71,12 +72,13 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <div
-          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-10 lg:col-span-4 lg:justify-end`}
+          id="mobile-nav-height"
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-200 lg:col-span-4 lg:justify-end`}
         >
-          <div className='block lg:hidden'>
+          <div className="block lg:hidden">
             <BlurDown />
           </div>
-          <ul className='max-lg:border-b-[0.5px] flex items-center z-10 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] bg-white'>
+          <ul className="max-lg:border-b-[0.5px] flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px]">
             <NavItems navItems={navItems} />
           </ul>
         </div>
