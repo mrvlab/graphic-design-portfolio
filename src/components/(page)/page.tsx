@@ -1,7 +1,7 @@
-import { fetchHomePageQuery, settingsQuery } from '@/sanity/lib/queries';
+import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import { sanityFetch } from '@/sanity/lib/live';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
-import { SettingsQueryResult } from '../../../sanity.types';
+import { FetchHomePageQueryResult } from '../../../sanity.types';
 import { HomeContent } from './HomeContent';
 
 export async function generateMetadata() {
@@ -16,10 +16,10 @@ export async function generateMetadata() {
 }
 
 export default async function Page() {
-  const { data: settings }: { data: SettingsQueryResult } = await sanityFetch({
-    query: settingsQuery,
+  const { data }: { data: FetchHomePageQueryResult } = await sanityFetch({
+    query: fetchHomePageQuery,
   });
-  const enterSiteText = settings?.enterSiteText;
+  const enterSiteText = data?.enterSiteText;
 
   return <HomeContent enterSiteText={enterSiteText || '( Coming Soon )'} />;
 }
