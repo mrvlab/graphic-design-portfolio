@@ -57,13 +57,6 @@ export const settings = defineType({
         metadata: ['lqip'],
       },
     }),
-
-    defineField({
-      name: 'enterSiteText',
-      title: 'Enter Site Text',
-      description: 'Text displayed on the enter site button.',
-      type: 'string',
-    }),
   ],
   preview: {
     select: {

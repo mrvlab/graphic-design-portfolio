@@ -1,257 +1,239 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import gsap from 'gsap';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import NextImage from '@/components/Media/NextImage';
+import HoverOverlay from '../HoverOverlay';
+import { useEntranceDetection } from './useEntranceDetection';
+import { useColorShiftAnimation } from './useColorShiftAnimation';
+import { ANIMATION_CONFIG, Z_INDEX } from './constants';
+import { getImageAssetId, getBackgroundColor } from '@/utils/homeProjectUtils';
+import { IProjects } from '../../types/IProject';
+import { IBoxState } from '../../types/IBoxState';
 
-interface Project {
-  title: string;
-  color: string;
-  image: string;
-  targetPosition?: number;
-}
+type IDesktopColorSwapHomeGrid = {
+  projects: IProjects;
+};
 
-interface DesktopColorSwapHomeGridProps {
-  projects: Project[];
-}
-
-interface BoxState {
-  currentProjectIndex: number;
-  loaded: boolean;
-  color: string;
-  imageLoaded: boolean;
-}
-
+/**
+ * Desktop home grid with color-shifting animation and hover interactions
+ * @see ANIMATION_DOCUMENTATION.md for detailed animation behavior
+ */
 export function DesktopColorSwapHomeGrid({
   projects,
-}: DesktopColorSwapHomeGridProps) {
-  const [hasEntered, setHasEntered] = useState(false);
-  const [boxes, setBoxes] = useState<BoxState[]>([]);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
-  const boxRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const loadedProjectsRef = useRef(new Set<number>());
-  const animationStartedRef = useRef(false);
-  const shiftCountRef = useRef(0);
+}: IDesktopColorSwapHomeGrid) {
+  const hasEntered = useEntranceDetection();
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [elevatedIndex, setElevatedIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const actuallyEntered =
-      document.documentElement.classList.contains('user-has-entered');
-    setHasEntered(actuallyEntered);
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          const hasEnteredNow =
-            document.documentElement.classList.contains('user-has-entered');
-          setHasEntered(hasEnteredNow);
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const initialBoxes: BoxState[] = projects.map((project, index) => ({
+  // Initialize box states
+  const [boxes, setBoxes] = useState<IBoxState[]>(() =>
+    projects.map((project, index) => ({
       currentProjectIndex: index,
       loaded: false,
-      color: project.color,
+      color: getBackgroundColor(project),
       imageLoaded: false,
-    }));
-    setBoxes(initialBoxes);
-  }, [projects]);
-
-  const loadImage = useCallback(
-    (projectIndex: number) => {
-      if (loadedProjectsRef.current.has(projectIndex)) return;
-
-      loadedProjectsRef.current.add(projectIndex);
-      const project = projects[projectIndex];
-
-      const img = new Image();
-      img.onload = () => {
-        setBoxes((prevBoxes) => {
-          const newBoxes = [...prevBoxes];
-          newBoxes[projectIndex] = {
-            ...newBoxes[projectIndex],
-            loaded: true,
-            imageLoaded: true,
-          };
-          return newBoxes;
-        });
-
-        // Fade in the image at original position - instant transition from color to image
-        if (imageRefs.current[projectIndex] && boxRefs.current[projectIndex]) {
-          // Instantly hide the color placeholder
-          gsap.set(boxRefs.current[projectIndex], {
-            opacity: 0,
-          });
-
-          // Start image at full opacity (instant replacement)
-          gsap.set(imageRefs.current[projectIndex], {
-            opacity: 1,
-          });
-        }
-      };
-
-      img.onerror = () => {
-        console.error(
-          `Failed to load Project ${projectIndex + 1} image:`,
-          project.image
-        );
-        loadedProjectsRef.current.add(projectIndex);
-      };
-
-      img.src = project.image;
-    },
-    [projects]
+    }))
   );
 
-  const checkForImageLoad = useCallback(() => {
-    const projectIndexToLoad = shiftCountRef.current - 5;
+  // Animation hook - manages color shifting and image loading
+  const { boxRefs, imageRefs } = useColorShiftAnimation({
+    projects,
+    boxes,
+    setBoxes,
+    hasEntered,
+    onAnimationComplete: () => setAnimationComplete(true),
+  });
 
-    if (
-      projectIndexToLoad >= 0 &&
-      projectIndexToLoad < 12 &&
-      !loadedProjectsRef.current.has(projectIndexToLoad)
-    ) {
-      loadImage(projectIndexToLoad);
-    }
-  }, [loadImage]);
-
-  const shiftColors = useCallback(() => {
-    shiftCountRef.current += 1;
-
-    setBoxes((prevBoxes) => {
-      const newBoxes = [...prevBoxes];
-      const tempProjectIndex = newBoxes[11].currentProjectIndex;
-
-      for (let i = 11; i > 0; i--) {
-        newBoxes[i] = {
-          ...newBoxes[i],
-          currentProjectIndex: newBoxes[i - 1].currentProjectIndex,
-        };
-      }
-      newBoxes[0] = {
-        ...newBoxes[0],
-        currentProjectIndex: tempProjectIndex,
-      };
-
-      newBoxes.forEach((box, boxIndex) => {
-        if (!box.loaded && boxRefs.current[boxIndex]) {
-          const projectIndex = box.currentProjectIndex;
-          gsap.to(boxRefs.current[boxIndex], {
-            backgroundColor: projects[projectIndex].color,
-            duration: 0.2,
-            ease: 'power2.inOut',
-          });
-        }
-      });
-
-      return newBoxes;
-    });
-
-    setTimeout(() => checkForImageLoad(), 0);
-  }, [projects, checkForImageLoad]);
-
-  const animationLoop = useCallback(() => {
-    // Calculate timing: 2300ms total animation, 12 shifts = ~191ms per shift
-    const totalAnimationTime = 2300;
-    const numberOfShifts = 12;
-    const delayPerShift = totalAnimationTime / numberOfShifts;
-
-    const shift = () => {
-      shiftColors();
-
-      if (loadedProjectsRef.current.size < 12) {
-        setTimeout(shift, delayPerShift);
-      } else {
-      }
-    };
-
-    shift();
-  }, [shiftColors]);
-
-  const startAnimation = useCallback(() => {
-    const timeline = gsap.timeline();
-    timelineRef.current = timeline;
-
-    // Wait 700ms for overlay to fade out, then start the 2300ms animation
-    timeline.to(
-      {},
-      {
-        duration: 0.7, // 700ms delay for overlay fade-out
-        onComplete: animationLoop,
-      }
-    );
-  }, [animationLoop]);
-
+  // Sync elevated index with hovered index
   useEffect(() => {
-    if (hasEntered && boxes.length > 0 && !animationStartedRef.current) {
-      animationStartedRef.current = true;
-      shiftCountRef.current = 0;
-      startAnimation();
+    if (hoveredIndex !== null) {
+      setElevatedIndex(hoveredIndex);
     }
+  }, [hoveredIndex]);
 
-    return () => {
-      if (timelineRef.current) {
-        timelineRef.current.kill();
-      }
-    };
-  }, [hasEntered, boxes, startAnimation]);
+  // Reset elevation when blur overlay exits
+  const handleOverlayExitComplete = useCallback(() => {
+    setElevatedIndex(null);
+  }, []);
 
-  // Grid layout changes smoothly over 2300ms starting at 700ms (synchronized with GSAP animation)
-  const gridClass = hasEntered
-    ? 'grid grid-cols-1 lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1] transition-all duration-[2300ms] ease-in-out'
-    : 'grid grid-cols-2 lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1]';
+  // Re-initialize boxes when projects change
+  useEffect(() => {
+    setBoxes(
+      projects.map((project, index) => ({
+        currentProjectIndex: index,
+        loaded: false,
+        color: getBackgroundColor(project),
+        imageLoaded: false,
+      }))
+    );
+  }, [projects]);
 
-  const itemClass = hasEntered
-    ? 'relative aspect-4/3 flex gap-2.5 max-lg:w-[80%] max-lg:mx-auto transition-all duration-[2300ms] ease-in-out'
-    : 'relative aspect-4/3 flex gap-2.5';
+  // Memoize class names
+  const gridClassName = useMemo(() => {
+    const baseClasses =
+      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1] my-auto';
+    const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
+    return `${baseClasses} ${columnClass}`;
+  }, [hasEntered]);
+
+  const itemClassName = 'relative aspect-[4/3] flex gap-2.5';
 
   return (
-    <div className={gridClass} suppressHydrationWarning>
-      {boxes.map((box, index) => (
-        <div key={index} className={itemClass} suppressHydrationWarning>
-          <div className="hidden lg:flex flex-[0.5] w-full justify-center">
-            {(index + 1).toFixed(1)}
-          </div>
+    <div className="relative">
+      {/* Main grid with images */}
+      <div className={gridClassName} suppressHydrationWarning>
+        {boxes.map((box, index) => {
+          const isElevated = elevatedIndex === index;
+          // Use index for image (preserves CMS order)
+          const project = projects[index];
+          // Use currentProjectIndex for rotating colors (creates ladder effect)
+          // Only calculate currentColor if box is not loaded (during animation)
+          const currentColor = box.loaded
+            ? '#ffffff'
+            : getBackgroundColor(projects[box.currentProjectIndex]) ||
+              box.color;
 
-          <div className="relative flex-1 aspect-4/5 overflow-hidden">
-            {/* Color placeholder */}
-            <div
-              ref={(el) => {
-                boxRefs.current[index] = el;
-              }}
-              className="absolute inset-0 transition-colors"
-              style={{
-                backgroundColor: box.color,
-                opacity: box.loaded ? 0 : 1,
-              }}
-            />
+          const isLinkable = project.slug && !project.comingSoon;
+          const projectUrl = isLinkable
+            ? `/project/${project.slug}`
+            : undefined;
 
-            {/* Real image */}
-            <div
-              ref={(el) => {
-                imageRefs.current[index] = el;
-              }}
-              className="absolute inset-0 opacity-0"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={projects[index].image}
-                alt={projects[index].title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      ))}
+          const gridItemContent = (
+            <>
+              {/* Project number */}
+              <motion.div
+                className="flex flex-[0.5] w-full justify-center"
+                style={{ position: 'relative' }}
+              >
+                {(index + 1).toFixed(1)}
+              </motion.div>
+
+              {/* Image container */}
+              <div className="relative flex-1 aspect-4/5">
+                {/* Color placeholder - shows rotating colors during animation */}
+                <div
+                  ref={(el) => {
+                    boxRefs.current[index] = el;
+                  }}
+                  className="absolute inset-0"
+                  style={{
+                    backgroundColor: currentColor,
+                    opacity: box.loaded ? 0 : 1,
+                    display: box.loaded ? 'none' : 'block',
+                  }}
+                />
+
+                {/* Image - loads at correct position based on index */}
+                <div
+                  ref={(el) => {
+                    imageRefs.current[index] = el;
+                  }}
+                  className="absolute inset-0 opacity-0"
+                  style={{
+                    backgroundColor: currentColor,
+                  }}
+                >
+                  <NextImage
+                    refId={getImageAssetId(project)}
+                    alt={project.title || undefined}
+                    className="w-full h-full object-cover"
+                    width={800}
+                    height={1000}
+                  />
+                </div>
+              </div>
+            </>
+          );
+
+          const motionDivProps = {
+            className: itemClassName,
+            style: { zIndex: isElevated ? Z_INDEX.ELEVATED : Z_INDEX.BASE },
+            onHoverStart: () => animationComplete && setHoveredIndex(index),
+            onHoverEnd: () => animationComplete && setHoveredIndex(null),
+            suppressHydrationWarning: true,
+          };
+
+          return isLinkable && projectUrl ? (
+            <Link key={index} href={projectUrl} className="block">
+              <motion.div {...motionDivProps}>{gridItemContent}</motion.div>
+            </Link>
+          ) : (
+            <motion.div key={index} {...motionDivProps}>
+              {gridItemContent}
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Number parentheses overlay */}
+      <AnimatePresence>
+        {hoveredIndex !== null && (
+          <motion.div
+            className={`${gridClassName} absolute inset-0 pointer-events-none z-200`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+              ease: 'easeInOut',
+            }}
+          >
+            {boxes.map((_, index) => (
+              <div key={index} className={itemClassName}>
+                <div className="flex flex-[0.5] w-full justify-center relative">
+                  <motion.span
+                    animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                    transition={{
+                      duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+                      ease: 'easeInOut',
+                    }}
+                  >
+                    (&nbsp;
+                  </motion.span>
+                  <span>{(index + 1).toFixed(1)}</span>
+                  <motion.span
+                    animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
+                    transition={{
+                      duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+                      ease: 'easeInOut',
+                    }}
+                  >
+                    &nbsp;)
+                  </motion.span>
+                </div>
+                <div className="flex-1" />
+              </div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Blur overlay */}
+      <AnimatePresence onExitComplete={handleOverlayExitComplete}>
+        {hoveredIndex !== null && <HoverOverlay />}
+      </AnimatePresence>
+
+      {/* Project title */}
+      <AnimatePresence mode="wait">
+        {hoveredIndex !== null && (
+          <motion.h3
+            key={hoveredIndex}
+            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{
+              duration: ANIMATION_CONFIG.HOVER_TRANSITION,
+              ease: 'easeInOut',
+            }}
+          >
+            {projects[hoveredIndex]?.title || ''}
+          </motion.h3>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

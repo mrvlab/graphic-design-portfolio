@@ -15,6 +15,7 @@ import { schema } from './src/sanity/schemaTypes';
 import { structure } from './src/sanity/structure';
 import { resolve } from '@/sanity/presentation/resolve';
 import { muxInput } from 'sanity-plugin-mux-input';
+import { colorInput } from '@sanity/color-input';
 
 export default defineConfig({
   basePath: '/studio',
@@ -33,6 +34,7 @@ export default defineConfig({
       },
     }),
     muxInput(),
-    visionTool({ defaultApiVersion: apiVersion })
+    visionTool({ defaultApiVersion: apiVersion }),
+    colorInput(),
   ],
 });

@@ -9,6 +9,11 @@ export const homePage = defineType({
   icon: HomeIcon,
   fieldsets: [
     {
+      name: 'enterOverlay',
+      title: 'Enter Overlay',
+      options: { collapsible: true, collapsed: false },
+    },
+    {
       name: 'seo',
       title: 'SEO Settings',
       options: { collapsible: true, collapsed: true },
@@ -16,12 +21,19 @@ export const homePage = defineType({
   ],
   fields: [
     defineField({
+      name: 'enterSiteLogo',
+      fieldset: 'enterOverlay',
+      title: 'Enter Site Logo',
+      type: 'mediaType',
+    }),
+    defineField({
       name: 'enterSiteText',
+      fieldset: 'enterOverlay',
       title: 'Enter Site Text',
       type: 'string',
-      description: 'Text displayed on the entrance overlay button.',
-      initialValue: 'Enter Site',
-      validation: (Rule) => Rule.required(),
+      description:
+        'Text displayed on the entrance overlay button on mobile and Cursor on desktop.',
+      initialValue: '( Enter Site )',
     }),
     defineField({
       name: 'projects',

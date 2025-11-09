@@ -14,6 +14,7 @@ type MuxVideoProps = {
 
 export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const videoRef = useRef<ComponentRef<typeof MuxPlayer>>(null);
 
   useEffect(() => {
@@ -56,6 +57,14 @@ export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
     return <div className={clsx('w-full h-full', className)} />;
   }
 
+  if (hasError) {
+    return (
+      <div className={clsx('w-full h-full flex items-center justify-center bg-gray-100', className)}>
+        <span className="text-gray-400 text-sm">Video unavailable</span>
+      </div>
+    );
+  }
+
   return (
     <MuxPlayer
       ref={videoRef}
@@ -81,6 +90,11 @@ export default function MuxVideo({ playbackId, className }: MuxVideoProps) {
       }
       onPlay={(e: Event) => {
         (e.currentTarget as HTMLElement).classList.add('loaded');
+      }}
+      onError={(e: Event) => {
+        // Silently handle HLS errors to prevent console spam
+        setHasError(true);
+        console.warn('Mux video playback error:', playbackId);
       }}
     />
   );

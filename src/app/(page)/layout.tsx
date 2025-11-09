@@ -27,7 +27,10 @@ export default async function RootLayout({
 
   return (
     <>
-      <EntranceOverlay enterSiteText={data?.enterSiteText || 'Enter Site'} />
+      <EntranceOverlay
+        enterSiteText={data?.enterSiteText || 'Enter Site'}
+        enterSiteLogo={data?.enterSiteLogo}
+      />
       <MobileNavHeightTracker />
 
       {/* Wrapper for content that should be hidden behind overlay */}

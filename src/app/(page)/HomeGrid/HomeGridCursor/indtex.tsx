@@ -1,11 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { useHasEnteredSite } from "@/app/project/utils/useHasEnteredSite";
+import { useEffect, useRef, useState } from 'react';
+import { useHasEnteredSite } from '@/app/project/utils/useHasEnteredSite';
 
+type IHomeGridCursor = {
+  enterSiteText: string;
+};
 const DESKTOP_BREAKPOINT = 1024;
 
-const HomeGridCursor = () => {
+const HomeGridCursor = ({ enterSiteText }: IHomeGridCursor) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const rafIdRef = useRef<number>(0);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -18,7 +21,7 @@ const HomeGridCursor = () => {
     };
 
     handleResize();
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     // Update cursor position
     const updateCursorPosition = (e: MouseEvent) => {
@@ -33,12 +36,12 @@ const HomeGridCursor = () => {
       });
     };
 
-    window.addEventListener("mousemove", updateCursorPosition);
+    window.addEventListener('mousemove', updateCursorPosition);
 
     // Cleanup
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", updateCursorPosition);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('mousemove', updateCursorPosition);
       cancelAnimationFrame(rafIdRef.current);
     };
   }, [isDesktop]);
@@ -62,9 +65,9 @@ const HomeGridCursor = () => {
         <div
           ref={cursorRef}
           className="fixed left-0 top-0 pointer-events-none z-100 mix-blend-difference text-white"
-          style={{ willChange: "transform" }}
+          style={{ willChange: 'transform' }}
         >
-          ( Click to enter )
+          {enterSiteText}
         </div>
       )}
     </>

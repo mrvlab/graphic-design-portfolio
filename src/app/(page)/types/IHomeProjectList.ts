@@ -1,9 +1,7 @@
-import { FetchHomePageQueryResult } from '../../../../sanity.types';
+import { IProjects } from './IProject';
 
 type IHomeProjectList = {
-  project: Partial<
-    NonNullable<NonNullable<FetchHomePageQueryResult>['projects']>[number]
-  >;
+  projects: IProjects;
   index: number;
 };
 

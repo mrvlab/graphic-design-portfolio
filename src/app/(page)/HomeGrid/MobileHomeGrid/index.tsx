@@ -1,40 +1,52 @@
 'use client';
 
-interface Project {
-  title: string;
-  color: string;
-  image: string;
-}
+import Media from '@/components/Media/Media';
+import { IProjects } from '../../types/IProject';
 
-interface MobileHomeGridProps {
-  projects: Project[];
-}
+type IMobileHomeGrid = {
+  projects: IProjects;
+};
 
-export function MobileHomeGrid({ projects }: MobileHomeGridProps) {
+export function MobileHomeGrid({ projects }: IMobileHomeGrid) {
   return (
     <div
       className="mobile-home-grid gap-y-16 gap-x-24 px-12"
       suppressHydrationWarning
     >
-      {projects.map((project, index) => (
-        <div
-          key={project.title}
-          className="mobile-home-grid-item"
-          suppressHydrationWarning
-        >
-          <div className="flex flex-[0.5] w-full justify-center lg:hidden">
-            {`( ${(index + 1).toFixed(1)} )`}
-          </div>
+      {projects.map((project, index) => {
+        // Get first media item from mediaGallery
+        const firstMediaItem = project.mediaGallery?.mediaItems?.[0];
 
-          <div className="relative flex-1 aspect-4/5">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
+        return (
+          <div
+            key={project.title || index}
+            className="mobile-home-grid-item"
+            suppressHydrationWarning
+          >
+            <div className="flex flex-[0.5] w-full justify-center lg:hidden">
+              {`( ${(index + 1).toFixed(1)} )`}
+            </div>
+
+            <div className="relative flex-1 aspect-4/5">
+              <Media
+                id={
+                  firstMediaItem?.asset?.url
+                    ? firstMediaItem.asset._id
+                    : undefined
+                }
+                playbackId={firstMediaItem?.asset?.playbackId || undefined}
+                alt={
+                  firstMediaItem?.alt || project.title || `Project ${index + 1}`
+                }
+                className="w-full h-full object-cover"
+                width={800}
+                height={1000}
+                priority={index < 4}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

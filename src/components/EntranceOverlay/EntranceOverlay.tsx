@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 /**
  * EntranceOverlay Component
@@ -31,10 +31,18 @@
  *    (Flash of Unstyled Content) while JavaScript loads.
  */
 
-import { useState, useEffect } from "react";
-import { entranceOverlay } from "@/app/project/utils/entranceOverlayConstants";
+import { useState, useEffect } from 'react';
+import { entranceOverlay } from '@/app/project/utils/entranceOverlayConstants';
+import Media from '@/components/Media/Media';
+import type { FetchHomePageQueryResult } from '../../../sanity.types';
 
-export function EntranceOverlay({ enterSiteText }: { enterSiteText?: string }) {
+export function EntranceOverlay({
+  enterSiteText,
+  enterSiteLogo,
+}: {
+  enterSiteText?: string;
+  enterSiteLogo?: NonNullable<FetchHomePageQueryResult>['enterSiteLogo'];
+}) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
@@ -79,7 +87,7 @@ export function EntranceOverlay({ enterSiteText }: { enterSiteText?: string }) {
         isVisible &&
         isAnimatingIn &&
         !isAnimatingOut &&
-        (e.key === "Enter" || e.key === " ")
+        (e.key === 'Enter' || e.key === ' ')
       ) {
         e.preventDefault();
         handleEnter();
@@ -87,14 +95,14 @@ export function EntranceOverlay({ enterSiteText }: { enterSiteText?: string }) {
     };
 
     if (isVisible && isAnimatingIn) {
-      window.addEventListener("keydown", handleKeyDown);
-      return () => window.removeEventListener("keydown", handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
     }
   }, [isVisible, isAnimatingIn, isAnimatingOut]);
 
   const handleEnter = () => {
     // Mark that user has entered this session
-    sessionStorage.setItem(entranceOverlay.storage.hasEnteredKey, "true");
+    sessionStorage.setItem(entranceOverlay.storage.hasEnteredKey, 'true');
 
     // Start fade out animation
     setIsAnimatingOut(true);
@@ -121,30 +129,53 @@ export function EntranceOverlay({ enterSiteText }: { enterSiteText?: string }) {
   return (
     <div
       onClick={handleEnter}
-      className={`fixed inset-0 top-[var(--mobile-nav-combined-height)] z-100 bg-white/75 backdrop-blur-[15px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
+      className={`fixed inset-0 top-[var(--mobile-nav-combined-height)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
         isAnimatingOut
-          ? "opacity-0 !pointer-events-none transition-opacity duration-700 ease-in-out"
+          ? 'opacity-0 !pointer-events-none transition-opacity duration-700 ease-in-out'
           : isAnimatingIn
-            ? "opacity-100"
-            : "opacity-0"
+            ? 'opacity-100'
+            : 'opacity-0'
       }`}
       aria-hidden="true"
       role="presentation"
     >
       <div className="relative flex flex-col justify-center h-full">
         <div className="absolute w-full h-full flex flex-col items-center justify-center z-0 lg:px-[6%] gap-2">
-          {/* Enter logo - placeholder */}
-          <div id="entrance-logo" className="h-fit w-fit"></div>
+          {/* Enter logo */}
+          {enterSiteLogo && (
+            <div
+              id="entrance-logo"
+              className="h-fit w-fit max-w-[80%] lg:max-w-[60%]"
+            >
+              <Media
+                id={
+                  enterSiteLogo.mediaType === 'image'
+                    ? enterSiteLogo.image?.asset?._id
+                    : undefined
+                }
+                playbackId={
+                  enterSiteLogo.mediaType === 'video'
+                    ? enterSiteLogo.video?.asset?.playbackId || undefined
+                    : undefined
+                }
+                alt={enterSiteLogo.image?.alt || 'Site logo'}
+                className="w-full h-auto object-contain"
+                priority
+                width={1600}
+                height={900}
+              />
+            </div>
+          )}
 
           {/* Enter button - visible on mobile only */}
           <div className="flex flex-col justify-center items-center z-10 lg:hidden">
             <button
               onClick={handleEnter}
               className="hover:opacity-70 transition-opacity cursor-pointer focus:outline-none"
-              aria-label={enterSiteText || "Enter Site"}
+              aria-label={enterSiteText || 'Enter Site'}
               autoFocus
             >
-              {enterSiteText || "Enter Site"}
+              {enterSiteText || 'Enter Site'}
             </button>
           </div>
         </div>
