@@ -1,14 +1,14 @@
-import { fetchHeaderQuery, navigationQuery } from "@/sanity/lib/queries";
-import { getCurrentYear } from "@/utils/getCurrentYear";
-import React from "react";
-import NavItems from "./NavItems";
-import Link from "next/link";
-import { sanityFetch } from "@/sanity/lib/live";
+import { fetchHeaderQuery, navigationQuery } from '@/sanity/lib/queries';
+import { getCurrentYear } from '@/utils/getCurrentYear';
+import React from 'react';
+import NavItems from './NavItems';
+import Link from 'next/link';
+import { sanityFetch } from '@/sanity/lib/live';
 import {
   FetchHeaderQueryResult,
   NavigationQueryResult,
-} from "../../../sanity.types";
-import BlurDown from "./BlurDown";
+} from '../../../sanity.types';
+import BlurDown from './BlurDown';
 
 type Props = {
   hideFirstSection?: boolean;
@@ -36,10 +36,10 @@ const NavigationMenu = async ({
 
   // Combine mobile and desktop visibility
   const getVisibilityClasses = () => {
-    if (hideAllOnMobile && hideAllOnDesktop) return "hidden";
-    if (hideAllOnMobile) return "hidden lg:block";
-    if (hideAllOnDesktop) return "block lg:hidden";
-    return "block";
+    if (hideAllOnMobile && hideAllOnDesktop) return 'hidden';
+    if (hideAllOnMobile) return 'hidden lg:block';
+    if (hideAllOnDesktop) return 'block lg:hidden';
+    return 'block';
   };
 
   const visibilityClasses = getVisibilityClasses();
@@ -78,9 +78,15 @@ const NavigationMenu = async ({
           <div className="block lg:hidden">
             <BlurDown />
           </div>
-          <ul className="max-lg:border-b-[0.5px] flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px]">
-            <NavItems navItems={navItems} />
-          </ul>
+          <div className="w-full relative">
+            <ul className="flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] ">
+              <NavItems navItems={navItems} />
+            </ul>
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[0.5px] bg-black pointer-events-none z-200 lg:hidden "
+              style={{ mixBlendMode: 'normal' }}
+            />
+          </div>
         </div>
       )}
     </>

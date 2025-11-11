@@ -225,12 +225,39 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding-top: 24px;
   margin: auto;
+  transition: grid-template-columns 0.7s ease-in-out;
+}
+
+/* Controlled scrolling for mobile - prevent free scroll */
+@media (max-width: 1023px) {
+  html {
+    overscroll-behavior-y: none;
+    overflow-y: scroll;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    touch-action: pan-y;
+  }
+
+  /* Prevent momentum scrolling on mobile */
+  html.user-has-entered {
+    -webkit-overflow-scrolling: auto;
+  }
+
+  /* Lock touch actions on grid */
+  .mobile-home-grid {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 }
 
 html.user-has-entered .mobile-home-grid {
   grid-template-columns: repeat(1, minmax(0, 1fr));
   padding-top: 140px;
-  transition: padding-top 0.7s ease-out;
+  padding-bottom: 140px;
+  transition: grid-template-columns 0.7s ease-in-out;
 }
 
 .mobile-home-grid-item {

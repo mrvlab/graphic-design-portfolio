@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import NextImage from '@/components/Media/NextImage';
-import HoverOverlay from '../HoverOverlay';
 import { useEntranceDetection } from './useEntranceDetection';
 import { useColorShiftAnimation } from './useColorShiftAnimation';
 import { ANIMATION_CONFIG, Z_INDEX } from './constants';
@@ -213,7 +212,20 @@ export function DesktopColorSwapHomeGrid({
 
       {/* Blur overlay */}
       <AnimatePresence onExitComplete={handleOverlayExitComplete}>
-        {hoveredIndex !== null && <HoverOverlay />}
+        {hoveredIndex !== null && (
+          <motion.div
+            className="fixed inset-0 backdrop-blur-[20px] pointer-events-none z-50 "
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+              ease: 'easeInOut',
+            }}
+            aria-hidden="true"
+            role="presentation"
+          />
+        )}
       </AnimatePresence>
 
       {/* Project title */}

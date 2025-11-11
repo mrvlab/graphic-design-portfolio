@@ -6,7 +6,6 @@ import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
-import LenisScroller from '@/components/LenisScroller';
 import BlurDown from '@/components/NavBar/BlurDown';
 import { EntranceOverlay } from '@/components/EntranceOverlay/EntranceOverlay';
 import { sanityFetch } from '@/sanity/lib/live';
@@ -43,7 +42,6 @@ export default async function RootLayout({
         </nav>
         {/* Main content */}
         <main className="flex flex-col flex-1 max-lg:pb-12 lg:pt-[3%] lg:pr-[9.59%] lg:pl-[3.73%]">
-          <LenisScroller />
           {children}
         </main>
 

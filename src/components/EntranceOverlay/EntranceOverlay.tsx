@@ -31,7 +31,7 @@
  *    (Flash of Unstyled Content) while JavaScript loads.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { entranceOverlay } from '@/app/project/utils/entranceOverlayConstants';
 import Media from '@/components/Media/Media';
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
@@ -46,8 +46,17 @@ export function EntranceOverlay({
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detect if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     // Check if user has already entered during this session
     const hasEntered = sessionStorage.getItem(
       entranceOverlay.storage.hasEnteredKey
@@ -78,7 +87,32 @@ export function EntranceOverlay({
         entranceOverlay.classes.userEntered
       );
     }
+
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  const handleEnter = useCallback(() => {
+    // Mark that user has entered this session
+    sessionStorage.setItem(entranceOverlay.storage.hasEnteredKey, 'true');
+
+    // Start fade out animation
+    setIsAnimatingOut(true);
+
+    // Remove overlay-ready class and add content-visible classes
+    document.documentElement.classList.remove(
+      entranceOverlay.classes.overlayReady
+    );
+    document.documentElement.classList.add(
+      entranceOverlay.classes.contentVisible
+    );
+    document.documentElement.classList.add(entranceOverlay.classes.userEntered);
+
+    // Remove overlay - instant on mobile, animated on desktop
+    const delay = isMobile ? 0 : 700;
+    setTimeout(() => {
+      setIsVisible(false);
+    }, delay);
+  }, [isMobile]);
 
   useEffect(() => {
     // Handle keyboard events (Enter or Space to dismiss)
@@ -98,29 +132,7 @@ export function EntranceOverlay({
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [isVisible, isAnimatingIn, isAnimatingOut]);
-
-  const handleEnter = () => {
-    // Mark that user has entered this session
-    sessionStorage.setItem(entranceOverlay.storage.hasEnteredKey, 'true');
-
-    // Start fade out animation
-    setIsAnimatingOut(true);
-
-    // Remove overlay-ready class and add content-visible classes
-    document.documentElement.classList.remove(
-      entranceOverlay.classes.overlayReady
-    );
-    document.documentElement.classList.add(
-      entranceOverlay.classes.contentVisible
-    );
-    document.documentElement.classList.add(entranceOverlay.classes.userEntered);
-
-    // Remove overlay after animation completes
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 700); // Match transition duration
-  };
+  }, [isVisible, isAnimatingIn, isAnimatingOut, handleEnter]);
 
   if (!isVisible) {
     return null;
@@ -131,7 +143,7 @@ export function EntranceOverlay({
       onClick={handleEnter}
       className={`fixed inset-0 top-[var(--mobile-nav-combined-height)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
         isAnimatingOut
-          ? 'opacity-0 !pointer-events-none transition-opacity duration-700 ease-in-out'
+          ? `opacity-0 !pointer-events-none ${isMobile ? '' : 'transition-opacity duration-700 ease-in-out'}`
           : isAnimatingIn
             ? 'opacity-100'
             : 'opacity-0'
