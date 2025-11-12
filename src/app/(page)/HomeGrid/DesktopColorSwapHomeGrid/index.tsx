@@ -66,7 +66,7 @@ export function DesktopColorSwapHomeGrid({
     return `${baseClasses} ${columnClass}`;
   }, [hasEntered]);
 
-  const itemClassName = 'flex h-full relative aspect-[8/7] flex gap-2.5';
+  const itemClassName = 'relative aspect-[4/3] flex gap-2.5';
 
   return (
     <div className="relative lg:h-full">
@@ -172,7 +172,7 @@ export function DesktopColorSwapHomeGrid({
           };
 
           return isLinkable && projectUrl ? (
-            <Link key={index} href={projectUrl} className={itemClassName}>
+            <Link key={index} href={projectUrl} className="block">
               <motion.div {...motionDivProps}>{gridItemContent}</motion.div>
             </Link>
           ) : (
@@ -249,7 +249,7 @@ export function DesktopColorSwapHomeGrid({
         {hoveredIndex !== null && (
           <motion.h3
             key={hoveredIndex}
-            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none tracking-[-3.34px]"
+            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none tracking-[-3.34]"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}

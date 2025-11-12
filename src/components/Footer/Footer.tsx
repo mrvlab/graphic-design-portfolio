@@ -14,7 +14,7 @@ const Footer = async () => {
 
   return (
     <footer id="footer-height" className="relative w-full z-200">
-      <div className="flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end lg:sticky lg:bottom-0 overflow-hidden z-50">
+      <div className="flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:py-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end lg:sticky lg:bottom-0 overflow-hidden z-50">
         <div className="hidden lg:flex lg:pt-0 z-10 lg:col-span-4">
           {footer?.lefttext && <RichText content={footer?.lefttext} />}
         </div>
