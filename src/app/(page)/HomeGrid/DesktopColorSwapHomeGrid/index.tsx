@@ -73,7 +73,7 @@ export function DesktopColorSwapHomeGrid({
   // Memoize class names
   const gridClassName = useMemo(() => {
     const baseClasses =
-      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1] my-auto';
+      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1] my-auto lg:h-full lg:w-full';
     const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
     return `${baseClasses} ${columnClass}`;
   }, [hasEntered]);
@@ -81,7 +81,7 @@ export function DesktopColorSwapHomeGrid({
   const itemClassName = 'relative aspect-[4/3] flex gap-2.5';
 
   return (
-    <div className="relative">
+    <div className="relative lg:h-full">
       {/* Main grid with images */}
       <div className={gridClassName} suppressHydrationWarning>
         {boxes.map((box, index) => {
@@ -89,11 +89,9 @@ export function DesktopColorSwapHomeGrid({
           // Use index for image (preserves CMS order)
           const project = projects[index];
           // Use currentProjectIndex for rotating colors (creates ladder effect)
-          // Only calculate currentColor if box is not loaded (during animation)
-          const currentColor = box.loaded
-            ? '#ffffff'
-            : getBackgroundColor(projects[box.currentProjectIndex]) ||
-              box.color;
+          // Keep the original color even when loaded for hover states
+          const currentColor =
+            getBackgroundColor(projects[box.currentProjectIndex]) || box.color;
 
           const isLinkable = project.slug && !project.comingSoon;
           const projectUrl = isLinkable
@@ -104,35 +102,63 @@ export function DesktopColorSwapHomeGrid({
             <>
               {/* Project number */}
               <motion.div
-                className="flex flex-[0.5] w-full justify-center"
+                className="flex flex-1 w-full justify-center"
                 style={{ position: 'relative' }}
               >
                 {(index + 1).toFixed(1)}
               </motion.div>
 
               {/* Image container */}
-              <div className="relative flex-1 aspect-4/5">
-                {/* Color placeholder - shows rotating colors during animation */}
-                <div
+              <div className="relative aspect-3/4">
+                {/* Color placeholder - shows rotating colors during animation and when not hovered */}
+                <motion.div
                   ref={(el) => {
                     boxRefs.current[index] = el;
                   }}
                   className="absolute inset-0"
                   style={{
                     backgroundColor: currentColor,
-                    opacity: box.loaded ? 0 : 1,
-                    display: box.loaded ? 'none' : 'block',
+                  }}
+                  animate={{
+                    opacity:
+                      !box.loaded ||
+                      (hoveredIndex !== null && hoveredIndex !== index)
+                        ? 1
+                        : 0,
+                    backgroundColor:
+                      box.loaded &&
+                      hoveredIndex !== null &&
+                      hoveredIndex !== index
+                        ? currentColor
+                        : undefined,
+                  }}
+                  transition={{
+                    duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+                    ease: 'easeInOut',
                   }}
                 />
 
                 {/* Image - loads at correct position based on index */}
-                <div
+                <motion.div
                   ref={(el) => {
                     imageRefs.current[index] = el;
                   }}
                   className="absolute inset-0 opacity-0"
                   style={{
-                    backgroundColor: currentColor,
+                    backgroundColor: '#ffffff',
+                  }}
+                  animate={{
+                    opacity:
+                      box.loaded &&
+                      (hoveredIndex === null || hoveredIndex === index)
+                        ? project.comingSoon
+                          ? 0.2
+                          : 1
+                        : 0,
+                  }}
+                  transition={{
+                    duration: ANIMATION_CONFIG.TRANSITION_DURATION,
+                    ease: 'easeInOut',
                   }}
                 >
                   <NextImage
@@ -142,7 +168,7 @@ export function DesktopColorSwapHomeGrid({
                     width={800}
                     height={1000}
                   />
-                </div>
+                </motion.div>
               </div>
             </>
           );
@@ -182,7 +208,7 @@ export function DesktopColorSwapHomeGrid({
           >
             {boxes.map((_, index) => (
               <div key={index} className={itemClassName}>
-                <div className="flex flex-[0.5] w-full justify-center relative">
+                <div className="flex flex-1 w-full justify-center relative">
                   <motion.span
                     animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
                     transition={{
@@ -203,7 +229,7 @@ export function DesktopColorSwapHomeGrid({
                     &nbsp;)
                   </motion.span>
                 </div>
-                <div className="flex-1" />
+                <div className="relative aspect-3/4" />
               </div>
             ))}
           </motion.div>
@@ -233,7 +259,7 @@ export function DesktopColorSwapHomeGrid({
         {hoveredIndex !== null && (
           <motion.h3
             key={hoveredIndex}
-            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none"
+            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none tracking-[-4%]"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}

@@ -23,9 +23,14 @@
   --z-100: 100;
   --z-200: 200;
 
+  /* Layout Height Variables - Initial values, auto-updated by LayoutHeightTracker */
   --mobile-nav-home-height: 62px;
   --mobile-nav-height: 36px;
-  --mobile-nav-combined-height: 98px; /* Combined height (will be auto-calculated) */
+  --mobile-nav-combined-height: 98px;
+  --desktop-nav-height: 46.95px;
+  --footer-height: 69.53px;
+  --nav-footer-total-mobile: 168px; /* mobile nav + footer (auto-calculated) */
+  --nav-footer-total-desktop: 116.48px; /* desktop nav + footer (auto-calculated) */
 
   --blur-height: 280%;
   /* Blur Down */

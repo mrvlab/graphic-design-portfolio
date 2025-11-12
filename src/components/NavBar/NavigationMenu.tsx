@@ -49,7 +49,7 @@ const NavigationMenu = async ({
       {/* LEFT SECTION */}
       {!hideFirstSection && (
         <div
-          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10 lg:col-span-4`}
+          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10 lg:col-span-4 lf`}
         >
           <span>&copy; {getCurrentYear()}</span>
           <span>{header?.lefttext}</span>
@@ -78,7 +78,7 @@ const NavigationMenu = async ({
           <div className="block lg:hidden">
             <BlurDown />
           </div>
-          <div className="w-full relative">
+          <div className="w-full relative lg:flex lg:justify-end">
             <ul className="flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] ">
               <NavItems navItems={navItems} />
             </ul>

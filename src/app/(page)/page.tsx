@@ -49,7 +49,7 @@ const page = async () => {
         enterSiteText={data?.enterSiteText || '( Click to enter )'}
       />
 
-      <div className="hidden lg:block lg:my-auto">
+      <div className="hidden lg:block lg:my-auto lg:w-full lg:h-full">
         <DesktopColorSwapHomeGrid projects={projects} />
       </div>
 

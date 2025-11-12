@@ -14,8 +14,10 @@ export function useScrollJacking(
 ) {
   const currentIndexRef = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [shouldReinitialize, setShouldReinitialize] = useState(false);
   const isAnimating = useRef(false);
   const hasInitialized = useRef(false);
+  const wasMobileRef = useRef(false);
 
   const getTargetScroll = useCallback(
     (index: number): number => {
@@ -95,7 +97,31 @@ export function useScrollJacking(
     }
   }, [itemRefs]);
 
-  // Re-initialize scroll position when user enters
+  // Handle window resize to detect mobile/desktop breakpoint changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
+      const isMobile = window.innerWidth < CONFIG.DESKTOP_BREAKPOINT;
+
+      // Check if we transitioned from desktop to mobile
+      if (isMobile && !wasMobileRef.current && hasEntered) {
+        // Reset initialization flag so mobile behavior can reinitialize
+        hasInitialized.current = false;
+        setShouldReinitialize((prev) => !prev); // Toggle to trigger re-initialization
+      }
+
+      wasMobileRef.current = isMobile;
+    };
+
+    // Set initial state
+    wasMobileRef.current = window.innerWidth < CONFIG.DESKTOP_BREAKPOINT;
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [hasEntered]);
+
+  // Re-initialize scroll position when user enters or when resizing to mobile
   useEffect(() => {
     if (
       typeof window === 'undefined' ||
@@ -112,12 +138,13 @@ export function useScrollJacking(
     }, 150); // Slightly longer delay to ensure layout has settled
 
     return () => clearTimeout(initTimer);
-  }, [hasEntered, getTargetScroll, syncScrollPosition]);
+  }, [hasEntered, getTargetScroll, syncScrollPosition, shouldReinitialize]);
 
   useEffect(() => {
     if (
       typeof window === 'undefined' ||
-      window.innerWidth >= CONFIG.DESKTOP_BREAKPOINT
+      window.innerWidth >= CONFIG.DESKTOP_BREAKPOINT ||
+      !hasEntered
     )
       return;
 
@@ -177,7 +204,14 @@ export function useScrollJacking(
       window.removeEventListener('keydown', handleKeydown);
       observer.kill();
     };
-  }, [projectsLength, gotoIndex, getTargetScroll, syncScrollPosition]);
+  }, [
+    projectsLength,
+    gotoIndex,
+    getTargetScroll,
+    syncScrollPosition,
+    hasEntered,
+    shouldReinitialize,
+  ]);
 
   return { currentIndex };
 }

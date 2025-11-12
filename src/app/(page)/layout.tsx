@@ -10,7 +10,7 @@ import BlurDown from '@/components/NavBar/BlurDown';
 import { EntranceOverlay } from '@/components/EntranceOverlay/EntranceOverlay';
 import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHomePageQuery } from '@/sanity/lib/queries';
-import { MobileNavHeightTracker } from '@/components/MobileNavHeightTracker';
+import { LayoutHeightTracker } from '@/components/MobileNavHeightTracker';
 
 export default async function RootLayout({
   children,
@@ -30,18 +30,21 @@ export default async function RootLayout({
         enterSiteText={data?.enterSiteText || 'Enter Site'}
         enterSiteLogo={data?.enterSiteLogo}
       />
-      <MobileNavHeightTracker />
+      <LayoutHeightTracker />
 
       {/* Wrapper for content that should be hidden behind overlay */}
       <div id="main-content-wrapper" className="flex flex-col h-full lg:h-dvh">
         <NavigationMenu hideFirstSection hideAllOnDesktop />
 
-        <nav className="max-lg:hidden flex max-lg:flex-col lg:grid lg:grid-cols-24 items-center px-2 lg:pt-3 z-200 max-lg:py-2 sticky top-0">
+        <nav
+          id="desktop-nav-height"
+          className="max-lg:hidden flex max-lg:flex-col lg:grid lg:grid-cols-24 items-center px-2 lg:pt-3 z-200 max-lg:py-2 sticky top-0"
+        >
           <BlurDown />
           <NavigationMenu />
         </nav>
         {/* Main content */}
-        <main className="flex flex-col flex-1 max-lg:pb-12 lg:pt-[3%] lg:pr-[9.59%] lg:pl-[3.73%]">
+        <main className="flex flex-col flex-1 min-h-0 max-lg:pb-12 lg:pt-[3%] lg:pr-[9.59%] lg:pl-[3.73%] lg:min-h-[calc(100dvh-var(--nav-footer-total-desktop))] lg:overflow-hidden lg:mx-auto lg:w-full">
           {children}
         </main>
 
