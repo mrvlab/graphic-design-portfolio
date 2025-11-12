@@ -116,12 +116,7 @@
   .hover-underline-links a {
     text-decoration: none;
     text-decoration-thickness: 0.8px;
-    @apply underline underline-offset-[1.8px] lg:no-underline;
-  }
-
-  .hover-underline-links a:hover {
-    text-decoration-thickness: 0.8px;
-    @apply lg:underline lg:underline-offset-[1.8px];
+    @apply underline underline-offset-[1.8px];
   }
 
   /* Screen reader only - hides content visually but keeps it accessible to screen readers and search engines */
