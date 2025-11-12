@@ -13,16 +13,19 @@ export function DesktopHomeGrid({ projects }: IDesktopHomeGrid) {
         {projects?.map((project, index) => {
           const currentColor = getBackgroundColor(project) || '#ffffff';
           return (
-            <div key={index} className="relative aspect-[4/3] flex gap-2.5">
+            <div
+              key={index}
+              className="flex justify-center relative aspect-[4/3] gap-2.5 overflow-hidden"
+            >
               <div
-                className="flex flex-1 w-full justify-center"
+                className="flex px-3 w-fit justify-center"
                 style={{ position: 'relative' }}
               >
                 {(index + 1).toFixed(1)}
               </div>
 
               {/* Image container */}
-              <div className="relative aspect-3/4">
+              <div className="flex relative aspect-3/4 h-full">
                 {/* Color placeholder - shows rotating colors during animation and when not hovered */}
                 <div
                   className="absolute inset-0"

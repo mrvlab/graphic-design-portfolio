@@ -66,7 +66,8 @@ export function DesktopColorSwapHomeGrid({
     return `${baseClasses} ${columnClass}`;
   }, [hasEntered]);
 
-  const itemClassName = 'relative aspect-[4/3] flex gap-2.5';
+  const itemClassName =
+    'flex justify-center relative aspect-[4/3] gap-2.5 overflow-hidden';
 
   return (
     <div className="relative lg:h-full">
@@ -90,14 +91,14 @@ export function DesktopColorSwapHomeGrid({
             <>
               {/* Project number */}
               <motion.div
-                className="flex flex-1 w-full justify-center"
+                className="flex px-3 w-fit justify-center"
                 style={{ position: 'relative' }}
               >
                 {(index + 1).toFixed(1)}
               </motion.div>
 
               {/* Image container */}
-              <div className="relative aspect-3/4">
+              <div className="flex relative aspect-3/4 h-full">
                 {/* Color placeholder - shows rotating colors during animation and when not hovered */}
                 <motion.div
                   ref={(el) => {
@@ -202,7 +203,7 @@ export function DesktopColorSwapHomeGrid({
           >
             {boxes.map((_, index) => (
               <div key={index} className={itemClassName}>
-                <div className="flex flex-1 w-full justify-center relative">
+                <div className="flex px-3 w-fit justify-center relative">
                   <motion.span
                     animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
                     transition={{
@@ -223,7 +224,7 @@ export function DesktopColorSwapHomeGrid({
                     &nbsp;)
                   </motion.span>
                 </div>
-                <div className="relative aspect-3/4" />
+                <div className="flex relative aspect-3/4 h-full" />
               </div>
             ))}
           </motion.div>
