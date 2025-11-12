@@ -29,7 +29,7 @@ export function MobileHomeGrid({ projects }: IMobileHomeGrid) {
   return (
     <div className="relative">
       <div
-        className="mobile-home-grid gap-y-16 gap-x-24 px-12"
+        className="mobile-home-grid gap-y-16 gap-x-24 px-12 sm:max-w-[70%]"
         suppressHydrationWarning
       >
         {projects.map((project, index) => (

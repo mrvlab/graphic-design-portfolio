@@ -15,4 +15,5 @@ export const ANIMATION_CONFIG = {
 export const Z_INDEX = {
   BASE: 10,
   ELEVATED: 200,
+  BLUR: 50,
 } as const;

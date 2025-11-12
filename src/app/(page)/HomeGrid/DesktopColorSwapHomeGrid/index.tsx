@@ -58,27 +58,15 @@ export function DesktopColorSwapHomeGrid({
     setElevatedIndex(null);
   }, []);
 
-  // Re-initialize boxes when projects change
-  useEffect(() => {
-    setBoxes(
-      projects.map((project, index) => ({
-        currentProjectIndex: index,
-        loaded: false,
-        color: getBackgroundColor(project),
-        imageLoaded: false,
-      }))
-    );
-  }, [projects]);
-
   // Memoize class names
   const gridClassName = useMemo(() => {
     const baseClasses =
-      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[1.9/1] my-auto lg:h-full lg:w-full';
+      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[2/1] my-auto lg:h-full lg:w-full';
     const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
     return `${baseClasses} ${columnClass}`;
   }, [hasEntered]);
 
-  const itemClassName = 'relative aspect-[4/3] flex gap-2.5';
+  const itemClassName = 'flex h-full relative aspect-[8/7] flex gap-2.5';
 
   return (
     <div className="relative lg:h-full">
@@ -122,7 +110,9 @@ export function DesktopColorSwapHomeGrid({
                   animate={{
                     opacity:
                       !box.loaded ||
-                      (hoveredIndex !== null && hoveredIndex !== index)
+                      (animationComplete &&
+                        hoveredIndex !== null &&
+                        hoveredIndex !== index)
                         ? 1
                         : 0,
                     backgroundColor:
@@ -143,7 +133,7 @@ export function DesktopColorSwapHomeGrid({
                   ref={(el) => {
                     imageRefs.current[index] = el;
                   }}
-                  className="absolute inset-0 opacity-0"
+                  className="absolute inset-0"
                   style={{
                     backgroundColor: '#ffffff',
                   }}
@@ -182,7 +172,7 @@ export function DesktopColorSwapHomeGrid({
           };
 
           return isLinkable && projectUrl ? (
-            <Link key={index} href={projectUrl} className="block">
+            <Link key={index} href={projectUrl} className={itemClassName}>
               <motion.div {...motionDivProps}>{gridItemContent}</motion.div>
             </Link>
           ) : (
@@ -259,7 +249,7 @@ export function DesktopColorSwapHomeGrid({
         {hoveredIndex !== null && (
           <motion.h3
             key={hoveredIndex}
-            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none tracking-[-4%]"
+            className="fixed inset-0 mx-auto text-white mix-blend-difference text-[83.53px] font-bold flex justify-center items-center flex-wrap w-fit z-200 pointer-events-none tracking-[-3.34px]"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}

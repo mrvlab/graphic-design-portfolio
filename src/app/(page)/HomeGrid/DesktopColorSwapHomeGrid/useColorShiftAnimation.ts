@@ -223,18 +223,34 @@ export function useColorShiftAnimation({
     );
   }, [animationLoop]);
 
-  // Trigger animation when user enters
+  // Trigger animation when user enters, reloads, or navigates via Next.js links
   useEffect(() => {
-    if (hasEntered && boxes.length > 0 && !animationStartedRef.current) {
-      animationStartedRef.current = true;
-      shiftCountRef.current = 0;
-      startAnimation();
+    // Early return if conditions not met
+    if (!hasEntered || boxes.length === 0 || animationStartedRef.current) {
+      return;
     }
 
+    // Start animation
+    animationStartedRef.current = true;
+    shiftCountRef.current = 0;
+    startAnimation();
+  }, [hasEntered, boxes.length, startAnimation]);
+
+  // Cleanup: Reset animation state on unmount (when user navigates away)
+  // This ensures animation plays fresh when user returns via Next.js navigation
+  useEffect(() => {
+    const timeline = timelineRef;
+    const animationStarted = animationStartedRef;
+    const loadedProjects = loadedProjectsRef;
+    const shiftCount = shiftCountRef;
+
     return () => {
-      timelineRef.current?.kill();
+      timeline.current?.kill();
+      animationStarted.current = false;
+      loadedProjects.current.clear();
+      shiftCount.current = 0;
     };
-  }, [hasEntered, boxes, startAnimation]);
+  }, []);
 
   return {
     boxRefs,
