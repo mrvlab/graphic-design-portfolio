@@ -104,8 +104,10 @@ export function DesktopColorSwapHomeGrid({
                     boxRefs.current[index] = el;
                   }}
                   className="absolute inset-0"
+                  initial={{ opacity: 1 }}
                   style={{
                     backgroundColor: currentColor,
+                    opacity: 1,
                   }}
                   animate={{
                     opacity:
@@ -134,8 +136,10 @@ export function DesktopColorSwapHomeGrid({
                     imageRefs.current[index] = el;
                   }}
                   className="absolute inset-0"
+                  initial={{ opacity: 0 }}
                   style={{
                     backgroundColor: '#ffffff',
+                    opacity: 0,
                   }}
                   animate={{
                     opacity:
@@ -154,7 +158,7 @@ export function DesktopColorSwapHomeGrid({
                   <NextImage
                     refId={getImageAssetId(project)}
                     alt={project.title || undefined}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover !opacity-100"
                     width={800}
                     height={1000}
                   />
