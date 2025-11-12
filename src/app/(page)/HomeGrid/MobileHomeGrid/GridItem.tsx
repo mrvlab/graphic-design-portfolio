@@ -37,14 +37,14 @@ export const GridItem = memo(
           </div>
 
           <div className="relative aspect-3/4">
-            {/* Color placeholder - shows when not active */}
+            {/* Color placeholder - shows before entrance and when not active */}
             <motion.div
               className="absolute inset-0"
               style={{
                 backgroundColor: projectColor,
               }}
               animate={{
-                opacity: hasEntered && !isActive ? 1 : 0,
+                opacity: !hasEntered || !isActive ? 1 : 0,
               }}
               transition={{
                 duration: TITLE_ANIMATION.duration,
@@ -52,7 +52,7 @@ export const GridItem = memo(
               }}
             />
 
-            {/* Image - shows when active or before entered */}
+            {/* Image - shows only when active and after entered */}
             <motion.div
               className="absolute inset-0"
               style={{
@@ -60,7 +60,7 @@ export const GridItem = memo(
               }}
               animate={{
                 opacity:
-                  !hasEntered || isActive ? (project.comingSoon ? 0.2 : 1) : 0,
+                  hasEntered && isActive ? (project.comingSoon ? 0.2 : 1) : 0,
               }}
               transition={{
                 duration: TITLE_ANIMATION.duration,
