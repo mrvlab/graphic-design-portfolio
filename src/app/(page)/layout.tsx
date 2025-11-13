@@ -44,7 +44,7 @@ export default async function RootLayout({
           <NavigationMenu />
         </nav>
         {/* Main content */}
-        <main className="flex flex-col flex-1 min-h-0 max-lg:pb-12 lg:flex-row lg:my-auto">
+        <main className="flex flex-col flex-1 min-h-0 lg:flex-row lg:my-auto">
           {children}
         </main>
 

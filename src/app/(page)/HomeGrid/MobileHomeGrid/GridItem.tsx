@@ -89,7 +89,7 @@ export const GridItem = memo(
 
         {hasEntered && (
           <motion.h3
-            className="absolute inset-0 flex justify-center items-center flex-wrap leading-[90%] text-white mix-blend-difference text-[45px] tracking-[-1.8px] sm:text-[83.53px] sm:tracking-[-3.34px] font-bold text-center px-4 pointer-events-none "
+            className="mobile-grid-title absolute inset-0 flex justify-center items-center flex-wrap leading-[90%] text-white mix-blend-difference text-[45px] tracking-[-1.8px] sm:text-[83.53px] sm:tracking-[-3.34px] font-bold text-center px-4 pointer-events-none mt-10"
             style={{ zIndex: Z_INDEX.ELEVATED }}
             initial={TITLE_ANIMATION.initial}
             animate={{

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
-import { CONFIG, getNavHeight } from './constants';
+import { CONFIG, getNavHeight, getFooterHeight } from './constants';
 
 /**
  * Manages scroll-jacking behavior with smooth transitions between items.
@@ -27,12 +27,21 @@ export function useScrollJacking(
 
       const rect = element.getBoundingClientRect();
       const elementTop = rect.top + window.scrollY;
-      const isEdge = index === 0 || index === projectsLength - 1;
 
-      if (isEdge) {
+      // First item: offset from top by nav height
+      if (index === 0) {
         return elementTop - getNavHeight() - CONFIG.FIRST_ITEM_OFFSET;
       }
 
+      // Last item: ensure footer is visible below
+      if (index === projectsLength - 1) {
+        const footerHeight = getFooterHeight();
+        const viewportCenter = window.innerHeight / 2;
+        // Position element in upper portion of viewport to allow room for footer
+        return elementTop - viewportCenter + rect.height / 2 - footerHeight / 2;
+      }
+
+      // Middle items: center in viewport
       const viewportCenter = window.innerHeight / 2;
       return elementTop - viewportCenter + rect.height / 2;
     },

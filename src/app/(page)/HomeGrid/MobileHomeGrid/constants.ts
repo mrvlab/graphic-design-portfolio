@@ -26,3 +26,11 @@ export const getNavHeight = (): number => {
     .trim();
   return cssVar ? parseInt(cssVar, 10) : 98;
 };
+
+export const getFooterHeight = (): number => {
+  if (typeof window === 'undefined') return 0;
+  const cssVar = getComputedStyle(document.documentElement)
+    .getPropertyValue('--footer-height')
+    .trim();
+  return cssVar ? parseInt(cssVar, 10) : 0;
+};
