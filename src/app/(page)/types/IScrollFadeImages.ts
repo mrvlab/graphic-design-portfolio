@@ -6,7 +6,6 @@ type IScrollFadeImages = {
   currentIndex: number;
   comingSoon: boolean | null;
   isVisible: boolean;
-  isScrollingDown: boolean;
 };
 
 export default IScrollFadeImages;

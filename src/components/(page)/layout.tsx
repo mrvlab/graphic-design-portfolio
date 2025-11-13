@@ -16,12 +16,12 @@ export default async function RootLayout({
   const isDraft = (await draftMode()).isEnabled;
 
   return (
-    <div className={`flex flex-col h-dvh pt-4 pb-2 lg:pt-3`}>
-      <nav className='flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 lg:px-1'>
+    <div className={`flex flex-col h-dvh pt-4 pb-2`}>
+      <nav className="flex max-lg:flex-col items-center px-2 z-50 max-lg:py-2 lg:px-1">
         <Navigation hideFirstSection hideThirdSection />
       </nav>
       {/* Main content */}
-      <main className='flex flex-col flex-1'>
+      <main className="flex flex-col flex-1">
         <LenisScroller />
         {children}
       </main>

@@ -37,8 +37,7 @@ export const settingsQuery = defineQuery(`
   image {
     _type,
     asset
-  },
-  enterSiteText
+  }
 }
 `);
 
@@ -62,6 +61,27 @@ export const fetchHeaderQuery = defineQuery(`
 `);
 export const fetchHomePageQuery = defineQuery(`
   *[_type == "homePage"][0]{
+    enterSiteText,
+    enterSiteLogo {
+      mediaType,
+      image {
+        alt,
+        asset-> {
+          _id,
+          url,
+          metadata
+        }
+      },
+      video {
+        asset-> {
+          _id,
+          playbackId,
+          assetId,
+          filename,
+          url
+        }
+      }
+    },
     projects[]->{
     _id,
     name,
@@ -69,6 +89,7 @@ export const fetchHomePageQuery = defineQuery(`
     title,
     year,
     richText,
+    mediaBackgroundColor,
     mediaGallery {
       _type,
       mediaItems[] {
@@ -106,6 +127,7 @@ export const fetchProjectsIndexQuery = defineQuery(`
     title,
     year,
     richText,
+    mediaBackgroundColor,
     mediaGallery {
       _type,
       mediaItems[] {
@@ -151,6 +173,7 @@ export const singleProjectQuery = defineQuery(`
     "slug": slug.current,
     year,
     richText,
+    mediaBackgroundColor,
     mediaGallery {
       _type,
       mediaItems[] {
@@ -194,6 +217,7 @@ export const singleProjectQuery = defineQuery(`
         "slug": slug.current,
         comingSoon,
         year,
+        mediaBackgroundColor,
         mediaGallery {
       _type,
       mediaItems[] {
@@ -303,6 +327,7 @@ export const fetchFooterQuery = defineQuery(`
     _id,
     name,
     rights,
+    timezone,
     location,
     lefttext
   }
@@ -337,6 +362,7 @@ export const projectsQuery = defineQuery(`
     title,
     year,
     richText,
+    mediaBackgroundColor,
     mediaGallery {
       _type,
       mediaItems[] {
