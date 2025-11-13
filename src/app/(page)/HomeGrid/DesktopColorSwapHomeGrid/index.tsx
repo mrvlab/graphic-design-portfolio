@@ -9,6 +9,7 @@ import { getBackgroundColor } from '@/utils/homeProjectUtils';
 import { IProjects } from '../../types/IProject';
 import { IBoxState } from '../../types/IBoxState';
 import { GridItem } from './GridItem';
+import { GRID_STYLES } from './gridStyles';
 
 type IDesktopColorSwapHomeGrid = {
   projects: IProjects;
@@ -58,13 +59,11 @@ export function DesktopColorSwapHomeGrid({
   }, []);
 
   // Grid class name based on entrance state
-  const baseClasses =
-    'grid grid-cols-4 grid-rows-3 gap-x-[var(--horizontal-grid-spacing)] gap-y-[var(--vertical-grid-spacing)] h-full w-full lg:aspect-[16/9]';
   const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
-  const gridClassName = `${baseClasses} ${columnClass}`;
+  const gridClassName = `${GRID_STYLES.GRID} ${columnClass}`;
 
   return (
-    <div className="relative lg:h-full">
+    <div className={GRID_STYLES.CONTAINER}>
       {/* Main grid with images */}
       <div className={gridClassName} suppressHydrationWarning>
         {boxes.map((box, index) => (

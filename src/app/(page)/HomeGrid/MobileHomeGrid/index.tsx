@@ -10,6 +10,7 @@ import { Z_INDEX } from './constants';
 import { useEntranceDetection } from './useEntranceDetection';
 import { useScrollJacking } from './useScrollJacking';
 import { GridItem } from './GridItem';
+import { MOBILE_GRID_STYLES } from './gridStyles';
 
 gsap.registerPlugin(Observer, ScrollToPlugin);
 
@@ -27,9 +28,9 @@ export function MobileHomeGrid({ projects }: IMobileHomeGrid) {
   );
 
   return (
-    <div className="relative">
+    <div className={MOBILE_GRID_STYLES.CONTAINER}>
       <div
-        className="mobile-home-grid gap-y-16 gap-x-24 px-12 sm:max-w-[70%]"
+        className={`mobile-home-grid ${MOBILE_GRID_STYLES.GRID_BASE}`}
         suppressHydrationWarning
       >
         {projects.map((project, index) => (

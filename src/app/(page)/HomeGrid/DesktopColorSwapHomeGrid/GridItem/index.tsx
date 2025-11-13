@@ -7,6 +7,7 @@ import { Z_INDEX } from '../constants';
 import { ProjectNumber } from './ProjectNumber';
 import { ColorLayer } from './ColorLayer';
 import { ImageLayer } from './ImageLayer';
+import { GRID_STYLES } from '../gridStyles';
 
 type GridItemProps = {
   box: IBoxState;
@@ -54,14 +55,14 @@ export function GridItem({
 
   const shouldShowImage = hoveredIndex === null || isHovered;
 
-  const itemClassName = 'relative grid grid-cols-[auto_1fr] gap-4 w-fit';
-
   const gridContent = (
     <>
       <ProjectNumber index={index} isHovered={isHovered} />
 
       {/* Image container */}
-      <div className="aspect-3/4 w-fit bg-cover bg-center relative overflow-hidden">
+      <div
+        className={`${GRID_STYLES.IMAGE_CONTAINER} ${GRID_STYLES.RELATIVE_POSITION} ${GRID_STYLES.OVERFLOW_HIDDEN}`}
+      >
         <ColorLayer
           boxRef={(el) => {
             boxRefs.current[index] = el;
@@ -86,7 +87,7 @@ export function GridItem({
   );
 
   const motionProps = {
-    className: itemClassName,
+    className: GRID_STYLES.GRID_ITEM,
     style: { zIndex: isElevated ? Z_INDEX.ELEVATED : Z_INDEX.BASE },
     onHoverStart,
     onHoverEnd,

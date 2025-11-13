@@ -5,7 +5,6 @@ import { CONFIG, getNavHeight } from './constants';
 
 /**
  * Manages scroll-jacking behavior with smooth transitions between items.
- * Handles scroll events, keyboard navigation, and syncs active item with scroll position.
  */
 export function useScrollJacking(
   itemRefs: React.MutableRefObject<(HTMLDivElement | null)[]>,
@@ -14,10 +13,12 @@ export function useScrollJacking(
 ) {
   const currentIndexRef = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [shouldReinitialize, setShouldReinitialize] = useState(false);
+  const [reinitKey, setReinitKey] = useState(0);
   const isAnimating = useRef(false);
   const hasInitialized = useRef(false);
   const wasMobileRef = useRef(false);
+
+  const isMobile = () => window.innerWidth < CONFIG.DESKTOP_BREAKPOINT;
 
   const getTargetScroll = useCallback(
     (index: number): number => {
@@ -26,28 +27,27 @@ export function useScrollJacking(
 
       const rect = element.getBoundingClientRect();
       const elementTop = rect.top + window.scrollY;
-      const isFirstOrLast = index === 0 || index === projectsLength - 1;
+      const isEdge = index === 0 || index === projectsLength - 1;
 
-      if (isFirstOrLast) {
+      if (isEdge) {
         return elementTop - getNavHeight() - CONFIG.FIRST_ITEM_OFFSET;
       }
 
       const viewportCenter = window.innerHeight / 2;
-      const elementCenter = rect.height / 2;
-      return elementTop - viewportCenter + elementCenter;
+      return elementTop - viewportCenter + rect.height / 2;
     },
     [itemRefs, projectsLength]
   );
 
   const gotoIndex = useCallback(
     (index: number) => {
-      const isValid =
-        index >= 0 &&
-        index < projectsLength &&
-        index !== currentIndexRef.current &&
-        !isAnimating.current;
-
-      if (!isValid) return;
+      if (
+        index < 0 ||
+        index >= projectsLength ||
+        index === currentIndexRef.current ||
+        isAnimating.current
+      )
+        return;
 
       isAnimating.current = true;
       currentIndexRef.current = index;
@@ -66,30 +66,25 @@ export function useScrollJacking(
   );
 
   const syncScrollPosition = useCallback(() => {
-    if (isAnimating.current || window.innerWidth >= CONFIG.DESKTOP_BREAKPOINT)
-      return;
+    if (isAnimating.current || !isMobile()) return;
 
-    const scrollY = window.scrollY;
-    const viewportCenter = scrollY + window.innerHeight / 2;
+    const viewportCenter = window.scrollY + window.innerHeight / 2;
     let closestIndex = 0;
     let closestDistance = Infinity;
 
-    const items = itemRefs.current;
-    for (let i = 0; i < items.length; i++) {
-      const element = items[i];
-      if (!element) continue;
+    itemRefs.current.forEach((element, i) => {
+      if (!element) return;
 
       const rect = element.getBoundingClientRect();
-      const elementCenter = rect.top + scrollY + rect.height / 2;
+      const elementCenter = rect.top + window.scrollY + rect.height / 2;
       const distance = Math.abs(elementCenter - viewportCenter);
 
       if (distance < closestDistance) {
         closestDistance = distance;
         closestIndex = i;
-
-        if (distance < 10) break;
+        if (distance < 10) return; // Early exit approximation
       }
-    }
+    });
 
     if (closestIndex !== currentIndexRef.current) {
       currentIndexRef.current = closestIndex;
@@ -97,56 +92,38 @@ export function useScrollJacking(
     }
   }, [itemRefs]);
 
-  // Handle window resize to detect mobile/desktop breakpoint changes
+  // Handle resize and detect mobile/desktop transitions
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
     const handleResize = () => {
-      const isMobile = window.innerWidth < CONFIG.DESKTOP_BREAKPOINT;
-
-      // Check if we transitioned from desktop to mobile
-      if (isMobile && !wasMobileRef.current && hasEntered) {
-        // Reset initialization flag so mobile behavior can reinitialize
+      const nowMobile = isMobile();
+      if (nowMobile && !wasMobileRef.current && hasEntered) {
         hasInitialized.current = false;
-        setShouldReinitialize((prev) => !prev); // Toggle to trigger re-initialization
+        setReinitKey((prev) => prev + 1);
       }
-
-      wasMobileRef.current = isMobile;
+      wasMobileRef.current = nowMobile;
     };
 
-    // Set initial state
-    wasMobileRef.current = window.innerWidth < CONFIG.DESKTOP_BREAKPOINT;
-
+    wasMobileRef.current = isMobile();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [hasEntered]);
 
-  // Re-initialize scroll position when user enters or when resizing to mobile
+  // Initialize scroll position on mobile
   useEffect(() => {
-    if (
-      typeof window === 'undefined' ||
-      window.innerWidth >= CONFIG.DESKTOP_BREAKPOINT ||
-      !hasEntered ||
-      hasInitialized.current
-    )
-      return;
+    if (!isMobile() || !hasEntered || hasInitialized.current) return;
 
-    const initTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       window.scrollTo({ top: getTargetScroll(0), behavior: 'auto' });
       syncScrollPosition();
       hasInitialized.current = true;
-    }, 150); // Slightly longer delay to ensure layout has settled
+    }, 150);
 
-    return () => clearTimeout(initTimer);
-  }, [hasEntered, getTargetScroll, syncScrollPosition, shouldReinitialize]);
+    return () => clearTimeout(timer);
+  }, [hasEntered, getTargetScroll, syncScrollPosition, reinitKey]);
 
+  // Main scroll-jacking behavior
   useEffect(() => {
-    if (
-      typeof window === 'undefined' ||
-      window.innerWidth >= CONFIG.DESKTOP_BREAKPOINT ||
-      !hasEntered
-    )
-      return;
+    if (!isMobile() || !hasEntered) return;
 
     let syncTimeout: NodeJS.Timeout;
     let rafId: number | null = null;
@@ -174,19 +151,18 @@ export function useScrollJacking(
       preventDefault: true,
     });
 
+    const keyActions: Record<string, () => void> = {
+      ArrowDown: () => gotoIndex(currentIndexRef.current + 1),
+      ArrowUp: () => gotoIndex(currentIndexRef.current - 1),
+      PageDown: () => gotoIndex(currentIndexRef.current + 1),
+      PageUp: () => gotoIndex(currentIndexRef.current - 1),
+      ' ': () => gotoIndex(currentIndexRef.current + 1),
+      Home: () => gotoIndex(0),
+      End: () => gotoIndex(projectsLength - 1),
+    };
+
     const handleKeydown = (e: KeyboardEvent) => {
       if (isAnimating.current) return;
-
-      const keyActions: Record<string, () => void> = {
-        ArrowDown: () => gotoIndex(currentIndexRef.current + 1),
-        ArrowUp: () => gotoIndex(currentIndexRef.current - 1),
-        PageDown: () => gotoIndex(currentIndexRef.current + 1),
-        PageUp: () => gotoIndex(currentIndexRef.current - 1),
-        ' ': () => gotoIndex(currentIndexRef.current + 1),
-        Home: () => gotoIndex(0),
-        End: () => gotoIndex(projectsLength - 1),
-      };
-
       const action = keyActions[e.key];
       if (action) {
         e.preventDefault();
@@ -204,14 +180,7 @@ export function useScrollJacking(
       window.removeEventListener('keydown', handleKeydown);
       observer.kill();
     };
-  }, [
-    projectsLength,
-    gotoIndex,
-    getTargetScroll,
-    syncScrollPosition,
-    hasEntered,
-    shouldReinitialize,
-  ]);
+  }, [projectsLength, gotoIndex, syncScrollPosition, hasEntered, reinitKey]);
 
   return { currentIndex };
 }

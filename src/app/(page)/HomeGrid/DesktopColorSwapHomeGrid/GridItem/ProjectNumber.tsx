@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ANIMATION_CONFIG } from '../constants';
+import { GRID_STYLES } from '../gridStyles';
 
 type IProjectNumber = {
   index: number;
@@ -11,7 +12,7 @@ type IProjectNumber = {
  */
 export function ProjectNumber({ index, isHovered }: IProjectNumber) {
   return (
-    <div className="flex px-3 w-fit justify-center">
+    <div className={GRID_STYLES.PROJECT_NUMBER}>
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: isHovered ? 1 : 0 }}

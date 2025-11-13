@@ -5,6 +5,7 @@ import Media from '@/components/Media/Media';
 import { IProjects } from '../../types/IProject';
 import { Z_INDEX, TITLE_ANIMATION } from './constants';
 import { getBackgroundColor } from '@/utils/homeProjectUtils';
+import { MOBILE_GRID_STYLES } from './gridStyles';
 
 type GridItemProps = {
   project: IProjects[number];
@@ -26,20 +27,20 @@ export const GridItem = memo(
       <>
         <motion.div
           ref={itemRef}
-          className="mobile-home-grid-item"
+          className={MOBILE_GRID_STYLES.GRID_ITEM_INNER}
           style={{
             zIndex: isElevated ? Z_INDEX.ELEVATED : Z_INDEX.BASE,
           }}
           suppressHydrationWarning
         >
-          <div className="flex w-full justify-center lg:hidden">
+          <div className={MOBILE_GRID_STYLES.PROJECT_NUMBER}>
             {`( ${(index + 1).toFixed(1)} )`}
           </div>
 
-          <div className="relative aspect-3/4">
+          <div className={MOBILE_GRID_STYLES.IMAGE_CONTAINER}>
             {/* Color placeholder - shows before entrance and when not active */}
             <motion.div
-              className="absolute inset-0"
+              className={MOBILE_GRID_STYLES.LAYER_ABSOLUTE}
               style={{
                 backgroundColor: projectColor,
               }}
@@ -54,7 +55,7 @@ export const GridItem = memo(
 
             {/* Image - shows only when active and after entered */}
             <motion.div
-              className="absolute inset-0"
+              className={MOBILE_GRID_STYLES.LAYER_ABSOLUTE}
               style={{
                 opacity: project.comingSoon ? 0.2 : 1,
               }}
@@ -107,7 +108,7 @@ export const GridItem = memo(
     );
 
     return (
-      <div className="relative">
+      <div className={MOBILE_GRID_STYLES.GRID_ITEM_OUTER}>
         {isLinkable && projectUrl ? (
           <Link href={projectUrl} className="block">
             {gridItemContent}
