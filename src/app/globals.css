@@ -92,6 +92,9 @@
     rgb(255, 255, 255) 75%,
     rgba(255, 255, 255, 0) 87.5%
   );
+
+  --vertical-grid-spacing: clamp(70px, 6vw, 210px);
+  --horizontal-grid-spacing: clamp(70px, 6vw, 210px);
 }
 
 @layer base {

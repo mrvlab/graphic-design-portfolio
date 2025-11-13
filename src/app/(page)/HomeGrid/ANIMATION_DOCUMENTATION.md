@@ -3,6 +3,7 @@
 ## Overview
 
 The Desktop Color Swap Home Grid implements a sophisticated loading animation that creates a "ladder effect" by:
+
 1. Continuously shifting colors through a 12-position grid
 2. Loading images sequentially as the animation progresses
 3. Replacing color blocks with images instantly upon load
@@ -48,6 +49,7 @@ Position 12: Project 12 (color: #6D80AB - blue)
 **Direction**: Colors shift RIGHT, with position 12 wrapping to position 1 (circular rotation)
 
 **Algorithm**:
+
 ```
 Before Shift:
   temp = color at position 12
@@ -66,13 +68,15 @@ After Shift:
 ```
 
 ### Shift Timing
+
 - **Interval**: 250ms per shift
-- **Transition Duration**: 200ms (GSAP animation)
-- **Easing**: `power2.inOut`
+- **Transition Duration**: 700ms (Framer Motion animation)
+- **Easing**: `easeInOut`
 
 ## Animation Sequence
 
 ### Trigger
+
 Animation starts when user clicks "Enter" on the entrance overlay (`user-has-entered` class is added to `<html>`).
 
 ### Detailed Shift-by-Shift Sequence
@@ -103,13 +107,13 @@ Duration: 250ms
 Colors: Position 12 → Position 1, all others shift right
 Image Load: ✓ Project 1's image loads at Position 1
   - Color #377724 has now reached position 6
-  - Image appears INSTANTLY at position 1 (no fade)
+  - Image fades in at position 1 (700ms transition)
 
 === SHIFT 6 ===
 Duration: 250ms
 Colors: Continue shifting (except position 1 - image locked)
 Image Load: ✓ Project 2's image loads at Position 2
-  - Image appears INSTANTLY at position 2
+  - Image fades in at position 2 (700ms transition)
 
 === SHIFT 7 ===
 Duration: 250ms
@@ -154,12 +158,14 @@ Animation: STOPS - All images loaded
 ```
 
 ### Total Animation Time
+
 - **Duration**: ~4 seconds (16 shifts × 250ms)
 - **Start Delay**: Begins immediately after user clicks "Enter"
 
 ## Image Loading Behavior
 
 ### Loading Logic
+
 ```javascript
 // Image loads based on shift count
 const projectIndexToLoad = shiftCountRef.current - 5;
@@ -170,19 +176,30 @@ const projectIndexToLoad = shiftCountRef.current - 5;
 ```
 
 ### Image Load Position
+
 **Important**: Each image loads at its **ORIGINAL position**, NOT where its color currently is.
 
 Example:
+
 - Project 1 starts at position 1 with color #377724
 - After 5 shifts, color #377724 is at position 6
 - But Project 1's **image loads at position 1** (its original spot)
 
 ### Transition Type
-- **Color to Image**: INSTANT swap (no fade, no delay)
-- **Implementation**: 
-  ```javascript
-  gsap.set(colorPlaceholder, { opacity: 0 });  // Hide color instantly
-  gsap.set(imageContainer, { opacity: 1 });    // Show image instantly
+
+- **Color to Image**: Smooth fade transition (700ms)
+- **Implementation**:
+
+  ```typescript
+  // Framer Motion handles transitions automatically via state changes
+  animate={{
+    opacity: box.loaded ? 0 : 1  // Color fades out
+  }}
+
+  animate={{
+    opacity: box.loaded ? 1 : 0  // Image fades in
+  }}
+  transition={{ duration: 0.7, ease: 'easeInOut' }}
   ```
 
 ## Technical Implementation
@@ -190,29 +207,34 @@ Example:
 ### State Management
 
 **Box State Structure**:
+
 ```typescript
 interface BoxState {
-  currentProjectIndex: number;  // Which project color is at this position
-  loaded: boolean;               // Has the image loaded?
-  color: string;                 // Current color (for reference)
-  imageLoaded: boolean;          // Image load status
+  currentProjectIndex: number; // Which project color is at this position
+  loaded: boolean; // Has the image loaded?
+  color: string; // Current color (for reference)
+  imageLoaded: boolean; // Image load status
 }
 ```
 
 ### Key Refs
+
 - `shiftCountRef`: Tracks total number of shifts (used for image loading timing)
 - `loadedProjectsRef`: Set of project indices that have loaded (prevents duplicate loads)
-- `boxRefs`: References to color placeholder divs (for GSAP animations)
-- `imageRefs`: References to image container divs (for opacity control)
+- `boxRefs`: References to color placeholder divs (kept for potential future use)
+- `imageRefs`: References to image container divs (kept for potential future use)
+- `animationTimeoutRef`: Reference to setTimeout for cleanup
 
 ### Animation Control
 
 **Start Condition**:
+
 ```javascript
 if (hasEntered && boxes.length > 0 && !animationStartedRef.current)
 ```
 
 **Stop Condition**:
+
 ```javascript
 if (loadedProjectsRef.current.size < 12) {
   // Continue shifting
@@ -250,41 +272,47 @@ Shift 5: Checking if should load project 1
 ## Grid Layout Behavior
 
 ### Before User Enters
+
 ```css
 grid-cols-2  /* 2 columns on mobile/tablet */
 ```
 
 ### After User Enters
+
 ```css
 grid-cols-1  /* 1 column - starts transition */
 lg:grid-cols-4  /* 4 columns on desktop */
 ```
 
 ### Transition
+
 - Layout changes occur simultaneously with the color animation
 - Creates a smooth, unified entrance effect
 
 ## Data Requirements
 
 Each project must have:
+
 ```typescript
 {
-  title: string;      // Project name
-  color: string;      // Hex color code (e.g., "#377724")
-  image: string;      // Image URL
+  title: string; // Project name
+  color: string; // Hex color code (e.g., "#377724")
+  image: string; // Image URL
 }
 ```
 
 ## Performance Considerations
 
-1. **GSAP**: Optimized for 60fps animations
+1. **Framer Motion**: Hardware-accelerated animations using CSS transforms and opacity
 2. **Image Preloading**: Images load progressively during animation
 3. **State Updates**: Minimal re-renders using refs for animation control
-4. **Cleanup**: GSAP timeline killed on component unmount
+4. **Cleanup**: Timeouts cleared on component unmount
+5. **Single Animation Library**: Reduced bundle size by using only Framer Motion (GSAP removed from desktop grid)
 
 ## Customization Options
 
 ### Timing Adjustments
+
 ```javascript
 // Shift speed
 setTimeout(shift, 250);  // Change 250ms to adjust
@@ -294,12 +322,14 @@ duration: 0.2,  // Change to adjust smoothness
 ```
 
 ### Animation Start Delay
+
 ```javascript
 // In startAnimation()
 duration: 0.1,  // Delay before first shift starts
 ```
 
 ### Image Load Offset
+
 ```javascript
 // When to start loading images
 const projectIndexToLoad = shiftCountRef.current - 5;
@@ -309,6 +339,7 @@ const projectIndexToLoad = shiftCountRef.current - 5;
 ## Future Enhancements
 
 Potential improvements:
+
 - [ ] Configurable animation speed via props
 - [ ] Pause/resume functionality
 - [ ] Reverse animation option
@@ -319,21 +350,25 @@ Potential improvements:
 ## Troubleshooting
 
 ### Animation doesn't start
+
 - Check that `user-has-entered` class is on `<html>` element
 - Verify `hasEntered` state is true
 - Check console for image load errors
 
 ### Colors not shifting
-- Verify GSAP is imported
-- Check boxRefs are populated
+
+- Verify Framer Motion is imported
+- Check that state updates are triggering properly
 - Look for JavaScript errors in console
 
 ### Images not loading
+
 - Check image URLs are valid
 - Verify `mediaGallery.mediaItems[0].asset.url` exists
 - Check network tab for 404s
 
 ### Animation doesn't stop
+
 - Verify all 12 projects have valid images
 - Check `loadedProjectsRef.current.size` reaches 12
 - Look for errors during image loading
@@ -344,4 +379,3 @@ Potential improvements:
 - `MobileHomeGrid/index.tsx` - Static mobile version (no animation)
 - `page.tsx` - Data transformation and grid rendering
 - `HomeGridCursor/index.tsx` - Entrance overlay trigger
-

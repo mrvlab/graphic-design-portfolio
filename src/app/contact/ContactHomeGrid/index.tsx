@@ -6,7 +6,7 @@ import { IProjects } from '@/app/(page)/types/IProject';
 export const ContactHomeGrid = ({ projects }: { projects: IProjects }) => {
   return (
     <>
-      <div className="hidden lg:block lg:my-auto lg:w-full lg:h-full">
+      <div className="hidden lg:block lg:my-auto lg:w-full lg:h-full p-[var(--vertical-grid-spacing)] pr-20">
         <DesktopHomeGrid projects={projects} />
       </div>
 

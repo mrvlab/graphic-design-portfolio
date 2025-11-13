@@ -44,7 +44,7 @@ export default async function RootLayout({
           <NavigationMenu />
         </nav>
         {/* Main content */}
-        <main className="flex flex-col flex-1 min-h-0 max-lg:pb-12 lg:py-[3%] lg:pr-[9.59%] lg:pl-[3.73%] lg:min-h-[calc(100dvh-var(--nav-footer-total-desktop))] lg:overflow-hidden lg:mx-auto lg:w-full">
+        <main className="flex flex-col flex-1 min-h-0 max-lg:pb-12 lg:flex-row lg:my-auto">
           {children}
         </main>
 

@@ -1,15 +1,14 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import Link from 'next/link';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import NextImage from '@/components/Media/NextImage';
 import { useEntranceDetection } from './useEntranceDetection';
 import { useColorShiftAnimation } from './useColorShiftAnimation';
-import { ANIMATION_CONFIG, Z_INDEX } from './constants';
-import { getImageAssetId, getBackgroundColor } from '@/utils/homeProjectUtils';
+import { ANIMATION_CONFIG } from './constants';
+import { getBackgroundColor } from '@/utils/homeProjectUtils';
 import { IProjects } from '../../types/IProject';
 import { IBoxState } from '../../types/IBoxState';
+import { GridItem } from './GridItem';
 
 type IDesktopColorSwapHomeGrid = {
   projects: IProjects;
@@ -58,178 +57,32 @@ export function DesktopColorSwapHomeGrid({
     setElevatedIndex(null);
   }, []);
 
-  // Memoize class names
-  const gridClassName = useMemo(() => {
-    const baseClasses =
-      'grid lg:grid-rows-3 lg:grid-cols-4 lg:gap-[13.06%] lg:aspect-[2/1] my-auto lg:h-full lg:w-full';
-    const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
-    return `${baseClasses} ${columnClass}`;
-  }, [hasEntered]);
-
-  const itemClassName =
-    'flex justify-center relative aspect-[4/3] gap-2.5 overflow-hidden';
+  // Grid class name based on entrance state
+  const baseClasses =
+    'grid grid-cols-4 grid-rows-3 gap-x-[var(--horizontal-grid-spacing)] gap-y-[var(--vertical-grid-spacing)] h-full w-full lg:aspect-[16/9]';
+  const columnClass = hasEntered ? 'grid-cols-1' : 'grid-cols-2';
+  const gridClassName = `${baseClasses} ${columnClass}`;
 
   return (
     <div className="relative lg:h-full">
       {/* Main grid with images */}
       <div className={gridClassName} suppressHydrationWarning>
-        {boxes.map((box, index) => {
-          const isElevated = elevatedIndex === index;
-          // Use index for image (preserves CMS order)
-          const project = projects[index];
-          // Use currentProjectIndex for rotating colors (creates ladder effect)
-          // Keep the original color even when loaded for hover states
-          const currentColor =
-            getBackgroundColor(projects[box.currentProjectIndex]) || box.color;
-
-          const isLinkable = project.slug && !project.comingSoon;
-          const projectUrl = isLinkable
-            ? `/project/${project.slug}`
-            : undefined;
-
-          const gridItemContent = (
-            <>
-              {/* Project number */}
-              <motion.div
-                className="flex px-3 w-fit justify-center"
-                style={{ position: 'relative' }}
-              >
-                {(index + 1).toFixed(1)}
-              </motion.div>
-
-              {/* Image container */}
-              <div className="flex relative aspect-3/4 h-full">
-                {/* Color placeholder - shows rotating colors during animation and when not hovered */}
-                <motion.div
-                  ref={(el) => {
-                    boxRefs.current[index] = el;
-                  }}
-                  className="absolute inset-0"
-                  initial={{ opacity: 1 }}
-                  style={{
-                    backgroundColor: currentColor,
-                    opacity: 1,
-                  }}
-                  animate={{
-                    opacity:
-                      !box.loaded ||
-                      (animationComplete &&
-                        hoveredIndex !== null &&
-                        hoveredIndex !== index)
-                        ? 1
-                        : 0,
-                    backgroundColor:
-                      box.loaded &&
-                      hoveredIndex !== null &&
-                      hoveredIndex !== index
-                        ? currentColor
-                        : undefined,
-                  }}
-                  transition={{
-                    duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-                    ease: 'easeInOut',
-                  }}
-                />
-
-                {/* Image - loads at correct position based on index */}
-                <motion.div
-                  ref={(el) => {
-                    imageRefs.current[index] = el;
-                  }}
-                  className="absolute inset-0"
-                  initial={{ opacity: 0 }}
-                  style={{
-                    backgroundColor: '#ffffff',
-                    opacity: 0,
-                  }}
-                  animate={{
-                    opacity:
-                      box.loaded &&
-                      (hoveredIndex === null || hoveredIndex === index)
-                        ? project.comingSoon
-                          ? 0.2
-                          : 1
-                        : 0,
-                  }}
-                  transition={{
-                    duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  <NextImage
-                    refId={getImageAssetId(project)}
-                    alt={project.title || undefined}
-                    className="w-full h-full object-cover !opacity-100"
-                    width={800}
-                    height={1000}
-                  />
-                </motion.div>
-              </div>
-            </>
-          );
-
-          const motionDivProps = {
-            className: itemClassName,
-            style: { zIndex: isElevated ? Z_INDEX.ELEVATED : Z_INDEX.BASE },
-            onHoverStart: () => animationComplete && setHoveredIndex(index),
-            onHoverEnd: () => animationComplete && setHoveredIndex(null),
-            suppressHydrationWarning: true,
-          };
-
-          return isLinkable && projectUrl ? (
-            <Link key={index} href={projectUrl} className="block">
-              <motion.div {...motionDivProps}>{gridItemContent}</motion.div>
-            </Link>
-          ) : (
-            <motion.div key={index} {...motionDivProps}>
-              {gridItemContent}
-            </motion.div>
-          );
-        })}
+        {boxes.map((box, index) => (
+          <GridItem
+            key={index}
+            box={box}
+            index={index}
+            projects={projects}
+            hoveredIndex={hoveredIndex}
+            elevatedIndex={elevatedIndex}
+            animationComplete={animationComplete}
+            boxRefs={boxRefs}
+            imageRefs={imageRefs}
+            onHoverStart={() => animationComplete && setHoveredIndex(index)}
+            onHoverEnd={() => animationComplete && setHoveredIndex(null)}
+          />
+        ))}
       </div>
-
-      {/* Number parentheses overlay */}
-      <AnimatePresence>
-        {hoveredIndex !== null && (
-          <motion.div
-            className={`${gridClassName} absolute inset-0 pointer-events-none z-200`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-              ease: 'easeInOut',
-            }}
-          >
-            {boxes.map((_, index) => (
-              <div key={index} className={itemClassName}>
-                <div className="flex px-3 w-fit justify-center relative">
-                  <motion.span
-                    animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
-                    transition={{
-                      duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-                      ease: 'easeInOut',
-                    }}
-                  >
-                    (&nbsp;
-                  </motion.span>
-                  <span>{(index + 1).toFixed(1)}</span>
-                  <motion.span
-                    animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
-                    transition={{
-                      duration: ANIMATION_CONFIG.TRANSITION_DURATION,
-                      ease: 'easeInOut',
-                    }}
-                  >
-                    &nbsp;)
-                  </motion.span>
-                </div>
-                <div className="flex relative aspect-3/4 h-full" />
-              </div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Blur overlay */}
       <AnimatePresence onExitComplete={handleOverlayExitComplete}>
