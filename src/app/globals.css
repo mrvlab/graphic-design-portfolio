@@ -13,11 +13,24 @@
   --font-lausanne-italic: var(--font-lausanne-300-italic);
   --font-lausanne-medium: var(--font-lausanne-450);
   --aspect-3/4: 3 / 4;
+  --aspect-4/3: 4 / 3;
   --aspect-16/9: 16 / 9;
   --aspect-9/16: 9 / 16;
   --aspect-2/3: 2 / 3;
   --aspect-3/2: 3 / 2;
   --aspect-4/5: 4 / 5;
+  --aspect-5/4: 5 / 4;
+  --z-100: 100;
+  --z-200: 200;
+
+  /* Layout Height Variables - Initial values, auto-updated by LayoutHeightTracker */
+  --mobile-nav-home-height: 62px;
+  --mobile-nav-height: 36px;
+  --desktop-nav-height: 46.95px;
+  --footer-height: 59.53px;
+  --nav-total-mobile: 98px; /* mobile nav + nav home (auto-calculated) */
+  --nav-footer-total-mobile: 168px; /* mobile nav + footer (auto-calculated) */
+  --nav-footer-total-desktop: 116.48px; /* desktop nav + footer (auto-calculated) */
 
   --blur-height: 280%;
   /* Blur Down */
@@ -79,6 +92,9 @@
     rgb(255, 255, 255) 75%,
     rgba(255, 255, 255, 0) 87.5%
   );
+
+  --vertical-grid-spacing: clamp(70px, 6vw, 210px);
+  --horizontal-grid-spacing: clamp(70px, 6vw, 210px);
 }
 
 @layer base {
@@ -109,6 +125,19 @@
   .hover-underline-links a:hover {
     text-decoration-thickness: 0.8px;
     @apply lg:underline lg:underline-offset-[1.8px];
+  }
+
+  /* Screen reader only - hides content visually but keeps it accessible to screen readers and search engines */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 }
 
@@ -196,4 +225,90 @@ body {
   font-size: 1rem;
   transform-origin: center;
   transition: transform 0.2s ease-out;
+}
+
+/* Mobile Home Grid */
+.mobile-home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding-top: 24px;
+  margin: auto;
+  transition: grid-template-columns 0.7s ease-in-out;
+}
+
+/* Controlled scrolling for mobile - prevent free scroll */
+@media (max-width: 1023px) {
+  html {
+    overscroll-behavior-y: none;
+    overflow-y: scroll;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    touch-action: pan-y;
+  }
+
+  /* Prevent momentum scrolling on mobile */
+  html.user-has-entered {
+    -webkit-overflow-scrolling: auto;
+  }
+
+  /* Lock touch actions on grid */
+  .mobile-home-grid {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+html.user-has-entered .mobile-home-grid {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  padding-top: 140px;
+  padding-bottom: 140px;
+  transition: grid-template-columns 0.7s ease-in-out;
+}
+
+.mobile-home-grid-item {
+  position: relative;
+  aspect-ratio: 4/3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+html.user-has-entered .mobile-home-grid-item {
+  margin-left: auto;
+  margin-right: auto;
+  @apply w-[65%] sm:w-[75%];
+}
+
+/* Make the title span full viewport width */
+html.user-has-entered .mobile-grid-title {
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+}
+
+/* Entrance Overlay Styles */
+/* Hide content initially - will be shown when overlay-ready class is added */
+#main-content-wrapper {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* When overlay is ready, show content at full brightness */
+/* The overlay's backdrop-blur and semi-transparent background create the peek-through effect */
+html.overlay-ready #main-content-wrapper {
+  opacity: 1;
+}
+
+/* When content should be fully visible (after overlay dismissed or returning user) */
+html.entrance-content-visible #main-content-wrapper {
+  opacity: 1;
+}
+
+/* Prevent scrolling when overlay is active */
+html:not(.entrance-content-visible) {
+  overflow: hidden;
 }

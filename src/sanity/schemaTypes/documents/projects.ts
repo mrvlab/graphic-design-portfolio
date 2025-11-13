@@ -69,6 +69,12 @@ export const projects = defineType({
       fieldset: 'projectInit',
     }),
     defineField({
+      name: 'mediaBackgroundColor',
+      title: 'Media Background Color',
+      type: 'color',
+      fieldset: 'projectInit',
+    }),
+    defineField({
       name: 'mediaGallery',
       title: 'Media Gallery',
       type: 'mediaGallery',

@@ -3,7 +3,9 @@ import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import React from 'react';
 import { FetchHomePageQueryResult } from '../../../sanity.types';
 import { generateSeoMetadata } from '@/utils/generateMetadata';
-import ProjectList from './ProjectList';
+import { DesktopColorSwapHomeGrid } from './HomeGrid/DesktopColorSwapHomeGrid';
+import { MobileHomeGrid } from './HomeGrid/MobileHomeGrid';
+import HomeGridCursor from './HomeGrid/HomeGridCursor/indtex';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -23,28 +25,39 @@ const page = async () => {
 
   if (!data) {
     return (
-      <div className='py-40 text-center text-3xl text-gray-500'>
+      <div className="py-40 text-center text-3xl text-gray-500">
         404 – Home Not Found
       </div>
     );
   }
 
-  const projects = data.projects;
-
-  if (!projects?.length) {
+  if (!data.projects?.length) {
     return (
-      <div className='py-40 text-center text-3xl text-gray-500'>
+      <div className="py-40 text-center text-3xl text-gray-500">
         No Projects Found
       </div>
     );
   }
 
+  // Limit to first 12 projects (preserves CMS order)
+  // Note: Using slice() which is non-mutating and maintains original array order
+  const projects = data.projects.slice(0, 12);
+
   return (
-    <div className='grid grid-cols-2 gap-x-1 gap-y-12 px-1 pt-[140px] pb-12 lg:grid-cols-4 lg:pl-2 lg:pr-0 lg:pt-0 lg:pb-0 lg:my-auto lg:mr-auto lg:aspect-[21/7] lg:max-w-[94.5%] lg:w-full lg:gap-[140px]'>
-      {projects.map((project, indx) => (
-        <ProjectList key={project._id} project={project} index={indx} />
-      ))}
-    </div>
+    <>
+      <HomeGridCursor
+        enterSiteText={data?.enterSiteText || '( Click to enter )'}
+      />
+
+      <div className="hidden lg:block lg:my-auto lg:w-full lg:h-full p-[var(--vertical-grid-spacing)] pr-20">
+        <DesktopColorSwapHomeGrid projects={projects} />
+      </div>
+
+      {/* Mobile version - simple static grid */}
+      <div className="block lg:hidden">
+        <MobileHomeGrid projects={projects} />
+      </div>
+    </>
   );
 };
 

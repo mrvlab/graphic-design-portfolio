@@ -26,13 +26,13 @@ const RichText = ({ content }: { content: IRichText }) => {
   const components = {
     marks: {
       strong: ({ children }: { children: React.ReactNode }) => (
-        <strong className='font-bold'>{children}</strong>
+        <strong className="font-bold">{children}</strong>
       ),
     },
   };
 
   return (
-    <div className='leading-[125%] flex flex-col gap-[6px] hover-underline-links'>
+    <div className="leading-[125%] flex flex-col gap-[6px] hover-underline-links">
       <PortableText value={content} components={components} />
     </div>
   );

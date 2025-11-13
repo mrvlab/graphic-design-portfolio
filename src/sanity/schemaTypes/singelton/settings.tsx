@@ -52,17 +52,7 @@ export const settings = defineType({
       name: 'image',
       title: 'Social Share Image',
       type: 'image',
-      options: {
-        hotspot: true,
-        metadata: ['lqip'],
-      },
-    }),
-
-    defineField({
-      name: 'enterSiteText',
-      title: 'Enter Site Text',
-      description: 'Text displayed on the enter site button.',
-      type: 'string',
+      options: { hotspot: true, metadata: ['lqip'] },
     }),
   ],
   preview: {
