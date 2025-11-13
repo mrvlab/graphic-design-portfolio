@@ -7,7 +7,6 @@ import { draftMode } from 'next/headers';
 import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import BlurDown from '@/components/NavBar/BlurDown';
-import LenisScroller from '@/components/LenisScroller';
 
 export default async function RootLayout({
   children,
@@ -26,7 +25,6 @@ export default async function RootLayout({
       </nav>
       {/* Main content */}
       <main className="flex flex-col flex-1 min-h-0 max-lg:pb-12 lg:py-[3%] lg:pr-[9.59%] lg:pl-[3.73%] lg:min-h-[calc(100dvh-var(--nav-footer-total-desktop))] lg:overflow-hidden lg:mx-auto lg:w-full">
-        <LenisScroller />
         {children}
       </main>
 

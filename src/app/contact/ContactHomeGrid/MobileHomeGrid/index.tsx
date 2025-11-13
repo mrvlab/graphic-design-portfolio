@@ -10,7 +10,7 @@ export function MobileHomeGrid({ projects }: IMobileHomeGrid) {
   return (
     <div className="relative items-center justify-center py-0">
       <div
-        className="mobile-home-grid gap-y-16 gap-x-24 px-12 sm:max-w-[70%] py-0"
+        className="grid grid-cols-2 mx-auto gap-y-16 gap-x-24 px-12 pt-6 sm:max-w-[70%] py-0"
         suppressHydrationWarning
       >
         {projects.map((project, index) => {
