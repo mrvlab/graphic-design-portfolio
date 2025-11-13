@@ -141,7 +141,7 @@ export function EntranceOverlay({
   return (
     <div
       onClick={handleEnter}
-      className={`fixed inset-0 top-[var(--mobile-nav-combined-height)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
+      className={`fixed inset-0 top-[var(--nav-total-mobile)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
         isAnimatingOut
           ? `opacity-0 !pointer-events-none ${isMobile ? '' : 'transition-opacity duration-700 ease-in-out'}`
           : isAnimatingIn

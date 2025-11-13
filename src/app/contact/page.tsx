@@ -46,7 +46,7 @@ const page = async () => {
       <ContactHomeGrid projects={projects} />
 
       {/* Blur overlay */}
-      <div className="fixed inset-0 top-[var(--mobile-nav-combined-height)] z-50 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 lg:top-0 pointer-events-none" />
+      <div className="fixed inset-0 top-[var(--nav-total-mobile)] z-50 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 lg:top-0 pointer-events-none" />
 
       {/* Contact content */}
       <div className="absolute inset-0 flex flex-col justify-center items-center z-100 pointer-events-none">

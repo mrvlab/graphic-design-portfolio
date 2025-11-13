@@ -26,9 +26,9 @@
   /* Layout Height Variables - Initial values, auto-updated by LayoutHeightTracker */
   --mobile-nav-home-height: 62px;
   --mobile-nav-height: 36px;
-  --mobile-nav-combined-height: 98px;
   --desktop-nav-height: 46.95px;
   --footer-height: 59.53px;
+  --nav-total-mobile: 98px; /* mobile nav + nav home (auto-calculated) */
   --nav-footer-total-mobile: 168px; /* mobile nav + footer (auto-calculated) */
   --nav-footer-total-desktop: 116.48px; /* desktop nav + footer (auto-calculated) */
 

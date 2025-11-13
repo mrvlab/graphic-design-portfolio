@@ -21,7 +21,7 @@ import { useEffect, useRef } from 'react';
  * Updates CSS variables:
  * - --mobile-nav-home-height
  * - --mobile-nav-height
- * - --mobile-nav-combined-height (home + main combined)
+ * - --nav-total-mobile (home + main combined)
  * - --desktop-nav-height
  * - --footer-height
  * - --nav-footer-total-mobile (mobile nav + footer)
@@ -120,7 +120,7 @@ export function useLayoutHeights() {
             `${mobileMainHeight}px`
           );
           root.style.setProperty(
-            '--mobile-nav-combined-height',
+            '--nav-total-mobile',
             `${mobileCombinedHeight}px`
           );
           root.style.setProperty(

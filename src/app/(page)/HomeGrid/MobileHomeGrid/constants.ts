@@ -22,8 +22,7 @@ export const TITLE_ANIMATION = {
 export const getNavHeight = (): number => {
   if (typeof window === 'undefined') return 98;
   const cssVar = getComputedStyle(document.documentElement)
-    .getPropertyValue('--mobile-nav-combined-height')
+    .getPropertyValue('--nav-total-mobile')
     .trim();
   return cssVar ? parseInt(cssVar, 10) : 98;
 };
-
