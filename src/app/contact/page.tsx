@@ -6,9 +6,8 @@ import {
   FetchContactQueryResult,
   FetchHomePageQueryResult,
 } from '../../../sanity.types';
-import { DesktopHomeGrid } from './ContactHomeGrid/DesktopHomeGrid';
-import { MobileHomeGrid } from './ContactHomeGrid/MobileHomeGrid';
 import ContactContent from './ContactContent';
+import { ContactHomeGrid } from './ContactHomeGrid';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -44,22 +43,13 @@ const page = async () => {
   }
   return (
     <>
-      {/* <ContactContent contact={contact} /> */}
-
-      {/* Desktop grid */}
-      <div className="hidden lg:block lg:my-auto lg:w-full lg:h-full">
-        <DesktopHomeGrid projects={projects} />
-      </div>
-
-      {/* Mobile grid */}
-      <div className="block lg:hidden overflow-hidden">
-        <MobileHomeGrid projects={projects} />
-      </div>
+      <ContactHomeGrid projects={projects} />
 
       {/* Blur overlay */}
       <div className="fixed inset-0 top-[var(--mobile-nav-combined-height)] z-50 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 lg:top-0 pointer-events-none" />
+
       {/* Contact content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center z-100">
+      <div className="absolute inset-0 flex flex-col justify-center items-center z-100 pointer-events-none">
         <ContactContent contact={contact} />
       </div>
     </>
