@@ -26,14 +26,6 @@ export const mediaGallery = defineType({
             }),
           ],
         }),
-        defineField({
-          name: 'video',
-          title: 'Video',
-          type: 'mux.video',
-          options: {
-            metadata: ['lqip'],
-          },
-        }),
       ],
     }),
   ],
