@@ -327,6 +327,7 @@ export const fetchFooterQuery = defineQuery(`
     _id,
     name,
     rights,
+    timezone,
     location,
     lefttext
   }

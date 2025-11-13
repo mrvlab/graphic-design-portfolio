@@ -829,6 +829,331 @@
         },
         "optional": true
       },
+      "timezone": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "Africa/Abidjan"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Accra"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Addis_Ababa"
+            },
+            {
+              "type": "string",
+              "value": "Australia/Adelaide"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Algiers"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Amsterdam"
+            },
+            {
+              "type": "string",
+              "value": "America/Anchorage"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Athens"
+            },
+            {
+              "type": "string",
+              "value": "Pacific/Auckland"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Bangkok"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Berlin"
+            },
+            {
+              "type": "string",
+              "value": "America/Bogota"
+            },
+            {
+              "type": "string",
+              "value": "Australia/Brisbane"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Brussels"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Bucharest"
+            },
+            {
+              "type": "string",
+              "value": "America/Argentina/Buenos_Aires"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Cairo"
+            },
+            {
+              "type": "string",
+              "value": "America/Cancun"
+            },
+            {
+              "type": "string",
+              "value": "America/Caracas"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Casablanca"
+            },
+            {
+              "type": "string",
+              "value": "America/Chicago"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Copenhagen"
+            },
+            {
+              "type": "string",
+              "value": "America/Denver"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Dhaka"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Dubai"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Dublin"
+            },
+            {
+              "type": "string",
+              "value": "America/Guatemala"
+            },
+            {
+              "type": "string",
+              "value": "America/Havana"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Helsinki"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Hong_Kong"
+            },
+            {
+              "type": "string",
+              "value": "Pacific/Honolulu"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Istanbul"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Jakarta"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Jerusalem"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Johannesburg"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Karachi"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Kathmandu"
+            },
+            {
+              "type": "string",
+              "value": "America/Jamaica"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Kuala_Lumpur"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Kuwait"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Kiev"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Lagos"
+            },
+            {
+              "type": "string",
+              "value": "America/Lima"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Lisbon"
+            },
+            {
+              "type": "string",
+              "value": "Europe/London"
+            },
+            {
+              "type": "string",
+              "value": "America/Los_Angeles"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Madrid"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Manila"
+            },
+            {
+              "type": "string",
+              "value": "Australia/Melbourne"
+            },
+            {
+              "type": "string",
+              "value": "America/Mexico_City"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Moscow"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Kolkata"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Nairobi"
+            },
+            {
+              "type": "string",
+              "value": "America/New_York"
+            },
+            {
+              "type": "string",
+              "value": "America/Panama"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Paris"
+            },
+            {
+              "type": "string",
+              "value": "Australia/Perth"
+            },
+            {
+              "type": "string",
+              "value": "America/Phoenix"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Prague"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Riyadh"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Rome"
+            },
+            {
+              "type": "string",
+              "value": "America/Santiago"
+            },
+            {
+              "type": "string",
+              "value": "America/Sao_Paulo"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Seoul"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Shanghai"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Singapore"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Stockholm"
+            },
+            {
+              "type": "string",
+              "value": "Pacific/Fiji"
+            },
+            {
+              "type": "string",
+              "value": "Australia/Sydney"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Taipei"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Tehran"
+            },
+            {
+              "type": "string",
+              "value": "Asia/Tokyo"
+            },
+            {
+              "type": "string",
+              "value": "America/Toronto"
+            },
+            {
+              "type": "string",
+              "value": "Africa/Tunis"
+            },
+            {
+              "type": "string",
+              "value": "America/Vancouver"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Vienna"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Warsaw"
+            },
+            {
+              "type": "string",
+              "value": "America/Whitehorse"
+            },
+            {
+              "type": "string",
+              "value": "Europe/Zurich"
+            }
+          ]
+        },
+        "optional": true
+      },
       "location": {
         "type": "objectAttribute",
         "value": {
@@ -2563,100 +2888,80 @@
           "value": {
             "type": "array",
             "of": {
-              "type": "union",
-              "of": [
-                {
-                  "type": "object",
-                  "attributes": {
-                    "asset": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "object",
-                        "attributes": {
-                          "_ref": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string"
-                            }
-                          },
-                          "_type": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "string",
-                              "value": "reference"
-                            }
-                          },
-                          "_weak": {
-                            "type": "objectAttribute",
-                            "value": {
-                              "type": "boolean"
-                            },
-                            "optional": true
-                          }
-                        },
-                        "dereferencesTo": "sanity.imageAsset"
-                      },
-                      "optional": true
-                    },
-                    "hotspot": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "inline",
-                        "name": "sanity.imageHotspot"
-                      },
-                      "optional": true
-                    },
-                    "crop": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "inline",
-                        "name": "sanity.imageCrop"
-                      },
-                      "optional": true
-                    },
-                    "alt": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      },
-                      "optional": true
-                    },
-                    "_type": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string",
-                        "value": "image"
-                      }
-                    }
-                  },
-                  "rest": {
+              "type": "object",
+              "attributes": {
+                "asset": {
+                  "type": "objectAttribute",
+                  "value": {
                     "type": "object",
                     "attributes": {
-                      "_key": {
+                      "_ref": {
                         "type": "objectAttribute",
                         "value": {
                           "type": "string"
                         }
+                      },
+                      "_type": {
+                        "type": "objectAttribute",
+                        "value": {
+                          "type": "string",
+                          "value": "reference"
+                        }
+                      },
+                      "_weak": {
+                        "type": "objectAttribute",
+                        "value": {
+                          "type": "boolean"
+                        },
+                        "optional": true
                       }
-                    }
-                  }
-                },
-                {
-                  "type": "object",
-                  "attributes": {
-                    "_key": {
-                      "type": "objectAttribute",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
+                    },
+                    "dereferencesTo": "sanity.imageAsset"
                   },
-                  "rest": {
+                  "optional": true
+                },
+                "hotspot": {
+                  "type": "objectAttribute",
+                  "value": {
                     "type": "inline",
-                    "name": "mux.video"
+                    "name": "sanity.imageHotspot"
+                  },
+                  "optional": true
+                },
+                "crop": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "inline",
+                    "name": "sanity.imageCrop"
+                  },
+                  "optional": true
+                },
+                "alt": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  },
+                  "optional": true
+                },
+                "_type": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string",
+                    "value": "image"
                   }
                 }
-              ]
+              },
+              "rest": {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
           },
           "optional": true

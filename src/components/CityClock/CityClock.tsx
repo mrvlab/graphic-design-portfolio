@@ -1,40 +1,44 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getCityFromTimezone } from '@/utils/timezones';
 
 type ICityClock = {
-  location: string | null | undefined;
+  location?: string | null;
+  timezone?: string | null;
 };
 
-const formatTime = () => {
-  return new Intl.DateTimeFormat('en-US', {
-    timeZone: 'Europe/Madrid',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true, // AM/PM format
-  }).format(new Date());
-};
+const CityClock = ({ location, timezone = 'Europe/Madrid' }: ICityClock) => {
+  const [time, setTime] = useState<string>('');
+  const [mounted, setMounted] = useState(false);
 
-const CityClock = ({ location }: ICityClock) => {
-  const [time, setTime] = useState(formatTime()); // Initial time setup
+  const displayLocation =
+    location || getCityFromTimezone(timezone || 'Europe/Madrid');
 
   useEffect(() => {
-    // Function to update the time
-    const updateTime = () => {
-      setTime(formatTime());
+    const formatTime = () => {
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone || 'Europe/Madrid',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      }).format(new Date());
     };
 
-    // Set an interval to update the time every second
-    const interval = setInterval(updateTime, 1000); // Update every second
+    setMounted(true);
+    setTime(formatTime());
 
-    // Cleanup the interval on component unmount
+    const interval = setInterval(() => {
+      setTime(formatTime());
+    }, 1000);
+
     return () => clearInterval(interval);
-  }, []); // Empty dependency array ensures this runs only on mount and unmount
+  }, [timezone]);
 
   return (
     <>
-      <span className=''>{location ? location : 'Madrid, Spain'}</span>
-      <span className=''>{time}</span>
+      <span>{displayLocation}</span>
+      <span>{mounted ? time : '--:-- --'}</span>
     </>
   );
 };

@@ -20,7 +20,10 @@ const Footer = async () => {
         </div>
         <div className="z-10 lg:col-span-12 lg:col-start-21 lg:flex lg:justify-end">
           <div className="flex gap-1 lg:justify-between lg:max-w-[225px] lg:w-full">
-            <CityClock location={footer?.location} />
+            <CityClock
+              location={footer?.location}
+              timezone={footer?.timezone}
+            />
           </div>
         </div>
         <div className="lg:flex lg:gap-[3px] z-10 lg:col-start-5 lg:col-span-16 lg:row-start-1 lg:justify-center">
