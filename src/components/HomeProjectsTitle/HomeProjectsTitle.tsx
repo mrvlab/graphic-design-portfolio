@@ -18,25 +18,14 @@ const HomeProjectsTitle = ({
 }: IHomeProjectsTitle) => {
   return (
     <h2
-      className='flex-1 flex flex-col justify-between'
+      className='flex flex-col justify-between'
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div
-        className={`flex flex-col lg:max-h-[42px] ${isHovered && !project.comingSoon ? 'italic' : ''}`}
+        className={`flex flex-col ${isHovered && !project.comingSoon ? 'italic' : ''}`}
       >
         <span>{(index + 1).toFixed(1)}</span>
-        <span>{project.title}</span>
-        {project.comingSoon ? (
-          <span>( Coming Soon )</span>
-        ) : (
-          <div className='flex gap-2'>
-            <span>Year:</span>
-            <span>
-              {project.year ? new Date(project.year).getFullYear() : ''}
-            </span>
-          </div>
-        )}
       </div>
     </h2>
   );

@@ -6,7 +6,6 @@ import { FetchFooterQueryResult } from '../../../sanity.types';
 import { sanityFetch } from '@/sanity/lib/live';
 import RichText from '../RichText/RichText';
 import BlurUp from './BlurUp';
-import CreativeServices from './CreativeServices/CreativeServices';
 
 const Footer = async () => {
   const { data: footer }: { data: FetchFooterQueryResult } = await sanityFetch({
@@ -14,28 +13,27 @@ const Footer = async () => {
   });
 
   return (
-    <footer className='relative w-full'>
-      <div className='flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:pt-[25px] lg:pb-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end lg:sticky lg:bottom-0 overflow-hidden z-50'>
-        <div className='hidden lg:flex lg:pt-0 z-10 lg:col-span-4'>
+    <footer id="footer-height" className="relative w-full z-200">
+      <div className="flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:py-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end lg:sticky lg:bottom-0 overflow-hidden z-50">
+        <div className="hidden lg:flex lg:pt-0 z-10 lg:col-span-4">
           {footer?.lefttext && <RichText content={footer?.lefttext} />}
         </div>
-        <div className='z-10 lg:col-span-12 lg:col-start-21 lg:flex lg:justify-end'>
-          <div className='flex gap-1 lg:justify-between lg:max-w-[225px] lg:w-full'>
-            <CityClock location={footer?.location} />
+        <div className="z-10 lg:col-span-12 lg:col-start-21 lg:flex lg:justify-end">
+          <div className="flex gap-1 lg:justify-between lg:max-w-[225px] lg:w-full">
+            <CityClock
+              location={footer?.location}
+              timezone={footer?.timezone}
+            />
           </div>
         </div>
-        <div className='lg:flex lg:gap-[3px] z-10 lg:col-start-5 lg:col-span-16 lg:row-start-1 lg:justify-center'>
+        <div className="lg:flex lg:gap-[3px] z-10 lg:col-start-5 lg:col-span-16 lg:row-start-1 lg:justify-center">
           &copy; {getCurrentYear()}
-          <span className='hidden lg:flex lg:justify-center'>
+          <span className="hidden lg:flex lg:justify-center">
             {footer?.name}
           </span>
           {footer?.rights}
         </div>
         <BlurUp />
-      </div>
-
-      <div className='absolute inset-0 flex items-center justify-center z-50 pointer-events-none bottom-[1rem]'>
-        <CreativeServices />
       </div>
     </footer>
   );

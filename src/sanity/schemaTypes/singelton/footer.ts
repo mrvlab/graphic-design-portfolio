@@ -1,5 +1,6 @@
 import { DoubleChevronDownIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
+import { timezoneOptions } from '@/utils/timezones';
 
 export const footer = defineType({
   name: 'footer',
@@ -49,8 +50,24 @@ export const footer = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'timezone',
+      title: 'Timezone',
+      description:
+        'Select your timezone - this will determine both the city and time display',
+      type: 'string',
+      options: {
+        list: timezoneOptions.map((tz) => ({
+          title: tz.title,
+          value: tz.value,
+        })),
+        layout: 'dropdown',
+      },
+    }),
+    defineField({
       name: 'location',
-      title: 'Location',
+      title: 'Location (Optional Override)',
+      description:
+        "Override the city name if you want to display something different than what's in the timezone",
       type: 'string',
     }),
   ],

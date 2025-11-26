@@ -49,7 +49,7 @@ const NavigationMenu = async ({
       {/* LEFT SECTION */}
       {!hideFirstSection && (
         <div
-          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10 lg:col-span-4`}
+          className={`${visibilityClasses} lg:flex lg:flex-col w-full relative z-10 lg:col-span-4 lf`}
         >
           <span>&copy; {getCurrentYear()}</span>
           <span>{header?.lefttext}</span>
@@ -59,8 +59,9 @@ const NavigationMenu = async ({
       {/* CENTER SECTION */}
       {!hideSecondSection && (
         <Link
-          href='/'
-          className={`${visibilityClasses} flex flex-col items-center relative w-full z-50 py-4 lg:py-0 lg:col-span-16`}
+          href="/"
+          id="mobile-nav-home"
+          className={`${visibilityClasses} flex flex-col items-center relative w-full z-200 py-4 lg:py-0 lg:col-span-16`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
         >
           <h1>{header?.name}</h1>
@@ -71,14 +72,21 @@ const NavigationMenu = async ({
       {/* RIGHT SECTION */}
       {!hideThirdSection && (
         <div
-          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-10 lg:col-span-4 lg:justify-end`}
+          id="mobile-nav-height"
+          className={`${visibilityClasses} flex w-full sticky max-lg:top-0 z-200 lg:col-span-4 lg:justify-end`}
         >
-          <div className='block lg:hidden'>
+          <div className="block lg:hidden">
             <BlurDown />
           </div>
-          <ul className='max-lg:border-b-[0.5px] flex items-center z-10 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] bg-white'>
-            <NavItems navItems={navItems} />
-          </ul>
+          <div className="w-full relative lg:flex lg:justify-end">
+            <ul className="flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] ">
+              <NavItems navItems={navItems} />
+            </ul>
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[0.5px] bg-black pointer-events-none z-200 lg:hidden "
+              style={{ mixBlendMode: 'normal' }}
+            />
+          </div>
         </div>
       )}
     </>

@@ -12,7 +12,6 @@ export const useProjectMobileScrollVisibility =
     const [hasScrolled, setHasScrolled] = useState(false);
     const hideScrollRef = useRef<HTMLDivElement | null>(null);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const hasIntersectedRef = useRef<boolean>(false);
 
     useEffect(() => {
       const handleScroll = () => {
@@ -39,11 +38,8 @@ export const useProjectMobileScrollVisibility =
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          // Once the element is intersected, hide the scroll text and keep it hidden
-          if (entry.isIntersecting && !hasIntersectedRef.current) {
-            hasIntersectedRef.current = true;
-            setShowScrollText(false);
-          }
+          // Show scroll text when not intersecting (at top), hide when intersecting (scrolled down)
+          setShowScrollText(!entry.isIntersecting);
         },
         { threshold: 0.1 }
       );

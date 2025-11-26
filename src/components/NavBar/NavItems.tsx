@@ -37,10 +37,10 @@ const NavItems = ({ navItems }: Props) => {
         key={item._id}
         className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit lg:px-0 z-10`}
         data-sanity-id={item._id}
-        data-sanity-type='navigation'
+        data-sanity-type="navigation"
       >
         <Link href={`/${slug}`}>
-          <div className='flex gap-1 group'>
+          <div className="flex gap-1 group">
             <span
               className={`transition-opacity duration-400 ${isActive(slug) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
             >
