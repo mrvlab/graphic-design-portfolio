@@ -2,7 +2,7 @@ import '../globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DraftMode/disableDraftMode';
-import { VisualEditing } from 'next-sanity';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import { draftMode } from 'next/headers';
 import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
