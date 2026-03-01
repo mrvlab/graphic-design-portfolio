@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { getImageAssetId, getBackgroundColor } from '@/utils/homeProjectUtils';
+import { dataAttr } from '@/sanity/lib/utils';
 import { IBoxState } from '../../../types/IBoxState';
 import { IProjects } from '../../../types/IProject';
 import { Z_INDEX } from '../constants';
@@ -40,6 +41,10 @@ export function GridItem({
   const isElevated = elevatedIndex === index;
   const isHovered = hoveredIndex === index;
   const project = projects[index];
+
+  const sanityAttr = project._id
+    ? dataAttr({ id: project._id, type: 'projects', path: 'title' }).toString()
+    : undefined;
 
   // Use currentProjectIndex for rotating colors (creates ladder effect)
   const currentColor =
@@ -92,6 +97,7 @@ export function GridItem({
     onHoverStart,
     onHoverEnd,
     suppressHydrationWarning: true,
+    'data-sanity': sanityAttr,
   };
 
   // Wrap in Link if linkable, otherwise just motion.div

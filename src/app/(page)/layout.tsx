@@ -29,6 +29,9 @@ export default async function RootLayout({
       <EntranceOverlay
         enterSiteText={data?.enterSiteText || 'Enter Site'}
         enterSiteLogo={data?.enterSiteLogo}
+        documentId={data?._id}
+        documentType={data?._type}
+        isDraftMode={isDraft}
       />
       <LayoutHeightTracker />
 

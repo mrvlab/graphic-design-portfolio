@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { NavigationQueryResult } from '../../../sanity.types';
+import { dataAttr } from '@/sanity/lib/utils';
 
 type Props = {
   navItems: NavigationQueryResult;
@@ -32,12 +33,17 @@ const NavItems = ({ navItems }: Props) => {
     const slug = item.slug;
     if (!slug) return null;
 
+    const sanityAttr = dataAttr({
+      id: item._id,
+      type: 'navigation',
+      path: 'name',
+    }).toString();
+
     return (
       <li
         key={item._id}
         className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit lg:px-0 z-10`}
-        data-sanity-id={item._id}
-        data-sanity-type="navigation"
+        data-sanity={sanityAttr}
       >
         <Link href={`/${slug}`}>
           <div className="flex gap-1 group">

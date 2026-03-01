@@ -5,6 +5,7 @@ import { useRef, useEffect, useState, useMemo } from 'react';
 import { useInView } from 'framer-motion';
 import IProjectCard from '../types/IProjectCard';
 import ProjectCardContent from './ProjectCardContent';
+import { dataAttr } from '@/sanity/lib/utils';
 
 function ProjectCard({ project, index }: IProjectCard) {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -59,11 +60,18 @@ function ProjectCard({ project, index }: IProjectCard) {
 
   if (!project) return null;
 
+  const sanityAttr = dataAttr({
+    id: project._id,
+    type: 'projects',
+    path: 'title',
+  }).toString();
+
   return project.comingSoon ? (
     <div
       className='flex flex-col items-stretch border-t-[0.5px] pt-1 px-1 lg:gap-0 lg:relative lg:px-2 lg:min-h-[146px]'
       id={`project-${index + 1}`}
       ref={cardRef}
+      data-sanity={sanityAttr}
     >
       <ProjectCardContent
         project={project}
@@ -80,6 +88,7 @@ function ProjectCard({ project, index }: IProjectCard) {
       href={project.slug ? `/project/${project.slug}` : '/'}
       className='flex flex-col items-stretch border-t-[0.5px] pt-1 px-1 lg:gap-0 lg:relative lg:px-2 lg:min-h-[146px]'
       id={`project-${index + 1}`}
+      data-sanity={sanityAttr}
     >
       <div ref={cardRef}>
         <ProjectCardContent

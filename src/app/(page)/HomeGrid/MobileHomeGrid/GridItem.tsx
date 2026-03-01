@@ -2,6 +2,7 @@ import { memo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Media from '@/components/Media/Media';
+import { dataAttr } from '@/sanity/lib/utils';
 import { IProjects } from '../../types/IProject';
 import { Z_INDEX, TITLE_ANIMATION } from './constants';
 import { getBackgroundColor } from '@/utils/homeProjectUtils';
@@ -107,8 +108,12 @@ export const GridItem = memo(
       </>
     );
 
+    const sanityAttr = project._id
+      ? dataAttr({ id: project._id, type: 'projects', path: 'title' }).toString()
+      : undefined;
+
     return (
-      <div className={MOBILE_GRID_STYLES.GRID_ITEM_OUTER}>
+      <div className={MOBILE_GRID_STYLES.GRID_ITEM_OUTER} data-sanity={sanityAttr}>
         {isLinkable && projectUrl ? (
           <Link href={projectUrl} className="block">
             {gridItemContent}
