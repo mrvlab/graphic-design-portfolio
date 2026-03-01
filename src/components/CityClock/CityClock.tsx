@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { vercelStegaSplit } from '@vercel/stega';
 import { getCityFromTimezone } from '@/utils/timezones';
 
 const FALLBACK_TIMEZONE = 'Europe/Madrid';
@@ -14,7 +15,7 @@ const CityClock = ({ location, timezone }: ICityClock) => {
   const [time, setTime] = useState<string>('');
   const [mounted, setMounted] = useState(false);
 
-  const tz = timezone || FALLBACK_TIMEZONE;
+  const tz = (timezone ? vercelStegaSplit(timezone).cleaned : null) || FALLBACK_TIMEZONE;
   const displayLocation = location || getCityFromTimezone(tz);
 
   useEffect(() => {
