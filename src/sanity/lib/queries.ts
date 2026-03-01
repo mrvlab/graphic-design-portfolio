@@ -1,7 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
 export const fetchSeo = defineQuery(`
-*[_type == "homePage"][0]{
+*[_id == "homePage" || _id == "drafts.homePage"][0]{
   seo {
   title,
   description,
@@ -28,7 +28,7 @@ export const fetchSeoTitle = defineQuery(`
 `);
 
 export const settingsQuery = defineQuery(`
-*[_type == "settings"][0]{
+*[_id == "settings" || _id == "drafts.settings"][0]{
   _id,
   title,
   description,
@@ -51,8 +51,9 @@ export const navigationQuery = defineQuery(`
 `);
 
 export const fetchHeaderQuery = defineQuery(`
-  *[_type == "header"][0]{
+  *[_id == "header" || _id == "drafts.header"][0]{
     _id,
+    _type,
     lefttext,
     name,
     workTitle,
@@ -60,7 +61,9 @@ export const fetchHeaderQuery = defineQuery(`
   }
 `);
 export const fetchHomePageQuery = defineQuery(`
-  *[_type == "homePage"][0]{
+  *[_id == "homePage" || _id == "drafts.homePage"][0]{
+    _id,
+    _type,
     enterSiteText,
     enterSiteLogo {
       mediaType,
@@ -119,7 +122,9 @@ export const fetchHomePageQuery = defineQuery(`
   }
 `);
 export const fetchProjectsIndexQuery = defineQuery(`
-  *[_type == "projectsIndex"][0]{
+  *[_id == "projectsIndex" || _id == "drafts.projectsIndex"][0]{
+    _id,
+    _type,
     projects[]->{
     _id,
     name,
@@ -168,6 +173,7 @@ export const fetchProjectsIndexQuery = defineQuery(`
 export const singleProjectQuery = defineQuery(`
   *[_type == "projects" && slug.current == $slug][0]{
     _id,
+    _type,
     title,
     comingSoon,
     "slug": slug.current,
@@ -246,8 +252,9 @@ export const singleProjectQuery = defineQuery(`
   }
 `);
 export const fetchAboutQuery = defineQuery(`
-  *[_type == "aboutPage"][0]{
+  *[_id == "aboutPage" || _id == "drafts.aboutPage"][0]{
     _id,
+    _type,
     languages[]->{
       _id,
       _type,
@@ -308,8 +315,9 @@ export const fetchAboutQuery = defineQuery(`
 `);
 
 export const fetchContactQuery = defineQuery(`
-  *[_type == "contactPage"][0]{
+  *[_id == "contactPage" || _id == "drafts.contactPage"][0]{
   _id,
+  _type,
   richText,
   seo {
     title,
@@ -323,8 +331,9 @@ export const fetchContactQuery = defineQuery(`
 `);
 
 export const fetchFooterQuery = defineQuery(`
-  *[_type == "footer"][0]{
+  *[_id == "footer" || _id == "drafts.footer"][0]{
     _id,
+    _type,
     name,
     rights,
     timezone,
