@@ -6,14 +6,19 @@ import { FetchFooterQueryResult } from '../../../sanity.types';
 import { sanityFetch } from '@/sanity/lib/live';
 import RichText from '../RichText/RichText';
 import BlurUp from './BlurUp';
+import { dataAttr } from '@/sanity/lib/utils';
 
 const Footer = async () => {
   const { data: footer }: { data: FetchFooterQueryResult } = await sanityFetch({
     query: fetchFooterQuery,
   });
 
+  const footerAttr = footer?._id
+    ? dataAttr({ id: footer._id, type: 'footer', path: 'name' }).toString()
+    : undefined;
+
   return (
-    <footer id="footer-height" className="relative w-full z-200">
+    <footer id="footer-height" className="relative w-full z-200" data-sanity={footerAttr}>
       <div className="flex flex-col items-center pt-[21px] pb-[18px] lg:flex-row lg:px-2 lg:py-3 lg:justify-between relative lg:w-full lg:grid lg:grid-cols-24 lg:items-end lg:sticky lg:bottom-0 overflow-hidden z-50">
         <div className="hidden lg:flex lg:pt-0 z-10 lg:col-span-4">
           {footer?.lefttext && <RichText content={footer?.lefttext} />}

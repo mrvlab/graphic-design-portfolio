@@ -5,6 +5,7 @@ import Carousel from '../Carousel/Carousel';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import Link from 'next/link';
 import RelatedProductsContent from './RelatedProductsContent';
+import { dataAttr } from '@/sanity/lib/utils';
 
 const RelatedProducts = ({
   project,
@@ -36,6 +37,11 @@ const RelatedProducts = ({
               3: 'lg:col-start-18',
             };
             const commonClasses = `lg:grid lg:grid-cols-2 lg:gap-x-4 lg:col-span-4 relative ${colStartClasses[index as keyof typeof colStartClasses]}`;
+            const sanityAttr = dataAttr({
+              id: project._id,
+              type: 'projects',
+              path: 'title',
+            }).toString();
 
             return project.slug && !project.comingSoon ? (
               <Link
@@ -44,6 +50,7 @@ const RelatedProducts = ({
                 className={`${commonClasses} group`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
+                data-sanity={sanityAttr}
               >
                 <RelatedProductsContent
                   project={project}
@@ -58,6 +65,7 @@ const RelatedProducts = ({
                 className={`${commonClasses} group`}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
+                data-sanity={sanityAttr}
               >
                 <RelatedProductsContent
                   project={project}
