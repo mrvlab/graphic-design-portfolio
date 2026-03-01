@@ -9,6 +9,7 @@ import FirstLayout from '../ProjectLayouts/FirstLayout/FirstLayout';
 import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
 import CustomCursor from '../CustomCursor/CustomCursor';
+import { dataAttr } from '@/sanity/lib/utils';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -53,11 +54,15 @@ export default async function Page({
     );
   }
   const layout = project.layout;
+  const projectAttr = project._id
+    ? dataAttr({ id: project._id, type: 'projects', path: 'title' }).toString()
+    : undefined;
 
   return (
     <div
       className='flex flex-col h-full relative cursor-none'
       id='project-page'
+      data-sanity={projectAttr}
     >
       <CustomCursor />
       {(() => {

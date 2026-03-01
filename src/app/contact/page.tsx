@@ -8,6 +8,7 @@ import {
 } from '../../../sanity.types';
 import ContactContent from './ContactContent';
 import { ContactHomeGrid } from './ContactHomeGrid';
+import { dataAttr } from '@/sanity/lib/utils';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -41,6 +42,10 @@ const page = async () => {
       </div>
     );
   }
+  const contactAttr = contact._id
+    ? dataAttr({ id: contact._id, type: 'contactPage', path: 'richText' }).toString()
+    : undefined;
+
   return (
     <>
       <ContactHomeGrid projects={projects} />
@@ -49,7 +54,10 @@ const page = async () => {
       <div className="fixed inset-0 top-[var(--nav-total-mobile)] z-50 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 lg:top-0 pointer-events-none" />
 
       {/* Contact content */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center z-100 pointer-events-none">
+      <div
+        className="absolute inset-0 flex flex-col justify-center items-center z-100 pointer-events-none"
+        data-sanity={contactAttr}
+      >
         <ContactContent contact={contact} />
       </div>
     </>

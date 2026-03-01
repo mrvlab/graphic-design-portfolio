@@ -4,6 +4,7 @@ import { generateSeoMetadata } from '@/utils/generateMetadata';
 import { FetchAboutQueryResult } from '../../../sanity.types';
 import MobileLayout from './MobileLayout';
 import DesktopLayout from './DesktopLayout';
+import { dataAttr } from '@/sanity/lib/utils';
 
 export async function generateMetadata() {
   const { data: page } = await sanityFetch({
@@ -29,8 +30,15 @@ const page = async () => {
     );
   }
 
+  const aboutAttr = about._id
+    ? dataAttr({ id: about._id, type: 'aboutPage', path: 'bodyTextSections' }).toString()
+    : undefined;
+
   return (
-    <div className='flex flex-col pt-[100px] px-2 pb-[100px] lg:gap-0 lg:pb-0 lg:pt-[68px] lg:h-full'>
+    <div
+      className='flex flex-col pt-[100px] px-2 pb-[100px] lg:gap-0 lg:pb-0 lg:pt-[68px] lg:h-full'
+      data-sanity={aboutAttr}
+    >
       <MobileLayout about={about} />
       <DesktopLayout about={about} />
     </div>

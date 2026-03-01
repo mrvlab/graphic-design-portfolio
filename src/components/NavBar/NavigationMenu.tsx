@@ -9,6 +9,7 @@ import {
   NavigationQueryResult,
 } from '../../../sanity.types';
 import BlurDown from './BlurDown';
+import { dataAttr } from '@/sanity/lib/utils';
 
 type Props = {
   hideFirstSection?: boolean;
@@ -44,6 +45,10 @@ const NavigationMenu = async ({
 
   const visibilityClasses = getVisibilityClasses();
 
+  const headerAttr = header?._id
+    ? dataAttr({ id: header._id, type: 'header', path: 'name' }).toString()
+    : undefined;
+
   return (
     <>
       {/* LEFT SECTION */}
@@ -63,6 +68,7 @@ const NavigationMenu = async ({
           id="mobile-nav-home"
           className={`${visibilityClasses} flex flex-col items-center relative w-full z-200 py-4 lg:py-0 lg:col-span-16`}
           aria-label={`${header?.name} - ${header?.workTitle}`}
+          data-sanity={headerAttr}
         >
           <h1>{header?.name}</h1>
           <p>{header?.workTitle}</p>

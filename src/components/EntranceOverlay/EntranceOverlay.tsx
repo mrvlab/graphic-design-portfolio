@@ -34,14 +34,21 @@
 import { useState, useEffect, useCallback } from 'react';
 import { entranceOverlay } from '@/app/project/utils/entranceOverlayConstants';
 import Media from '@/components/Media/Media';
+import { dataAttr } from '@/sanity/lib/utils';
 import type { FetchHomePageQueryResult } from '../../../sanity.types';
 
 export function EntranceOverlay({
   enterSiteText,
   enterSiteLogo,
+  documentId,
+  documentType,
+  isDraftMode = false,
 }: {
   enterSiteText?: string;
   enterSiteLogo?: NonNullable<FetchHomePageQueryResult>['enterSiteLogo'];
+  documentId?: string;
+  documentType?: string;
+  isDraftMode?: boolean;
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimatingIn, setIsAnimatingIn] = useState(false);
@@ -138,10 +145,17 @@ export function EntranceOverlay({
     return null;
   }
 
+  const sanityAttributes = documentId && documentType
+    ? {
+        logo: dataAttr({ id: documentId, type: documentType, path: 'enterSiteLogo' }),
+        text: dataAttr({ id: documentId, type: documentType, path: 'enterSiteText' }),
+      }
+    : null;
+
   return (
     <div
       onClick={handleEnter}
-      className={`fixed inset-0 top-[var(--nav-total-mobile)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:cursor-none lg:top-0 ${
+      className={`fixed inset-0 top-[var(--nav-total-mobile)] z-100 bg-white/75 backdrop-blur-[20px] supports-[backdrop-filter]:bg-white/20 pointer-events-auto lg:top-0 ${isDraftMode ? 'cursor-default' : 'lg:cursor-none'} ${
         isAnimatingOut
           ? `opacity-0 !pointer-events-none ${isMobile ? '' : 'transition-opacity duration-700 ease-in-out'}`
           : isAnimatingIn
@@ -158,6 +172,7 @@ export function EntranceOverlay({
             <div
               id="entrance-logo"
               className="h-fit w-fit max-w-[80%] lg:max-w-[60%]"
+              data-sanity={sanityAttributes?.logo.toString()}
             >
               <Media
                 id={
@@ -180,7 +195,10 @@ export function EntranceOverlay({
           )}
 
           {/* Enter button - visible on mobile only */}
-          <div className="flex flex-col justify-center items-center z-10 lg:hidden">
+          <div
+            className="flex flex-col justify-center items-center z-10 lg:hidden"
+            data-sanity={sanityAttributes?.text.toString()}
+          >
             <button
               onClick={handleEnter}
               className="hover:opacity-70 transition-opacity cursor-pointer focus:outline-none"

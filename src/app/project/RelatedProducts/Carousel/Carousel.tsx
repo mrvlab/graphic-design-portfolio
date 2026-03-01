@@ -11,6 +11,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { SingleProjectQueryResult } from '../../../../../sanity.types';
 import Link from 'next/link';
 import ProjectCarouselContent from './ProjectCarouselContent';
+import { dataAttr } from '@/sanity/lib/utils';
 
 type RelatedSection = Extract<
   NonNullable<NonNullable<SingleProjectQueryResult>['sectionList']>[number],
@@ -121,12 +122,18 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
             const textClass =
               activeIndex === index ? 'opacity-100' : 'opacity-0';
             const gridStartClass = `lg:col-start-${6 + index * 4}`;
+            const sanityAttr = dataAttr({
+              id: project._id,
+              type: 'projects',
+              path: 'title',
+            }).toString();
 
             return project.slug && !project.comingSoon ? (
               <Link
                 href={project.slug ? `/project/${project.slug}` : '/'}
                 className={`embla__slide ${gridStartClass} lg:col-span-2`}
                 key={project._id}
+                data-sanity={sanityAttr}
               >
                 <ProjectCarouselContent
                   project={project}
@@ -138,6 +145,7 @@ const Carousel: React.FC<ICarousel> = ({ relatedProducts }) => {
               <div
                 key={project._id}
                 className={`embla__slide ${gridStartClass} lg:col-span-2`}
+                data-sanity={sanityAttr}
               >
                 <ProjectCarouselContent
                   project={project}

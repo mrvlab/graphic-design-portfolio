@@ -46,6 +46,12 @@ const HomeGridCursor = ({ enterSiteText }: IHomeGridCursor) => {
         body * {
           cursor: none !important;
         }
+        button,
+        a,
+        [role="status"],
+        [role="status"] * {
+          cursor: pointer !important;
+        }
       `}</style>
 
       <div
