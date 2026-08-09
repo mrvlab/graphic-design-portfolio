@@ -3,14 +3,10 @@ import type { StructureBuilder, StructureResolver } from 'sanity/structure';
 // Schema imports
 import * as pages from './schemaTypes/pages';
 import * as documents from './schemaTypes/documents';
-import * as singelton from './schemaTypes/singelton';
+import { singletons } from './schemaTypes/singelton';
 
 const pageSchemas = Object.values(pages);
 const documentSchemas = Object.values(documents);
-
-// Object.values on a module namespace is alphabetical, so the singleton order
-// is listed explicitly instead.
-const singletonSchemas = [singelton.header, singelton.footer, singelton.settings];
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
@@ -54,7 +50,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.divider(),
 
       // Global singletons
-      ...singletonSchemas.map((schema) =>
+      ...singletons.map((schema) =>
         S.listItem()
           .title(schema.title || schema.name)
           .child(S.document().schemaType(schema.name).documentId(schema.name))
