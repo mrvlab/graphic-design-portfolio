@@ -68,30 +68,6 @@ export type SanityImageHotspot = {
   width?: number;
 };
 
-export type Header = {
-  _id: string;
-  _type: "header";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  lefttext?: string;
-  name?: string;
-  workTitle?: string;
-  projectCloseText?: string;
-  navigationItems?: Array<{
-    name?: string;
-    slug?: Slug;
-    _type: "navigationItem";
-    _key: string;
-  }>;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
-};
-
 export type Footer = {
   _id: string;
   _type: "footer";
@@ -120,6 +96,30 @@ export type Footer = {
   rights?: string;
   timezone?: "Africa/Abidjan" | "Africa/Accra" | "Africa/Addis_Ababa" | "Australia/Adelaide" | "Africa/Algiers" | "Europe/Amsterdam" | "America/Anchorage" | "Europe/Athens" | "Pacific/Auckland" | "Asia/Bangkok" | "Europe/Berlin" | "America/Bogota" | "Australia/Brisbane" | "Europe/Brussels" | "Europe/Bucharest" | "America/Argentina/Buenos_Aires" | "Africa/Cairo" | "America/Cancun" | "America/Caracas" | "Africa/Casablanca" | "America/Chicago" | "Europe/Copenhagen" | "America/Denver" | "Asia/Dhaka" | "Asia/Dubai" | "Europe/Dublin" | "America/Guatemala" | "America/Havana" | "Europe/Helsinki" | "Asia/Hong_Kong" | "Pacific/Honolulu" | "Europe/Istanbul" | "Asia/Jakarta" | "Asia/Jerusalem" | "Africa/Johannesburg" | "Asia/Karachi" | "Asia/Kathmandu" | "America/Jamaica" | "Asia/Kuala_Lumpur" | "Asia/Kuwait" | "Europe/Kiev" | "Africa/Lagos" | "America/Lima" | "Europe/Lisbon" | "Europe/London" | "America/Los_Angeles" | "Europe/Madrid" | "Asia/Manila" | "Australia/Melbourne" | "America/Mexico_City" | "Europe/Moscow" | "Asia/Kolkata" | "Africa/Nairobi" | "America/New_York" | "America/Panama" | "Europe/Paris" | "Australia/Perth" | "America/Phoenix" | "Europe/Prague" | "Asia/Riyadh" | "Europe/Rome" | "America/Santiago" | "America/Sao_Paulo" | "Asia/Seoul" | "Asia/Shanghai" | "Asia/Singapore" | "Europe/Stockholm" | "Pacific/Fiji" | "Australia/Sydney" | "Asia/Taipei" | "Asia/Tehran" | "Asia/Tokyo" | "America/Toronto" | "Africa/Tunis" | "America/Vancouver" | "Europe/Vienna" | "Europe/Warsaw" | "America/Whitehorse" | "Europe/Zurich";
   location?: string;
+};
+
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: string;
+  name?: string;
+  workTitle?: string;
+  projectCloseText?: string;
+  navigationItems?: Array<{
+    name?: string;
+    slug?: Slug;
+    _type: "navigationItem";
+    _key: string;
+  }>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
 };
 
 export type MediaType = {
@@ -799,7 +799,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Settings | SanityImageCrop | SanityImageHotspot | Header | Slug | Footer | MediaType | MediaGallery | Studies | SoftwareTools | Skills | Publications | Projects | Color | Languages | Experiences | Section | RelatedProjects | BlockContent | ProjectsIndex | HomePage | MuxVideo | ContactPage | AboutPage | RgbaColor | HsvaColor | HslaColor | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Settings | SanityImageCrop | SanityImageHotspot | Footer | Header | Slug | MediaType | MediaGallery | Studies | SoftwareTools | Skills | Publications | Projects | Color | Languages | Experiences | Section | RelatedProjects | BlockContent | ProjectsIndex | HomePage | MuxVideo | ContactPage | AboutPage | RgbaColor | HsvaColor | HslaColor | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: fetchSeo
