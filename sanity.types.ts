@@ -13,61 +13,6 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
-  background?: string;
-  foreground?: string;
-  population?: number;
-  title?: string;
-};
-
-export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
-};
-
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -100,22 +45,27 @@ export type Settings = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
   };
 };
 
-export type Header = {
-  _id: string;
-  _type: "header";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  lefttext?: string;
-  name?: string;
-  workTitle?: string;
-  projectCloseText?: string;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type Footer = {
@@ -144,87 +94,69 @@ export type Footer = {
   }>;
   name?: string;
   rights?: string;
-  timezone?:
-    | "Africa/Abidjan"
-    | "Africa/Accra"
-    | "Africa/Addis_Ababa"
-    | "Australia/Adelaide"
-    | "Africa/Algiers"
-    | "Europe/Amsterdam"
-    | "America/Anchorage"
-    | "Europe/Athens"
-    | "Pacific/Auckland"
-    | "Asia/Bangkok"
-    | "Europe/Berlin"
-    | "America/Bogota"
-    | "Australia/Brisbane"
-    | "Europe/Brussels"
-    | "Europe/Bucharest"
-    | "America/Argentina/Buenos_Aires"
-    | "Africa/Cairo"
-    | "America/Cancun"
-    | "America/Caracas"
-    | "Africa/Casablanca"
-    | "America/Chicago"
-    | "Europe/Copenhagen"
-    | "America/Denver"
-    | "Asia/Dhaka"
-    | "Asia/Dubai"
-    | "Europe/Dublin"
-    | "America/Guatemala"
-    | "America/Havana"
-    | "Europe/Helsinki"
-    | "Asia/Hong_Kong"
-    | "Pacific/Honolulu"
-    | "Europe/Istanbul"
-    | "Asia/Jakarta"
-    | "Asia/Jerusalem"
-    | "Africa/Johannesburg"
-    | "Asia/Karachi"
-    | "Asia/Kathmandu"
-    | "America/Jamaica"
-    | "Asia/Kuala_Lumpur"
-    | "Asia/Kuwait"
-    | "Europe/Kiev"
-    | "Africa/Lagos"
-    | "America/Lima"
-    | "Europe/Lisbon"
-    | "Europe/London"
-    | "America/Los_Angeles"
-    | "Europe/Madrid"
-    | "Asia/Manila"
-    | "Australia/Melbourne"
-    | "America/Mexico_City"
-    | "Europe/Moscow"
-    | "Asia/Kolkata"
-    | "Africa/Nairobi"
-    | "America/New_York"
-    | "America/Panama"
-    | "Europe/Paris"
-    | "Australia/Perth"
-    | "America/Phoenix"
-    | "Europe/Prague"
-    | "Asia/Riyadh"
-    | "Europe/Rome"
-    | "America/Santiago"
-    | "America/Sao_Paulo"
-    | "Asia/Seoul"
-    | "Asia/Shanghai"
-    | "Asia/Singapore"
-    | "Europe/Stockholm"
-    | "Pacific/Fiji"
-    | "Australia/Sydney"
-    | "Asia/Taipei"
-    | "Asia/Tehran"
-    | "Asia/Tokyo"
-    | "America/Toronto"
-    | "Africa/Tunis"
-    | "America/Vancouver"
-    | "Europe/Vienna"
-    | "Europe/Warsaw"
-    | "America/Whitehorse"
-    | "Europe/Zurich";
+  timezone?: "Africa/Abidjan" | "Africa/Accra" | "Africa/Addis_Ababa" | "Australia/Adelaide" | "Africa/Algiers" | "Europe/Amsterdam" | "America/Anchorage" | "Europe/Athens" | "Pacific/Auckland" | "Asia/Bangkok" | "Europe/Berlin" | "America/Bogota" | "Australia/Brisbane" | "Europe/Brussels" | "Europe/Bucharest" | "America/Argentina/Buenos_Aires" | "Africa/Cairo" | "America/Cancun" | "America/Caracas" | "Africa/Casablanca" | "America/Chicago" | "Europe/Copenhagen" | "America/Denver" | "Asia/Dhaka" | "Asia/Dubai" | "Europe/Dublin" | "America/Guatemala" | "America/Havana" | "Europe/Helsinki" | "Asia/Hong_Kong" | "Pacific/Honolulu" | "Europe/Istanbul" | "Asia/Jakarta" | "Asia/Jerusalem" | "Africa/Johannesburg" | "Asia/Karachi" | "Asia/Kathmandu" | "America/Jamaica" | "Asia/Kuala_Lumpur" | "Asia/Kuwait" | "Europe/Kiev" | "Africa/Lagos" | "America/Lima" | "Europe/Lisbon" | "Europe/London" | "America/Los_Angeles" | "Europe/Madrid" | "Asia/Manila" | "Australia/Melbourne" | "America/Mexico_City" | "Europe/Moscow" | "Asia/Kolkata" | "Africa/Nairobi" | "America/New_York" | "America/Panama" | "Europe/Paris" | "Australia/Perth" | "America/Phoenix" | "Europe/Prague" | "Asia/Riyadh" | "Europe/Rome" | "America/Santiago" | "America/Sao_Paulo" | "Asia/Seoul" | "Asia/Shanghai" | "Asia/Singapore" | "Europe/Stockholm" | "Pacific/Fiji" | "Australia/Sydney" | "Asia/Taipei" | "Asia/Tehran" | "Asia/Tokyo" | "America/Toronto" | "Africa/Tunis" | "America/Vancouver" | "Europe/Vienna" | "Europe/Warsaw" | "America/Whitehorse" | "Europe/Zurich";
   location?: string;
+};
+
+export type Header = {
+  _id: string;
+  _type: "header";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  lefttext?: string;
+  name?: string;
+  workTitle?: string;
+  projectCloseText?: string;
+  navigationItems?: Array<{
+    name?: string;
+    slug?: Slug;
+    _type: "navigationItem";
+    _key: string;
+  }>;
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type MediaType = {
+  _type: "mediaType";
+  mediaType?: "image" | "video";
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  video?: MuxVideo;
+};
+
+export type MediaGallery = {
+  _type: "mediaGallery";
+  mediaItems?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
 };
 
 export type Studies = {
@@ -317,61 +249,11 @@ export type Projects = {
   mediaBackgroundColor?: Color;
   mediaGallery?: MediaGallery;
   layout?: "firstLayout" | "secondLayout" | "thirdLayout";
-  sectionList?: Array<
-    | {
-        richText?: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "normal";
-          listItem?: "bullet" | "number";
-          markDefs?: Array<{
-            href?: string;
-            _type: "link";
-            _key: string;
-          }>;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }>;
-        richTextBottom?: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "normal";
-          listItem?: "bullet" | "number";
-          markDefs?: Array<{
-            href?: string;
-            _type: "link";
-            _key: string;
-          }>;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }>;
-        mediaGallery?: MediaGallery;
-        sectionBgColor?: string;
-        _type: "section";
-        _key: string;
-      }
-    | {
-        projects?: Array<{
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          _key: string;
-          [internalGroqTypeReferenceTo]?: "projects";
-        }>;
-        _type: "relatedProjects";
-        _key: string;
-      }
-  >;
+  sectionList?: Array<{
+    _key: string;
+  } & Section | {
+    _key: string;
+  } & RelatedProjects>;
   seo?: {
     title?: string;
     description?: string;
@@ -382,6 +264,7 @@ export type Projects = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -389,20 +272,13 @@ export type Projects = {
   };
 };
 
-export type Navigation = {
-  _id: string;
-  _type: "navigation";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-};
-
-export type Slug = {
-  _type: "slug";
-  current?: string;
-  source?: string;
+export type Color = {
+  _type: "color";
+  hex?: string;
+  alpha?: number;
+  hsl?: HslaColor;
+  hsv?: HsvaColor;
+  rgb?: RgbaColor;
 };
 
 export type Languages = {
@@ -429,11 +305,7 @@ export type Experiences = {
 };
 
 export type Section = {
-  _id: string;
   _type: "section";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
   richText?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -474,29 +346,8 @@ export type Section = {
   sectionBgColor?: string;
 };
 
-export type MediaGallery = {
-  _type: "mediaGallery";
-  mediaItems?: Array<{
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
-};
-
 export type RelatedProjects = {
-  _id: string;
   _type: "relatedProjects";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
   projects?: Array<{
     _ref: string;
     _type: "reference";
@@ -506,39 +357,37 @@ export type RelatedProjects = {
   }>;
 };
 
-export type BlockContent = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }
->;
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "image";
+  _key: string;
+}>;
 
 export type ProjectsIndex = {
   _id: string;
@@ -563,6 +412,7 @@ export type ProjectsIndex = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -595,6 +445,7 @@ export type HomePage = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -602,22 +453,14 @@ export type HomePage = {
   };
 };
 
-export type MediaType = {
-  _type: "mediaType";
-  mediaType?: "image" | "video";
-  image?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
+export type MuxVideo = {
+  _type: "mux.video";
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "mux.videoAsset";
   };
-  video?: MuxVideo;
 };
 
 export type ContactPage = {
@@ -654,6 +497,7 @@ export type ContactPage = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
@@ -702,6 +546,7 @@ export type AboutPage = {
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
+    media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
@@ -753,77 +598,12 @@ export type AboutPage = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
+      media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
     };
   };
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
-};
-
-export type SanityImageAsset = {
-  _id: string;
-  _type: "sanity.imageAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  metadata?: SanityImageMetadata;
-  source?: SanityAssetSourceData;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
-export type Color = {
-  _type: "color";
-  hex?: string;
-  alpha?: number;
-  hsl?: HslaColor;
-  hsv?: HsvaColor;
-  rgb?: RgbaColor;
 };
 
 export type RgbaColor = {
@@ -848,16 +628,6 @@ export type HslaColor = {
   s?: number;
   l?: number;
   a?: number;
-};
-
-export type MuxVideo = {
-  _type: "mux.video";
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "mux.videoAsset";
-  };
 };
 
 export type MuxVideoAsset = {
@@ -890,27 +660,21 @@ export type MuxAssetData = {
   max_stored_frame_rate?: number;
   mp4_support?: string;
   max_resolution_tier?: string;
-  tracks?: Array<
-    {
-      _key: string;
-    } & MuxTrack
-  >;
-  playback_ids?: Array<
-    {
-      _key: string;
-    } & MuxPlaybackId
-  >;
+  tracks?: Array<{
+    _key: string;
+  } & MuxTrack>;
+  playback_ids?: Array<{
+    _key: string;
+  } & MuxPlaybackId>;
   static_renditions?: MuxStaticRenditions;
 };
 
 export type MuxStaticRenditions = {
   _type: "mux.staticRenditions";
   status?: string;
-  files?: Array<
-    {
-      _key: string;
-    } & MuxStaticRenditionFile
-  >;
+  files?: Array<{
+    _key: string;
+  } & MuxStaticRenditionFile>;
 };
 
 export type MuxStaticRenditionFile = {
@@ -939,55 +703,107 @@ export type MuxTrack = {
   max_height?: number;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Settings
-  | Header
-  | Footer
-  | Studies
-  | SoftwareTools
-  | Skills
-  | Publications
-  | Projects
-  | Navigation
-  | Slug
-  | Languages
-  | Experiences
-  | Section
-  | MediaGallery
-  | RelatedProjects
-  | BlockContent
-  | ProjectsIndex
-  | HomePage
-  | MediaType
-  | ContactPage
-  | AboutPage
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | Color
-  | RgbaColor
-  | HsvaColor
-  | HslaColor
-  | MuxVideo
-  | MuxVideoAsset
-  | MuxAssetData
-  | MuxStaticRenditions
-  | MuxStaticRenditionFile
-  | MuxPlaybackId
-  | MuxTrack;
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
 
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
+};
+
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type SanityImageAsset = {
+  _id: string;
+  _type: "sanity.imageAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
+};
+
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
+export type AllSanitySchemaTypes = Settings | SanityImageCrop | SanityImageHotspot | Footer | Header | Slug | MediaType | MediaGallery | Studies | SoftwareTools | Skills | Publications | Projects | Color | Languages | Experiences | Section | RelatedProjects | BlockContent | ProjectsIndex | HomePage | MuxVideo | ContactPage | AboutPage | RgbaColor | HsvaColor | HslaColor | MuxVideoAsset | MuxAssetData | MuxStaticRenditions | MuxStaticRenditionFile | MuxPlaybackId | MuxTrack | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-
-// Source: src/sanity/lib/queries.ts
+// Source: ./src/sanity/lib/queries.ts
 // Variable: fetchSeo
-// Query: *[_type == "homePage"][0]{  seo {  title,  description,  image {    _type,    asset  }}}
+// Query: *[_type == "homePage" && (_id == "homePage" || _id == "drafts.homePage")][0]{  seo {  title,  description,  image {    _type,    asset  }}}
 export type FetchSeoResult = {
   seo: {
     title: string | null;
@@ -1003,8 +819,6 @@ export type FetchSeoResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchSeoTitle
 // Query: *[_type == "projects" && slug.current == $slug][0]{    title,    seo {      title,      description,      image {        _type,        asset      }    }  }
 export type FetchSeoTitleResult = {
@@ -1023,10 +837,8 @@ export type FetchSeoTitleResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{  _id,  title,  description,  title,  description,  image {    _type,    asset  }}
+// Query: *[_type == "settings" && (_id == "settings" || _id == "drafts.settings")][0]{  _id,  title,  description,  title,  description,  image {    _type,    asset  }}
 export type SettingsQueryResult = {
   _id: string;
   title: string | null;
@@ -1058,20 +870,8 @@ export type SettingsQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
-// Variable: navigationQuery
-// Query: *[_type == "navigation"] | order(_updatedAt desc)[0...12]{    _id,    name,    "slug": slug.current,    _updatedAt  }
-export type NavigationQueryResult = Array<{
-  _id: string;
-  name: string | null;
-  slug: string | null;
-  _updatedAt: string;
-}>;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchHeaderQuery
-// Query: *[_type == "header"][0]{    _id,    _type,    lefttext,    name,    workTitle,    projectCloseText  }
+// Query: *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]{    _id,    _type,    lefttext,    name,    workTitle,    projectCloseText,    // Menu order is the array order, which editors drag to rearrange. It drives    // the rendered menu, the breadcrumb labels and the site structure sent to    // search engines.    navigationItems[]{      _key,      name,      "slug": slug.current    }  }
 export type FetchHeaderQueryResult = {
   _id: string;
   _type: "header";
@@ -1079,11 +879,14 @@ export type FetchHeaderQueryResult = {
   name: string | null;
   workTitle: string | null;
   projectCloseText: string | null;
+  navigationItems: Array<{
+    _key: string;
+    name: string | null;
+    slug: string | null;
+  }> | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchHomePageQuery
-// Query: *[_type == "homePage"][0]{    _id,    _type,    enterSiteText,    enterSiteLogo {      mediaType,      image {        alt,        asset-> {          _id,          url,          metadata        }      },      video {        asset-> {          _id,          playbackId,          assetId,          filename,          url        }      }    },    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        _id,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    comingSoon    },    seo {    title,    description,    image {      _type,      asset    }  }  }
+// Query: *[_type == "homePage" && (_id == "homePage" || _id == "drafts.homePage")][0]{    _id,    _type,    enterSiteText,    enterSiteLogo {      mediaType,      image {        alt,        asset-> {          _id,          url,          metadata        }      },      video {        asset-> {          _id,          playbackId,          assetId,          filename,          url        }      }    },    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        _id,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    comingSoon    },    seo {    title,    description,    image {      _type,      asset    }  }  }
 export type FetchHomePageQueryResult = {
   _id: string;
   _type: "homePage";
@@ -1165,10 +968,8 @@ export type FetchHomePageQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchProjectsIndexQuery
-// Query: *[_type == "projectsIndex"][0]{    _id,    _type,    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        _id,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    comingSoon,    seo {      title,      description,      image {        _type,        asset      }    }    },    seo {      title,      description,      image {        _type,        asset      }    }  }
+// Query: *[_type == "projectsIndex" && (_id == "projectsIndex" || _id == "drafts.projectsIndex")][0]{    _id,    _type,    projects[]->{    _id,    name,    "slug": slug.current,    title,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        _id,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    comingSoon,    seo {      title,      description,      image {        _type,        asset      }    }    },    seo {      title,      description,      image {        _type,        asset      }    }  }
 export type FetchProjectsIndexQueryResult = {
   _id: string;
   _type: "projectsIndex";
@@ -1242,8 +1043,6 @@ export type FetchProjectsIndexQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: singleProjectQuery
 // Query: *[_type == "projects" && slug.current == $slug][0]{    _id,    _type,    title,    comingSoon,    "slug": slug.current,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    layout,    sectionList[] {      _type,      _key,      richText,      richTextBottom,      sectionBgColor,      mediaGallery {      _type,      mediaItems[] {        _key,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }        }      },      projects[]->{        _id,        title,        "slug": slug.current,        comingSoon,        year,        mediaBackgroundColor,        mediaGallery {      _type,      mediaItems[] {        _key,        alt,        asset-> {            _id,            _ref,            playbackId,            assetId,            filename,            url          }        }      },      }    },    seo {      title,      description,      image {        _type,        asset      }    }  }
 export type SingleProjectQueryResult = {
@@ -1288,96 +1087,93 @@ export type SingleProjectQueryResult = {
     }> | null;
   } | null;
   layout: "firstLayout" | "secondLayout" | "thirdLayout" | null;
-  sectionList: Array<
-    | {
-        _type: "relatedProjects";
-        _key: string;
-        richText: null;
-        richTextBottom: null;
-        sectionBgColor: null;
-        mediaGallery: null;
-        projects: Array<{
-          _id: string;
-          title: string | null;
-          slug: string | null;
-          comingSoon: boolean | null;
-          year: string | null;
-          mediaBackgroundColor: Color | null;
-          mediaGallery: {
-            _type: "mediaGallery";
-            mediaItems: Array<{
-              _key: string;
-              alt: string | null;
-              asset: {
-                _id: string;
-                _ref: null;
-                playbackId: null;
-                assetId: string | null;
-                filename: null;
-                url: string | null;
-              } | null;
-            }> | null;
+  sectionList: Array<{
+    _type: "relatedProjects";
+    _key: string;
+    richText: null;
+    richTextBottom: null;
+    sectionBgColor: null;
+    mediaGallery: null;
+    projects: Array<{
+      _id: string;
+      title: string | null;
+      slug: string | null;
+      comingSoon: boolean | null;
+      year: string | null;
+      mediaBackgroundColor: Color | null;
+      mediaGallery: {
+        _type: "mediaGallery";
+        mediaItems: Array<{
+          _key: string;
+          alt: string | null;
+          asset: {
+            _id: string;
+            _ref: null;
+            playbackId: null;
+            assetId: string | null;
+            filename: null;
+            url: string | null;
           } | null;
         }> | null;
-      }
-    | {
-        _type: "section";
+      } | null;
+    }> | null;
+  } | {
+    _type: "section";
+    _key: string;
+    richText: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
         _key: string;
-        richText: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "normal";
-          listItem?: "bullet" | "number";
-          markDefs?: Array<{
-            href?: string;
-            _type: "link";
-            _key: string;
-          }>;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        richTextBottom: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "normal";
-          listItem?: "bullet" | "number";
-          markDefs?: Array<{
-            href?: string;
-            _type: "link";
-            _key: string;
-          }>;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        sectionBgColor: string | null;
-        mediaGallery: {
-          _type: "mediaGallery";
-          mediaItems: Array<{
-            _key: string;
-            alt: string | null;
-            asset: {
-              _id: string;
-              _ref: null;
-              playbackId: null;
-              assetId: string | null;
-              filename: null;
-              url: string | null;
-            } | null;
-          }> | null;
+      }>;
+      style?: "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    richTextBottom: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    sectionBgColor: string | null;
+    mediaGallery: {
+      _type: "mediaGallery";
+      mediaItems: Array<{
+        _key: string;
+        alt: string | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          playbackId: null;
+          assetId: string | null;
+          filename: null;
+          url: string | null;
         } | null;
-        projects: null;
-      }
-  > | null;
+      }> | null;
+    } | null;
+    projects: null;
+  }> | null;
   seo: {
     title: string | null;
     description: string | null;
@@ -1392,10 +1188,8 @@ export type SingleProjectQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchAboutQuery
-// Query: *[_type == "aboutPage"][0]{    _id,    _type,    languages[]->{      _id,      _type,      language,      level    },    experiences[]->{      _id,      _type,      title,      location,      role,      startDate,      endDate    },    studies[]->{      _id,      _type,      degree,      institution,      startDate,      endDate    },    publications[]->{      _id,      _type,      title,      href    },    portrait {      _type,      asset    },    bodyTextSections[]{      _key,      title,      content    },    skills[]->{      _id,      _type,      title    },    softwareTools[]->{      _id,      _type,      richText    },    seo {      title,      description,      image {        _type,        asset      }    }  }
+// Query: *[_type == "aboutPage" && (_id == "aboutPage" || _id == "drafts.aboutPage")][0]{    _id,    _type,    languages[]->{      _id,      _type,      language,      level    },    experiences[]->{      _id,      _type,      title,      location,      role,      startDate,      endDate    },    studies[]->{      _id,      _type,      degree,      institution,      startDate,      endDate    },    publications[]->{      _id,      _type,      title,      href    },    portrait {      _type,      asset    },    bodyTextSections[]{      _key,      title,      content    },    skills[]->{      _id,      _type,      title    },    softwareTools[]->{      _id,      _type,      richText    },    seo {      title,      description,      image {        _type,        asset      }    }  }
 export type FetchAboutQueryResult = {
   _id: string;
   _type: "aboutPage";
@@ -1500,10 +1294,8 @@ export type FetchAboutQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchContactQuery
-// Query: *[_type == "contactPage"][0]{  _id,  _type,  richText,  seo {    title,    description,    image {      _type,      asset    }  }}
+// Query: *[_type == "contactPage" && (_id == "contactPage" || _id == "drafts.contactPage")][0]{  _id,  _type,  richText,  seo {    title,    description,    image {      _type,      asset    }  }}
 export type FetchContactQueryResult = {
   _id: string;
   _type: "contactPage";
@@ -1539,96 +1331,14 @@ export type FetchContactQueryResult = {
     } | null;
   } | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: fetchFooterQuery
-// Query: *[_type == "footer"][0]{    _id,    _type,    name,    rights,    timezone,    location,    lefttext  }
+// Query: *[_type == "footer" && (_id == "footer" || _id == "drafts.footer")][0]{    _id,    _type,    name,    rights,    timezone,    location,    lefttext  }
 export type FetchFooterQueryResult = {
   _id: string;
   _type: "footer";
   name: string | null;
   rights: string | null;
-  timezone:
-    | "Africa/Abidjan"
-    | "Africa/Accra"
-    | "Africa/Addis_Ababa"
-    | "Africa/Algiers"
-    | "Africa/Cairo"
-    | "Africa/Casablanca"
-    | "Africa/Johannesburg"
-    | "Africa/Lagos"
-    | "Africa/Nairobi"
-    | "Africa/Tunis"
-    | "America/Anchorage"
-    | "America/Argentina/Buenos_Aires"
-    | "America/Bogota"
-    | "America/Cancun"
-    | "America/Caracas"
-    | "America/Chicago"
-    | "America/Denver"
-    | "America/Guatemala"
-    | "America/Havana"
-    | "America/Jamaica"
-    | "America/Lima"
-    | "America/Los_Angeles"
-    | "America/Mexico_City"
-    | "America/New_York"
-    | "America/Panama"
-    | "America/Phoenix"
-    | "America/Santiago"
-    | "America/Sao_Paulo"
-    | "America/Toronto"
-    | "America/Vancouver"
-    | "America/Whitehorse"
-    | "Asia/Bangkok"
-    | "Asia/Dhaka"
-    | "Asia/Dubai"
-    | "Asia/Hong_Kong"
-    | "Asia/Jakarta"
-    | "Asia/Jerusalem"
-    | "Asia/Karachi"
-    | "Asia/Kathmandu"
-    | "Asia/Kolkata"
-    | "Asia/Kuala_Lumpur"
-    | "Asia/Kuwait"
-    | "Asia/Manila"
-    | "Asia/Riyadh"
-    | "Asia/Seoul"
-    | "Asia/Shanghai"
-    | "Asia/Singapore"
-    | "Asia/Taipei"
-    | "Asia/Tehran"
-    | "Asia/Tokyo"
-    | "Australia/Adelaide"
-    | "Australia/Brisbane"
-    | "Australia/Melbourne"
-    | "Australia/Perth"
-    | "Australia/Sydney"
-    | "Europe/Amsterdam"
-    | "Europe/Athens"
-    | "Europe/Berlin"
-    | "Europe/Brussels"
-    | "Europe/Bucharest"
-    | "Europe/Copenhagen"
-    | "Europe/Dublin"
-    | "Europe/Helsinki"
-    | "Europe/Istanbul"
-    | "Europe/Kiev"
-    | "Europe/Lisbon"
-    | "Europe/London"
-    | "Europe/Madrid"
-    | "Europe/Moscow"
-    | "Europe/Paris"
-    | "Europe/Prague"
-    | "Europe/Rome"
-    | "Europe/Stockholm"
-    | "Europe/Vienna"
-    | "Europe/Warsaw"
-    | "Europe/Zurich"
-    | "Pacific/Auckland"
-    | "Pacific/Fiji"
-    | "Pacific/Honolulu"
-    | null;
+  timezone: "Africa/Abidjan" | "Africa/Accra" | "Africa/Addis_Ababa" | "Africa/Algiers" | "Africa/Cairo" | "Africa/Casablanca" | "Africa/Johannesburg" | "Africa/Lagos" | "Africa/Nairobi" | "Africa/Tunis" | "America/Anchorage" | "America/Argentina/Buenos_Aires" | "America/Bogota" | "America/Cancun" | "America/Caracas" | "America/Chicago" | "America/Denver" | "America/Guatemala" | "America/Havana" | "America/Jamaica" | "America/Lima" | "America/Los_Angeles" | "America/Mexico_City" | "America/New_York" | "America/Panama" | "America/Phoenix" | "America/Santiago" | "America/Sao_Paulo" | "America/Toronto" | "America/Vancouver" | "America/Whitehorse" | "Asia/Bangkok" | "Asia/Dhaka" | "Asia/Dubai" | "Asia/Hong_Kong" | "Asia/Jakarta" | "Asia/Jerusalem" | "Asia/Karachi" | "Asia/Kathmandu" | "Asia/Kolkata" | "Asia/Kuala_Lumpur" | "Asia/Kuwait" | "Asia/Manila" | "Asia/Riyadh" | "Asia/Seoul" | "Asia/Shanghai" | "Asia/Singapore" | "Asia/Taipei" | "Asia/Tehran" | "Asia/Tokyo" | "Australia/Adelaide" | "Australia/Brisbane" | "Australia/Melbourne" | "Australia/Perth" | "Australia/Sydney" | "Europe/Amsterdam" | "Europe/Athens" | "Europe/Berlin" | "Europe/Brussels" | "Europe/Bucharest" | "Europe/Copenhagen" | "Europe/Dublin" | "Europe/Helsinki" | "Europe/Istanbul" | "Europe/Kiev" | "Europe/Lisbon" | "Europe/London" | "Europe/Madrid" | "Europe/Moscow" | "Europe/Paris" | "Europe/Prague" | "Europe/Rome" | "Europe/Stockholm" | "Europe/Vienna" | "Europe/Warsaw" | "Europe/Zurich" | "Pacific/Auckland" | "Pacific/Fiji" | "Pacific/Honolulu" | null;
   location: string | null;
   lefttext: Array<{
     children?: Array<{
@@ -1649,8 +1359,6 @@ export type FetchFooterQueryResult = {
     _key: string;
   }> | null;
 } | null;
-
-// Source: src/sanity/lib/queries.ts
 // Variable: projectsQuery
 // Query: *[_type == "projects" && defined(slug.current)][0...100]{    _id,    name,    "slug": slug.current,    title,    year,    richText,    mediaBackgroundColor,    mediaGallery {      _type,      mediaItems[] {        _key,        alt,        asset-> {          _id,          _ref,          playbackId,          assetId,          filename,          url        }      }    },    comingSoon,    seo {      title,      description,      image {        _type,        asset      }    }  }
 export type ProjectsQueryResult = Array<{
@@ -1708,22 +1416,37 @@ export type ProjectsQueryResult = Array<{
     } | null;
   } | null;
 }>;
+// Variable: sitemapQuery
+// Query: {  "pages": *[_id in ["homePage", "projectsIndex", "aboutPage", "contactPage"]]{    _id,    _updatedAt  },  "projects": *[_type == "projects" && defined(slug.current)]{    "slug": slug.current,    _updatedAt  },  "nav": *[_type == "header" && _id == "header"][0].navigationItems[]{    "slug": slug.current  }}
+export type SitemapQueryResult = {
+  pages: Array<{
+    _id: string;
+    _updatedAt: string;
+  }>;
+  projects: Array<{
+    slug: string | null;
+    _updatedAt: string;
+  }>;
+  nav: Array<{
+    slug: string | null;
+  }> | null;
+};
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n*[_type == "homePage"][0]{\n  seo {\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n}\n': FetchSeoResult;
-    '\n  *[_type == "projects" && slug.current == $slug][0]{\n    title,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n': FetchSeoTitleResult;
-    '\n*[_type == "settings"][0]{\n  _id,\n  title,\n  description,\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n': SettingsQueryResult;
-    '\n  *[_type == "navigation"] | order(_updatedAt desc)[0...12]{\n    _id,\n    name,\n    "slug": slug.current,\n    _updatedAt\n  }\n': NavigationQueryResult;
-    '\n  *[_type == "header"][0]{\n    _id,\n    _type,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n': FetchHeaderQueryResult;
-    '\n  *[_type == "homePage"][0]{\n    _id,\n    _type,\n    enterSiteText,\n    enterSiteLogo {\n      mediaType,\n      image {\n        alt,\n        asset-> {\n          _id,\n          url,\n          metadata\n        }\n      },\n      video {\n        asset-> {\n          _id,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    projects[]->{\n    _id,\n    name,\n    "slug": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  }\n': FetchHomePageQueryResult;
-    '\n  *[_type == "projectsIndex"][0]{\n    _id,\n    _type,\n    projects[]->{\n    _id,\n    name,\n    "slug": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n': FetchProjectsIndexQueryResult;
-    '\n  *[_type == "projects" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    comingSoon,\n    "slug": slug.current,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    layout,\n    sectionList[] {\n      _type,\n      _key,\n      richText,\n      richTextBottom,\n      sectionBgColor,\n      mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n        }\n      },\n      projects[]->{\n        _id,\n        title,\n        "slug": slug.current,\n        comingSoon,\n        year,\n        mediaBackgroundColor,\n        mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n            _id,\n            _ref,\n            playbackId,\n            assetId,\n            filename,\n            url\n          }\n        }\n      },\n      }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n': SingleProjectQueryResult;
-    '\n  *[_type == "aboutPage"][0]{\n    _id,\n    _type,\n    languages[]->{\n      _id,\n      _type,\n      language,\n      level\n    },\n    experiences[]->{\n      _id,\n      _type,\n      title,\n      location,\n      role,\n      startDate,\n      endDate\n    },\n    studies[]->{\n      _id,\n      _type,\n      degree,\n      institution,\n      startDate,\n      endDate\n    },\n    publications[]->{\n      _id,\n      _type,\n      title,\n      href\n    },\n    portrait {\n      _type,\n      asset\n    },\n    bodyTextSections[]{\n      _key,\n      title,\n      content\n    },\n    skills[]->{\n      _id,\n      _type,\n      title\n    },\n    softwareTools[]->{\n      _id,\n      _type,\n      richText\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n': FetchAboutQueryResult;
-    '\n  *[_type == "contactPage"][0]{\n  _id,\n  _type,\n  richText,\n  seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n}\n': FetchContactQueryResult;
-    '\n  *[_type == "footer"][0]{\n    _id,\n    _type,\n    name,\n    rights,\n    timezone,\n    location,\n    lefttext\n  }\n': FetchFooterQueryResult;
-    '\n  *[_type == "projects" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    "slug": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n': ProjectsQueryResult;
+    "\n*[_type == \"homePage\" && (_id == \"homePage\" || _id == \"drafts.homePage\")][0]{\n  seo {\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n}\n": FetchSeoResult;
+    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    title,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchSeoTitleResult;
+    "\n*[_type == \"settings\" && (_id == \"settings\" || _id == \"drafts.settings\")][0]{\n  _id,\n  title,\n  description,\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n": SettingsQueryResult;
+    "\n  *[_type == \"header\" && (_id == \"header\" || _id == \"drafts.header\")][0]{\n    _id,\n    _type,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText,\n    // Menu order is the array order, which editors drag to rearrange. It drives\n    // the rendered menu, the breadcrumb labels and the site structure sent to\n    // search engines.\n    navigationItems[]{\n      _key,\n      name,\n      \"slug\": slug.current\n    }\n  }\n": FetchHeaderQueryResult;
+    "\n  *[_type == \"homePage\" && (_id == \"homePage\" || _id == \"drafts.homePage\")][0]{\n    _id,\n    _type,\n    enterSiteText,\n    enterSiteLogo {\n      mediaType,\n      image {\n        alt,\n        asset-> {\n          _id,\n          url,\n          metadata\n        }\n      },\n      video {\n        asset-> {\n          _id,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  }\n": FetchHomePageQueryResult;
+    "\n  *[_type == \"projectsIndex\" && (_id == \"projectsIndex\" || _id == \"drafts.projectsIndex\")][0]{\n    _id,\n    _type,\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchProjectsIndexQueryResult;
+    "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    comingSoon,\n    \"slug\": slug.current,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    layout,\n    sectionList[] {\n      _type,\n      _key,\n      richText,\n      richTextBottom,\n      sectionBgColor,\n      mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n        }\n      },\n      projects[]->{\n        _id,\n        title,\n        \"slug\": slug.current,\n        comingSoon,\n        year,\n        mediaBackgroundColor,\n        mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n            _id,\n            _ref,\n            playbackId,\n            assetId,\n            filename,\n            url\n          }\n        }\n      },\n      }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": SingleProjectQueryResult;
+    "\n  *[_type == \"aboutPage\" && (_id == \"aboutPage\" || _id == \"drafts.aboutPage\")][0]{\n    _id,\n    _type,\n    languages[]->{\n      _id,\n      _type,\n      language,\n      level\n    },\n    experiences[]->{\n      _id,\n      _type,\n      title,\n      location,\n      role,\n      startDate,\n      endDate\n    },\n    studies[]->{\n      _id,\n      _type,\n      degree,\n      institution,\n      startDate,\n      endDate\n    },\n    publications[]->{\n      _id,\n      _type,\n      title,\n      href\n    },\n    portrait {\n      _type,\n      asset\n    },\n    bodyTextSections[]{\n      _key,\n      title,\n      content\n    },\n    skills[]->{\n      _id,\n      _type,\n      title\n    },\n    softwareTools[]->{\n      _id,\n      _type,\n      richText\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchAboutQueryResult;
+    "\n  *[_type == \"contactPage\" && (_id == \"contactPage\" || _id == \"drafts.contactPage\")][0]{\n  _id,\n  _type,\n  richText,\n  seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n}\n": FetchContactQueryResult;
+    "\n  *[_type == \"footer\" && (_id == \"footer\" || _id == \"drafts.footer\")][0]{\n    _id,\n    _type,\n    name,\n    rights,\n    timezone,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
+    "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": ProjectsQueryResult;
+    "{\n  \"pages\": *[_id in [\"homePage\", \"projectsIndex\", \"aboutPage\", \"contactPage\"]]{\n    _id,\n    _updatedAt\n  },\n  \"projects\": *[_type == \"projects\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    _updatedAt\n  },\n  \"nav\": *[_type == \"header\" && _id == \"header\"][0].navigationItems[]{\n    \"slug\": slug.current\n  }\n}": SitemapQueryResult;
   }
 }

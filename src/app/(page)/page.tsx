@@ -12,10 +12,7 @@ export async function generateMetadata() {
     query: fetchHomePageQuery,
   });
 
-  return generateSeoMetadata({
-    slug: 'home',
-    page: page,
-  });
+  return generateSeoMetadata({ page });
 }
 
 const page = async () => {

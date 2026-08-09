@@ -1,7 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
 export const fetchSeo = defineQuery(`
-*[_id == "homePage" || _id == "drafts.homePage"][0]{
+*[_type == "homePage" && (_id == "homePage" || _id == "drafts.homePage")][0]{
   seo {
   title,
   description,
@@ -28,7 +28,7 @@ export const fetchSeoTitle = defineQuery(`
 `);
 
 export const settingsQuery = defineQuery(`
-*[_id == "settings" || _id == "drafts.settings"][0]{
+*[_type == "settings" && (_id == "settings" || _id == "drafts.settings")][0]{
   _id,
   title,
   description,
@@ -41,27 +41,27 @@ export const settingsQuery = defineQuery(`
 }
 `);
 
-export const navigationQuery = defineQuery(`
-  *[_type == "navigation"] | order(_updatedAt desc)[0...12]{
-    _id,
-    name,
-    "slug": slug.current,
-    _updatedAt
-  }
-`);
 
 export const fetchHeaderQuery = defineQuery(`
-  *[_id == "header" || _id == "drafts.header"][0]{
+  *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]{
     _id,
     _type,
     lefttext,
     name,
     workTitle,
-    projectCloseText
+    projectCloseText,
+    // Menu order is the array order, which editors drag to rearrange. It drives
+    // the rendered menu, the breadcrumb labels and the site structure sent to
+    // search engines.
+    navigationItems[]{
+      _key,
+      name,
+      "slug": slug.current
+    }
   }
 `);
 export const fetchHomePageQuery = defineQuery(`
-  *[_id == "homePage" || _id == "drafts.homePage"][0]{
+  *[_type == "homePage" && (_id == "homePage" || _id == "drafts.homePage")][0]{
     _id,
     _type,
     enterSiteText,
@@ -122,7 +122,7 @@ export const fetchHomePageQuery = defineQuery(`
   }
 `);
 export const fetchProjectsIndexQuery = defineQuery(`
-  *[_id == "projectsIndex" || _id == "drafts.projectsIndex"][0]{
+  *[_type == "projectsIndex" && (_id == "projectsIndex" || _id == "drafts.projectsIndex")][0]{
     _id,
     _type,
     projects[]->{
@@ -252,7 +252,7 @@ export const singleProjectQuery = defineQuery(`
   }
 `);
 export const fetchAboutQuery = defineQuery(`
-  *[_id == "aboutPage" || _id == "drafts.aboutPage"][0]{
+  *[_type == "aboutPage" && (_id == "aboutPage" || _id == "drafts.aboutPage")][0]{
     _id,
     _type,
     languages[]->{
@@ -315,7 +315,7 @@ export const fetchAboutQuery = defineQuery(`
 `);
 
 export const fetchContactQuery = defineQuery(`
-  *[_id == "contactPage" || _id == "drafts.contactPage"][0]{
+  *[_type == "contactPage" && (_id == "contactPage" || _id == "drafts.contactPage")][0]{
   _id,
   _type,
   richText,
@@ -331,7 +331,7 @@ export const fetchContactQuery = defineQuery(`
 `);
 
 export const fetchFooterQuery = defineQuery(`
-  *[_id == "footer" || _id == "drafts.footer"][0]{
+  *[_type == "footer" && (_id == "footer" || _id == "drafts.footer")][0]{
     _id,
     _type,
     name,
@@ -399,14 +399,18 @@ export const projectsQuery = defineQuery(`
   }
 `);
 
-// export const sitemapData = defineQuery(`
-//   *[_type == "page" && defined(slug.current)] | order(_type asc) {
-//     "slug": slug.current,
-//     _type,
-//     _updatedAt,
-//   }
-// `);
-// export const pagesSlugs = defineQuery(`
-//   *[_type == "page" && defined(slug.current)]
-//   {"slug": slug.current}
-// `);
+// Everything sitemap.ts needs in a single round trip. `nav` is used to give
+// pages that appear in the CMS menu a higher priority than the rest.
+export const sitemapQuery = defineQuery(`{
+  "pages": *[_id in ["homePage", "projectsIndex", "aboutPage", "contactPage"]]{
+    _id,
+    _updatedAt
+  },
+  "projects": *[_type == "projects" && defined(slug.current)]{
+    "slug": slug.current,
+    _updatedAt
+  },
+  "nav": *[_type == "header" && _id == "header"][0].navigationItems[]{
+    "slug": slug.current
+  }
+}`);

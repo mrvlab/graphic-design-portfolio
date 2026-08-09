@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typegen": "npx sanity@latest schema extract && npx sanity@latest typegen generate --enforce-required-fields",
-    "schema": "npx sanity@latest schema extract",
-    "types": "npx sanity@latest typegen generate"
+    "typegen": "bun run schema && bun run types",
+    "schema": "sanity schema extract --force",
+    "types": "sanity typegen generate --enforce-required-fields"
   },
   "dependencies": {
     "@mux/mux-player-react": "^3.8.0",
@@ -47,5 +47,5 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "bun@1.3.14"
 }

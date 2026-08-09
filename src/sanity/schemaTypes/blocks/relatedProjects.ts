@@ -4,7 +4,8 @@ import { DocumentIcon } from '@sanity/icons';
 export const relatedProjects = defineType({
   name: 'relatedProjects',
   title: 'Related Projects',
-  type: 'document',
+  // Embedded inline in projects.sectionList — see the note in section.ts.
+  type: 'object',
   icon: DocumentIcon,
   fields: [
     defineField({

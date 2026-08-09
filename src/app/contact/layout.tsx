@@ -7,6 +7,7 @@ import { draftMode } from 'next/headers';
 import NavigationMenu from '@/components/NavBar/NavigationMenu';
 import Footer from '@/components/Footer/Footer';
 import BlurDown from '@/components/NavBar/BlurDown';
+import SiteStructuredData from '@/components/SEO/SiteStructuredData';
 
 export default async function RootLayout({
   children,
@@ -30,6 +31,8 @@ export default async function RootLayout({
 
       {/* Footer */}
       {await Footer()}
+      <SiteStructuredData variant="page" slug="contact" />
+
       {/* Other global utilities */}
       <SanityLive />
       {isDraft && (

@@ -9,6 +9,7 @@ import Footer from '@/components/Footer/Footer';
 import { lausanne } from '@/fonts/Lausanne';
 import LenisScroller from '@/components/LenisScroller';
 import BlurDown from '@/components/NavBar/BlurDown';
+import SiteStructuredData from '@/components/SEO/SiteStructuredData';
 
 export default async function RootLayout({
   children,
@@ -39,6 +40,8 @@ export default async function RootLayout({
         {/* Footer */}
         {await Footer()}
       </div>
+
+      <SiteStructuredData variant="page" slug="projects" />
 
       {/* Other global utilities */}
       <SanityLive />

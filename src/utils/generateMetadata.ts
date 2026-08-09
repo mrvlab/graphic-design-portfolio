@@ -1,11 +1,18 @@
 import { sanityFetch } from '@/sanity/lib/live';
 import { settingsQuery } from '@/sanity/lib/queries';
-import { urlForImage } from '@/sanity/lib/utils';
+import { resolveOpenGraphImage } from '@/sanity/lib/utils';
+import { getSiteUrl, isCanonicalDeployment, SITE_NAME } from '@/utils/siteUrl';
 import { Metadata } from 'next';
 import { toPlainText } from 'next-sanity';
-import { FetchSeoResult, FetchSeoTitleResult } from '../../sanity.types';
 
-type PageData = FetchSeoResult | FetchSeoTitleResult;
+type PageData = {
+  title?: string | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: unknown;
+  } | null;
+} | null;
 
 export async function generateSeoMetadata({
   slug,
@@ -19,106 +26,54 @@ export async function generateSeoMetadata({
     stega: false,
   });
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
-    'http://localhost:3000';
-  const url = slug ? `${baseUrl}/${slug}` : baseUrl;
+  // CMS strings are trimmed — stray whitespace otherwise shows up in <title>.
+  const siteTitle = settings?.title?.trim() || SITE_NAME;
+  const isHome = !slug;
+
+  // Next serves /about and redirects /about/ — sub-page canonicals must not
+  // have a trailing slash, while the home canonical is the root "/".
+  // sitemap.ts must emit these exact same strings.
+  const baseUrl = getSiteUrl();
+  const url = isHome ? `${baseUrl}/` : `${baseUrl}/${slug.replace(/^\/+/, '')}`;
 
   const description =
     page?.seo?.description ??
-    (settings?.description
-      ? toPlainText(settings.description)
-      : 'Default description');
+    (settings?.description ? toPlainText(settings.description) : undefined);
 
-  const title =
-    page?.seo?.title ??
-    (page && 'title' in page ? page.title : null) ??
-    settings?.title ??
-    'Martina Quirici';
+  const pageTitle =
+    page?.seo?.title?.trim() || page?.title?.trim() || siteTitle;
 
-  const fullTitle =
-    page?.seo?.title && settings?.title
-      ? `${page.seo.title} | ${settings.title}`
-      : page && 'title' in page && settings?.title
-        ? `${page.title} | ${settings.title}`
-        : title;
+  // The root layout applies the "%s | Martina Quirici" template, so pages
+  // return their bare title. The home page opts out and stays the brand name.
+  const title = isHome ? { absolute: siteTitle } : pageTitle;
+  const ogTitle = isHome ? siteTitle : `${pageTitle} | ${siteTitle}`;
 
-  const imageUrl =
-    urlForImage(page?.seo?.image)?.url() ?? 'https://your-default-image.png';
-
-  let imageWidth = 1200;
-  let imageHeight = 630;
-
-  if (
-    page?.seo?.image &&
-    typeof page.seo.image === 'object' &&
-    'asset' in page.seo.image &&
-    page.seo.image.asset
-  ) {
-    try {
-      const imageAssetQuery = `*[_type == "sanity.imageAsset" && _id == $id][0]{
-        metadata {
-          dimensions {
-            width,
-            height
-          }
-        }
-      }`;
-
-      const imageAssetId = page.seo.image.asset._ref;
-      const { data: imageAsset } = await sanityFetch({
-        query: imageAssetQuery,
-        params: { id: imageAssetId },
-        stega: false,
-      });
-
-      if (imageAsset?.metadata?.dimensions) {
-        imageWidth = imageAsset.metadata.dimensions.width;
-        imageHeight = imageAsset.metadata.dimensions.height;
-      }
-    } catch (error) {
-      console.error('Error fetching image dimensions:', error);
-    }
-  }
+  const image =
+    resolveOpenGraphImage(page?.seo?.image) ??
+    resolveOpenGraphImage(settings?.image);
 
   return {
-    title: fullTitle,
+    title,
     description,
+    alternates: { canonical: url },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       url,
-      siteName: settings?.title || 'Martina Quirici',
+      siteName: siteTitle,
       locale: 'en_US',
       type: 'website',
-      images: [
-        {
-          url: imageUrl,
-          width: imageWidth,
-          height: imageHeight,
-          alt: title,
-        },
-      ],
+      ...(image && { images: [image] }),
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: ogTitle,
       description,
-      images: [imageUrl],
+      ...(image && { images: [image.url] }),
     },
-    metadataBase: new URL(baseUrl),
-    alternates: {
-      canonical: url,
-    },
-    other: {
-      'og:site_name': settings?.title || 'Martina Quirici',
-      'og:locale': 'en_US',
-      'og:type': 'website',
-      'og:image:width': imageWidth.toString(),
-      'og:image:height': imageHeight.toString(),
-      'og:image:alt': title,
-      'og:image:secure_url': imageUrl,
-      'og:image:type': 'image/jpeg',
-    },
+    // Preview and beta deployments must never compete with the live site.
+    ...(!isCanonicalDeployment() && {
+      robots: { index: false, follow: false },
+    }),
   };
 }

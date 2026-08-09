@@ -10,6 +10,7 @@ import SecondLayout from '../ProjectLayouts/SecondLayout/SecondLayout';
 import ThirdLayout from '../ProjectLayouts/ThirdLayout/ThirdLayout';
 import CustomCursor from '../CustomCursor/CustomCursor';
 import { dataAttr } from '@/sanity/lib/utils';
+import SiteStructuredData from '@/components/SEO/SiteStructuredData';
 
 export async function generateStaticParams() {
   const projects = await client.fetch(projectsQuery);
@@ -64,6 +65,11 @@ export default async function Page({
       id='project-page'
       data-sanity={projectAttr}
     >
+      <SiteStructuredData
+        variant="page"
+        slug={`project/${project.slug}`}
+        label={project.title ?? undefined}
+      />
       <CustomCursor />
       {(() => {
         switch (layout) {
