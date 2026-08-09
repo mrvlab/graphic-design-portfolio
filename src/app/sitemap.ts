@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl();
   const { pages, projects, nav } = await seoClient.fetch(sitemapQuery);
 
-  const navSlugs = new Set(nav.map((item) => item.slug));
+  const navSlugs = new Set((nav ?? []).map((item) => item.slug));
   const updatedAt = (id: string) => {
     const page = pages.find((item) => item._id === id);
     return page?._updatedAt ? new Date(page._updatedAt) : new Date();

@@ -78,6 +78,13 @@ export type Header = {
   name?: string;
   workTitle?: string;
   projectCloseText?: string;
+  navigationItems?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "navigation";
+  }>;
 };
 
 export type Footer = {
@@ -282,7 +289,6 @@ export type Navigation = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  order?: number;
   slug?: Slug;
 };
 
@@ -876,12 +882,15 @@ export type SettingsQueryResult = {
   } | null;
 } | null;
 // Variable: navigationQuery
-// Query: *[_type == "navigation" && defined(slug.current)]  | order(coalesce(order, 9999) asc, _updatedAt desc)[0...12]{    _id,    name,    "slug": slug.current,    _updatedAt  }
+// Query: coalesce(    *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]      .navigationItems[]->{        _id,        name,        "slug": slug.current      },    *[_type == "navigation" && defined(slug.current)]    | order(_updatedAt desc)[0...12]{      _id,      name,      "slug": slug.current    }  )
 export type NavigationQueryResult = Array<{
   _id: string;
   name: string | null;
   slug: string | null;
-  _updatedAt: string;
+}> | Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
 }>;
 // Variable: fetchHeaderQuery
 // Query: *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]{    _id,    _type,    lefttext,    name,    workTitle,    projectCloseText  }
@@ -1425,7 +1434,7 @@ export type ProjectsQueryResult = Array<{
   } | null;
 }>;
 // Variable: sitemapQuery
-// Query: {  "pages": *[_id in ["homePage", "projectsIndex", "aboutPage", "contactPage"]]{    _id,    _updatedAt  },  "projects": *[_type == "projects" && defined(slug.current)]{    "slug": slug.current,    _updatedAt  },  "nav": *[_type == "navigation" && defined(slug.current)]{    "slug": slug.current  }}
+// Query: {  "pages": *[_id in ["homePage", "projectsIndex", "aboutPage", "contactPage"]]{    _id,    _updatedAt  },  "projects": *[_type == "projects" && defined(slug.current)]{    "slug": slug.current,    _updatedAt  },  "nav": coalesce(    *[_type == "header" && _id == "header"][0].navigationItems[]->{      "slug": slug.current    },    *[_type == "navigation" && defined(slug.current)]{      "slug": slug.current    }  )}
 export type SitemapQueryResult = {
   pages: Array<{
     _id: string;
@@ -1437,6 +1446,8 @@ export type SitemapQueryResult = {
   }>;
   nav: Array<{
     slug: string | null;
+  }> | Array<{
+    slug: string | null;
   }>;
 };
 
@@ -1447,7 +1458,7 @@ declare module "@sanity/client" {
     "\n*[_type == \"homePage\" && (_id == \"homePage\" || _id == \"drafts.homePage\")][0]{\n  seo {\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n}\n": FetchSeoResult;
     "\n  *[_type == \"projects\" && slug.current == $slug][0]{\n    title,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchSeoTitleResult;
     "\n*[_type == \"settings\" && (_id == \"settings\" || _id == \"drafts.settings\")][0]{\n  _id,\n  title,\n  description,\n  title,\n  description,\n  image {\n    _type,\n    asset\n  }\n}\n": SettingsQueryResult;
-    "\n  *[_type == \"navigation\" && defined(slug.current)]\n  | order(coalesce(order, 9999) asc, _updatedAt desc)[0...12]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    _updatedAt\n  }\n": NavigationQueryResult;
+    "\n  coalesce(\n    *[_type == \"header\" && (_id == \"header\" || _id == \"drafts.header\")][0]\n      .navigationItems[]->{\n        _id,\n        name,\n        \"slug\": slug.current\n      },\n    *[_type == \"navigation\" && defined(slug.current)]\n    | order(_updatedAt desc)[0...12]{\n      _id,\n      name,\n      \"slug\": slug.current\n    }\n  )\n": NavigationQueryResult;
     "\n  *[_type == \"header\" && (_id == \"header\" || _id == \"drafts.header\")][0]{\n    _id,\n    _type,\n    lefttext,\n    name,\n    workTitle,\n    projectCloseText\n  }\n": FetchHeaderQueryResult;
     "\n  *[_type == \"homePage\" && (_id == \"homePage\" || _id == \"drafts.homePage\")][0]{\n    _id,\n    _type,\n    enterSiteText,\n    enterSiteLogo {\n      mediaType,\n      image {\n        alt,\n        asset-> {\n          _id,\n          url,\n          metadata\n        }\n      },\n      video {\n        asset-> {\n          _id,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon\n    },\n    seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  }\n": FetchHomePageQueryResult;
     "\n  *[_type == \"projectsIndex\" && (_id == \"projectsIndex\" || _id == \"drafts.projectsIndex\")][0]{\n    _id,\n    _type,\n    projects[]->{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        _id,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n    },\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": FetchProjectsIndexQueryResult;
@@ -1456,6 +1467,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"contactPage\" && (_id == \"contactPage\" || _id == \"drafts.contactPage\")][0]{\n  _id,\n  _type,\n  richText,\n  seo {\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n}\n": FetchContactQueryResult;
     "\n  *[_type == \"footer\" && (_id == \"footer\" || _id == \"drafts.footer\")][0]{\n    _id,\n    _type,\n    name,\n    rights,\n    timezone,\n    location,\n    lefttext\n  }\n": FetchFooterQueryResult;
     "\n  *[_type == \"projects\" && defined(slug.current)][0...100]{\n    _id,\n    name,\n    \"slug\": slug.current,\n    title,\n    year,\n    richText,\n    mediaBackgroundColor,\n    mediaGallery {\n      _type,\n      mediaItems[] {\n        _key,\n        alt,\n        asset-> {\n          _id,\n          _ref,\n          playbackId,\n          assetId,\n          filename,\n          url\n        }\n      }\n    },\n    comingSoon,\n    seo {\n      title,\n      description,\n      image {\n        _type,\n        asset\n      }\n    }\n  }\n": ProjectsQueryResult;
-    "{\n  \"pages\": *[_id in [\"homePage\", \"projectsIndex\", \"aboutPage\", \"contactPage\"]]{\n    _id,\n    _updatedAt\n  },\n  \"projects\": *[_type == \"projects\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    _updatedAt\n  },\n  \"nav\": *[_type == \"navigation\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n}": SitemapQueryResult;
+    "{\n  \"pages\": *[_id in [\"homePage\", \"projectsIndex\", \"aboutPage\", \"contactPage\"]]{\n    _id,\n    _updatedAt\n  },\n  \"projects\": *[_type == \"projects\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    _updatedAt\n  },\n  \"nav\": coalesce(\n    *[_type == \"header\" && _id == \"header\"][0].navigationItems[]->{\n      \"slug\": slug.current\n    },\n    *[_type == \"navigation\" && defined(slug.current)]{\n      \"slug\": slug.current\n    }\n  )\n}": SitemapQueryResult;
   }
 }

@@ -41,16 +41,24 @@ export const settingsQuery = defineQuery(`
 }
 `);
 
-// coalesce() parks items without an explicit order at the back, and the
-// _updatedAt tiebreak preserves the previous ordering until editors set values.
+// Menu order is the order of header.navigationItems, which editors drag to
+// rearrange. The fallback keeps the menu populated until the header is filled
+// in and can be dropped once it is.
 export const navigationQuery = defineQuery(`
-  *[_type == "navigation" && defined(slug.current)]
-  | order(coalesce(order, 9999) asc, _updatedAt desc)[0...12]{
-    _id,
-    name,
-    "slug": slug.current,
-    _updatedAt
-  }
+  coalesce(
+    *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]
+      .navigationItems[]->{
+        _id,
+        name,
+        "slug": slug.current
+      },
+    *[_type == "navigation" && defined(slug.current)]
+    | order(_updatedAt desc)[0...12]{
+      _id,
+      name,
+      "slug": slug.current
+    }
+  )
 `);
 
 export const fetchHeaderQuery = defineQuery(`
@@ -413,7 +421,12 @@ export const sitemapQuery = defineQuery(`{
     "slug": slug.current,
     _updatedAt
   },
-  "nav": *[_type == "navigation" && defined(slug.current)]{
-    "slug": slug.current
-  }
+  "nav": coalesce(
+    *[_type == "header" && _id == "header"][0].navigationItems[]->{
+      "slug": slug.current
+    },
+    *[_type == "navigation" && defined(slug.current)]{
+      "slug": slug.current
+    }
+  )
 }`);

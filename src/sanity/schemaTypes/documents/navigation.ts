@@ -15,14 +15,6 @@ export const navigation = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'order',
-      title: 'Menu order',
-      description: 'Lower numbers appear first.',
-      type: 'number',
-      validation: (rule) => rule.min(0).integer(),
-      initialValue: 100,
-    }),
-    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
