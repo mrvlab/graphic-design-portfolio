@@ -2,14 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { NavigationQueryResult } from '../../../sanity.types';
+import { FetchHeaderQueryResult } from '../../../sanity.types';
 import { dataAttr } from '@/sanity/lib/utils';
 
+type NavItem = NonNullable<
+  NonNullable<FetchHeaderQueryResult>['navigationItems']
+>[number];
+
 type Props = {
-  navItems: NavigationQueryResult;
+  navItems: NavItem[];
+  headerId?: string;
 };
 
-const NavItems = ({ navItems }: Props) => {
+const NavItems = ({ navItems, headerId }: Props) => {
   const pathname = usePathname();
 
   if (navItems.length < 3) return null;
@@ -27,21 +32,25 @@ const NavItems = ({ navItems }: Props) => {
   };
 
   const renderNavLink = (
-    item: (typeof navItems)[number],
+    item: NavItem,
     alignment: 'left' | 'center' | 'right'
   ) => {
     const slug = item.slug;
     if (!slug) return null;
 
-    const sanityAttr = dataAttr({
-      id: item._id,
-      type: 'navigation',
-      path: 'name',
-    }).toString();
+    // Menu items are now inline on the header, so click-to-edit targets the
+    // header document and addresses the item by its array key.
+    const sanityAttr = headerId
+      ? dataAttr({
+          id: headerId,
+          type: 'header',
+          path: `navigationItems[_key=="${item._key}"].name`,
+        }).toString()
+      : undefined;
 
     return (
       <li
-        key={item._id}
+        key={item._key}
         className={`flex w-full ${alignmentClasses[alignment]} py-2.5 px-3 lg:w-fit lg:px-0 z-10`}
         data-sanity={sanityAttr}
       >

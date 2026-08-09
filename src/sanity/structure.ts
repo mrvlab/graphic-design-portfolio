@@ -7,7 +7,10 @@ import * as singelton from './schemaTypes/singelton';
 
 const pageSchemas = Object.values(pages);
 const documentSchemas = Object.values(documents);
-const singletonSchemas = Object.values(singelton);
+
+// Object.values on a module namespace is alphabetical, so the singleton order
+// is listed explicitly instead.
+const singletonSchemas = [singelton.header, singelton.footer, singelton.settings];
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()

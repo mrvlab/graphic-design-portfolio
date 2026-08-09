@@ -1,13 +1,10 @@
-import { fetchHeaderQuery, navigationQuery } from '@/sanity/lib/queries';
+import { fetchHeaderQuery } from '@/sanity/lib/queries';
 import { getCurrentYear } from '@/utils/getCurrentYear';
 import React from 'react';
 import NavItems from './NavItems';
 import Link from 'next/link';
 import { sanityFetch } from '@/sanity/lib/live';
-import {
-  FetchHeaderQueryResult,
-  NavigationQueryResult,
-} from '../../../sanity.types';
+import { FetchHeaderQueryResult } from '../../../sanity.types';
 import BlurDown from './BlurDown';
 import { dataAttr } from '@/sanity/lib/utils';
 
@@ -26,11 +23,6 @@ const NavigationMenu = async ({
   hideAllOnMobile = false,
   hideAllOnDesktop = false,
 }: Props) => {
-  const { data: navItems }: { data: NavigationQueryResult } = await sanityFetch(
-    {
-      query: navigationQuery,
-    }
-  );
   const { data: header }: { data: FetchHeaderQueryResult } = await sanityFetch({
     query: fetchHeaderQuery,
   });
@@ -86,7 +78,10 @@ const NavigationMenu = async ({
           </div>
           <div className="w-full relative lg:flex lg:justify-end">
             <ul className="flex items-center z-200 w-full lg:gap-3 lg:justify-between lg:max-w-[225px] ">
-              <NavItems navItems={navItems} />
+              <NavItems
+                navItems={header?.navigationItems ?? []}
+                headerId={header?._id}
+              />
             </ul>
             <div
               className="absolute bottom-0 left-0 right-0 h-[0.5px] bg-black pointer-events-none z-200 lg:hidden "

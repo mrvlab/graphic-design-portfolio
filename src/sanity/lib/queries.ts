@@ -41,25 +41,6 @@ export const settingsQuery = defineQuery(`
 }
 `);
 
-// Menu order is the order of header.navigationItems, which editors drag to
-// rearrange. The fallback keeps the menu populated until the header is filled
-// in and can be dropped once it is.
-export const navigationQuery = defineQuery(`
-  coalesce(
-    *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]
-      .navigationItems[]->{
-        _id,
-        name,
-        "slug": slug.current
-      },
-    *[_type == "navigation" && defined(slug.current)]
-    | order(_updatedAt desc)[0...12]{
-      _id,
-      name,
-      "slug": slug.current
-    }
-  )
-`);
 
 export const fetchHeaderQuery = defineQuery(`
   *[_type == "header" && (_id == "header" || _id == "drafts.header")][0]{
@@ -68,7 +49,15 @@ export const fetchHeaderQuery = defineQuery(`
     lefttext,
     name,
     workTitle,
-    projectCloseText
+    projectCloseText,
+    // Menu order is the array order, which editors drag to rearrange. It drives
+    // the rendered menu, the breadcrumb labels and the site structure sent to
+    // search engines.
+    navigationItems[]{
+      _key,
+      name,
+      "slug": slug.current
+    }
   }
 `);
 export const fetchHomePageQuery = defineQuery(`
@@ -421,12 +410,7 @@ export const sitemapQuery = defineQuery(`{
     "slug": slug.current,
     _updatedAt
   },
-  "nav": coalesce(
-    *[_type == "header" && _id == "header"][0].navigationItems[]->{
-      "slug": slug.current
-    },
-    *[_type == "navigation" && defined(slug.current)]{
-      "slug": slug.current
-    }
-  )
+  "nav": *[_type == "header" && _id == "header"][0].navigationItems[]{
+    "slug": slug.current
+  }
 }`);

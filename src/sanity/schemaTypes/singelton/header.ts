@@ -6,8 +6,9 @@ export const header = defineType({
   title: 'Header',
   type: 'document',
   icon: DoubleChevronUpIcon,
+  // No group is marked default, so the Studio opens on its "All fields" tab.
   groups: [
-    { name: 'text', title: 'Text', default: true },
+    { name: 'text', title: 'Text' },
     { name: 'navigation', title: 'Navigation' },
   ],
   fields: [
@@ -48,11 +49,35 @@ export const header = defineType({
       group: 'navigation',
       of: [
         defineArrayMember({
-          type: 'reference',
-          to: [{ type: 'navigation' }],
+          type: 'object',
+          name: 'navigationItem',
+          title: 'Menu item',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Label',
+              description: 'Text shown in the menu.',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'slug',
+              title: 'Slug',
+              description:
+                'Path this item links to, without the leading slash — for example "about".',
+              type: 'slug',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: { title: 'name', subtitle: 'slug.current' },
+            prepare: ({ title, subtitle }) => ({
+              title: title || 'Untitled',
+              subtitle: subtitle ? `/${subtitle}` : 'No slug',
+            }),
+          },
         }),
       ],
-      validation: (rule) => rule.unique(),
     }),
   ],
   preview: {

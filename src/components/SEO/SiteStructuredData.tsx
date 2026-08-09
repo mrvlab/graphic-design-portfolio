@@ -1,9 +1,5 @@
 import { sanityFetch } from '@/sanity/lib/live';
-import {
-  fetchHeaderQuery,
-  navigationQuery,
-  settingsQuery,
-} from '@/sanity/lib/queries';
+import { fetchHeaderQuery, settingsQuery } from '@/sanity/lib/queries';
 import { resolveOpenGraphImage } from '@/sanity/lib/utils';
 import JsonLd from '@/components/JsonLd';
 import {
@@ -31,15 +27,14 @@ const SiteStructuredData = async ({ variant, slug, label }: Props) => {
   const baseUrl = getSiteUrl();
   const home = `${baseUrl}/`;
 
-  const [{ data: nav }, { data: settings }, { data: header }] =
-    await Promise.all([
-      sanityFetch({ query: navigationQuery, stega: false }),
-      sanityFetch({ query: settingsQuery, stega: false }),
-      sanityFetch({ query: fetchHeaderQuery, stega: false }),
-    ]);
+  const [{ data: settings }, { data: header }] = await Promise.all([
+    sanityFetch({ query: settingsQuery, stega: false }),
+    sanityFetch({ query: fetchHeaderQuery, stega: false }),
+  ]);
 
+  // Same source and order as the rendered menu.
   // CMS labels are trimmed — stray whitespace otherwise ends up in the markup.
-  const menu = (nav ?? []).flatMap((item) =>
+  const menu = (header?.navigationItems ?? []).flatMap((item) =>
     item.slug && item.name
       ? [{ name: item.name.trim(), url: `${baseUrl}/${item.slug}` }]
       : []
