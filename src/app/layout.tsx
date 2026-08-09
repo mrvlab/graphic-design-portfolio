@@ -2,9 +2,11 @@ import './globals.css';
 import { lausanne } from '@/fonts/Lausanne';
 import { Metadata } from 'next';
 import { entranceOverlay } from '@/app/project/utils/entranceOverlayConstants';
+import { getSiteUrl, SITE_NAME } from '@/utils/siteUrl';
 
 export const metadata: Metadata = {
-  title: 'Martina Quirici',
+  metadataBase: new URL(getSiteUrl()),
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
   description: 'Graphic Designer Portfolio',
 };
 

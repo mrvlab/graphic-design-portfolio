@@ -139,7 +139,7 @@ export default function MuxVideo({
       autoPlay={autoPlay}
       preload="auto"
       loop={loopValue}
-      style={playerStyles as React.CSSProperties}
+      style={playerStyles}
       metadata={metadata}
       renditionOrder={RenditionOrder.DESCENDING}
       minResolution={MinResolution.noLessThan720p}

@@ -11,6 +11,7 @@ import { EntranceOverlay } from '@/components/EntranceOverlay/EntranceOverlay';
 import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHomePageQuery } from '@/sanity/lib/queries';
 import { LayoutHeightTracker } from '@/components/MobileNavHeightTracker';
+import SiteStructuredData from '@/components/SEO/SiteStructuredData';
 
 export default async function RootLayout({
   children,
@@ -54,6 +55,8 @@ export default async function RootLayout({
         {/* Footer */}
         <Footer />
       </div>
+
+      <SiteStructuredData variant="home" />
 
       {/* Other global utilities */}
       <SanityLive />

@@ -4,7 +4,10 @@ import { BlockElementIcon } from '@sanity/icons';
 export const section = defineType({
   name: 'section',
   title: 'Section',
-  type: 'document',
+  // Embedded inline in projects.sectionList — an object, not a standalone
+  // document. Declaring it as a document left typegen unable to resolve the
+  // projection, which typed every field as null.
+  type: 'object',
   icon: BlockElementIcon,
   fieldsets: [
     {
